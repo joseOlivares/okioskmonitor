@@ -85,6 +85,11 @@ namespace okioskclient
 
             ipCliente = ipCliente.Trim(); //borrando espacios
 
+            if (ipCliente==" ")
+            {
+                return; //si presino cancelar
+            }
+
             String appPath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             appPath = Directory.GetParent(appPath).FullName;
             String jsFile =appPath+@"\okiosk_installer\app\config\setIPs.js";
