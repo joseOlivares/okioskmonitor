@@ -1,0 +1,9 @@
+C:\Users\Developer\Documents\C#\okioskclient\bin\Debug\okioskclient.exe.config
+C:\Users\Developer\Documents\C#\okioskclient\bin\Debug\okioskclient.exe
+C:\Users\Developer\Documents\C#\okioskclient\bin\Debug\okioskclient.pdb
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.Form1.resources
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.Properties.Resources.resources
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.csproj.GenerateResource.cache
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.csproj.CoreCompileInputs.cache
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.exe
+C:\Users\Developer\Documents\C#\okioskclient\obj\Debug\okioskclient.pdb
