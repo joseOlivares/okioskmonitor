@@ -85,9 +85,6 @@ namespace okioskclient
 
             ipCliente = ipCliente.Trim(); //borrando espacios
 
-            Regex ipExp = new Regex(@"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$"); //Exp Regular par IP valida
-
-
             String appPath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             appPath = Directory.GetParent(appPath).FullName;
             String jsFile =appPath+@"\okiosk_installer\app\config\setIPs.js";
