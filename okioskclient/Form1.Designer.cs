@@ -40,6 +40,7 @@
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScrollBarsEnabled = false;
             this.webBrowser1.Size = new System.Drawing.Size(883, 463);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser1_DocumentCompleted);
@@ -47,7 +48,7 @@
             // btnConfig
             // 
             this.btnConfig.Image = global::okioskclient.Properties.Resources.config;
-            this.btnConfig.Location = new System.Drawing.Point(12, 405);
+            this.btnConfig.Location = new System.Drawing.Point(16, 405);
             this.btnConfig.Name = "btnConfig";
             this.btnConfig.Size = new System.Drawing.Size(53, 46);
             this.btnConfig.TabIndex = 1;
