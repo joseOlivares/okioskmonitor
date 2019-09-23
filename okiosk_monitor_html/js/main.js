@@ -53,8 +53,8 @@ var app={
 					  //esa seccion es solo para hacer pruebas locales de la lectura de errores
 					  	myPrinter=checkPrinterStatusDefault(prStatus,prDetectedErrorState,prExtendedDetectedErrorState);
 					  //------------------------------------
-					  var printer=p;
-					  debugger;
+					  //var printer=p;
+					  //debugger;
 					  //estado de error detectado 0, estado de error extendido 0, 
 			    }//End IF		
 
