@@ -44,14 +44,14 @@ var app={
 		              prDetectedErrorState=p.DetectedErrorState;
 					  prExtendedDetectedErrorState=p.ExtendedDetectedErrorState;
 					  
-
-					  prDriverName=p.DriverName;
 					  prStringStatus=p.status;
-					  prLastErrorCode=p.LastErrorCode||-1;
-					  strErrorDescription=p.ErrorDescription||-1;
+					  prDriverName=p.DriverName;//no se envía					  
+					  prLastErrorCode=p.LastErrorCode||-1;//no se envia
+					  strErrorDescription=p.ErrorDescription||-1;//no se envia
 
 					  //esa seccion es solo para hacer pruebas locales de la lectura de errores
-					  	myPrinter=checkPrinterStatusDefault(prStatus,prDetectedErrorState,prExtendedDetectedErrorState);
+						  myPrinter=checkPrinterStatusDefault(prStatus,prDetectedErrorState,prExtendedDetectedErrorState);
+						  //app.showResults();
 					  //------------------------------------
 					  //var printer=p;
 					  //debugger;
@@ -68,7 +68,7 @@ var app={
 	},	
 
 	sendData: function(){
-		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
+		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
 			socket.emit('ver_status',datos);
 	}, 
 
