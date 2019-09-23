@@ -1,5 +1,11 @@
-function checkPrinterStatus (){
+//Funciones para decodificar el estatus de los Impresores
+//Autor: José Luis Olivares
+//Email: joseluiss_503@hotmail.com
+//Fecha: 23/09/2019
 
+//Esta funcion se usara para impresores Zebra TTP2030 o cualquier otro.
+function checkPrinterStatusDefault (prStatus,prDetectedErrorState,prExtendedDetectedErrorState){
+    var strPrinterStatus=-1, strDetectedErrorstate=-1, strExtendedDetectedErrorState=-1;
                 //estado de error detectado 0, estado de error extendido 0, 
               switch (prStatus) {
                   case 1: 
@@ -116,4 +122,5 @@ function checkPrinterStatus (){
                       break;
               }//end switch
 
+              return {strPrinterStatus:strPrinterStatus,strDetectedErrorstate:strDetectedErrorstate,strExtendedDetectedErrorState:strExtendedDetectedErrorState};
 }
