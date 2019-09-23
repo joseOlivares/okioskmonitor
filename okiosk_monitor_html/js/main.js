@@ -2,7 +2,8 @@
 //Libreria para leer estatus de impresor Zebra TTP
 //Basada en las especificaciones del fabricante
 //Codificado  e implementado por Jose Luis Olivares, email: joseluiss_503@hotmail.com
-//Version 1.0,    Junio 2017
+//Version 1.0,  Junio 2017
+//Version 2.0,  Septiembre 2019
 //-----------------------------------------------------------------------------
 
 //***Global Vars****
@@ -185,7 +186,7 @@ var app={
 		self.sendData();
 
 
-	}//cuerra initialize
+	}//cierra initialize
 };
 
 //app.initialize();
