@@ -14,7 +14,8 @@
 
       var prStatus=-1, strPrinterStatus=-1, prExtendedPrinterstatus=-1;
       var prDetectedErrorState=-1,strDetectedErrorstate=-1, prExtendedDetectedErrorState=-1, strExtendedDetectedErrorState=-1;
-      var prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
+	  var prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
+	  var myPrinter={};//para ver los errores locales
 
       var locator = new ActiveXObject("WbemScripting.SWbemLocator");//solo en Iexplorer
       var service = locator.ConnectServer(".");
@@ -41,7 +42,19 @@ var app={
 		              prStatus=p.printerStatus;
 		              prExtendedPrinterstatus=p.ExtendedPrinterStatus;
 		              prDetectedErrorState=p.DetectedErrorState;
-		              prExtendedDetectedErrorState=p.ExtendedDetectedErrorState;
+					  prExtendedDetectedErrorState=p.ExtendedDetectedErrorState;
+					  
+
+					  prDriverName=p.DriverName;
+					  prStringStatus=p.status;
+					  prLastErrorCode=p.LastErrorCode||-1;
+					  strErrorDescription=p.ErrorDescription||-1;
+
+					  //esa seccion es solo para hacer pruebas locales de la lectura de errores
+					  	myPrinter=checkPrinterStatusDefault(prStatus,prDetectedErrorState,prExtendedDetectedErrorState);
+					  //------------------------------------
+					  var printer=p;
+					  debugger;
 					  //estado de error detectado 0, estado de error extendido 0, 
 			    }//End IF		
 
@@ -51,7 +64,7 @@ var app={
 	},
 
 	showResults:function(){
-		alert(printerName+' Printer Status: '+prStatus+' '+strPrinterStatus+'| Extended Prn Status: '+prExtendedPrinterstatus +'| Estado de error detectado:'+prDetectedErrorState+' '+strDetectedErrorstate+' |Estado de error extendido '+ prExtendedDetectedErrorState +' '+strExtendedDetectedErrorState +'| LastErrorCode= '+prLastErrorCode+' Error Desciption: '+strErrorDescription);
+		alert(printerName+' Printer Status: '+prStatus+' '+myPrinter.strPrinterStatus+'| Extended Prn Status: '+prExtendedPrinterstatus +'| Estado de error detectado:'+prDetectedErrorState+' '+myPrinter.strDetectedErrorstate+' |Estado de error extendido '+ prExtendedDetectedErrorState +' '+myPrinter.strExtendedDetectedErrorState +'| LastErrorCode= '+prLastErrorCode+' Error Desciption: '+strErrorDescription);
 	},	
 
 	sendData: function(){
