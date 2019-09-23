@@ -25,7 +25,6 @@
 	var socket = io.connect(serverIP,{query:'ipClienteX='+ipAsID}); //creating socket connection to server  'http://192.168.79.128:3000'
 	//*******
 
-
 var app={
 	checkPrinterStatus:function(){
 	      var properties = service.ExecQuery("SELECT * FROM Win32_Printer");
