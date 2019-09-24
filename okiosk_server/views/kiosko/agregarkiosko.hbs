@@ -1,0 +1,63 @@
+{{> nav_agregarkiosko}}
+<div class="container p-6 mx-auto">
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/kiosko/agrearKiosko" method="post">
+                        <h3><span class="label label-default">Datos de Kiosko</span></h3>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre de kiosko" autofocus required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="serie">Serie</label>
+                            <input type="text" class="form-control" name="serie" placeholder="serie de kiosko" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="ip">IP</label>
+                            <input type="text" class="form-control ip_address" name="ip" placeholder="ip de kiosko" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="ubicacion">Ubicacion</label>
+                            <input type="textarea" class="form-control" name="ubicacion" placeholder="ubicacion de kiosko" required="true">
+                        </div>
+                        <hr>
+                        <h3><span class="label label-default">Datos de Contacto</span></h3>
+                        <div class="form-group">
+                            <label for="contacto">Nombre</label>
+                            <input type="text" class="form-control" name="contacto" placeholder="nombre de contacto" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="contacto">Telefono</label>
+                            <input type="text" class="form-control phone" name="telefono" placeholder="telefono de contacto" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo</label>
+                            <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="ejemplo@correo.com" required="true">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">Crear Kiosko</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function(){
+            
+            $('.phone').mask('0000-0000');
+            
+            $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+                translation: {
+                'Z': {
+                    pattern: /[0-9]/, optional: true
+                }
+                }
+            });
+            $('.ip_address').mask('099.099.099.099');
+            
+        });
+</script>

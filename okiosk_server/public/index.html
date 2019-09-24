@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="APP para el monitoreo de equipos y sus impresores, Version 2.0  2019">
+    <link rel="shortcut icon" href="img/mini-logo-ba.jpg">
+    <meta name="author" content="Jose Luis Olivares">
+    <meta name="author" content="Dario Roman Araya">
+    <meta name="email author" content="joseluiss_503@hotmail.com">
+    <meta name="email author" content="dario_aratto@hotmail.com">
+
+    <title>Kiosko Monitor</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jlstyle.css" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.js"></script>
+    <script type="text/javascript" src="js/setServerIp.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script> 
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="js/fn_printer_olivares.js"></script>    
+    <script type="text/javascript" src="js/fn_leerConfManagerErrorCode_olivares.js"></script>      
+    <script type="text/javascript" src="js/main.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                    <div class="container-fluid">
+                      <!-- Brand and toggle get grouped for better mobile display -->
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">GBM</a>
+                      </div>
+                  
+                      <!-- Collect the nav links, forms, and other content for toggling -->
+                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                          <li class="active"><a href="index.html">KIOSKO MONITOR V2.0 <span class="sr-only">(current)</span></a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                          <li id="adminBar2"></li> 
+                            <li id="adminItem1"></li> 
+                            <li id="adminItem2"></li>
+
+                          <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Usuario <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="#"><i class="fa fa-fw fa-user"></i> <span id="spnUserId"></span></a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="/logout"><i class="fa fa-fw fa-power-off"></i> Cerrar sesion</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                
+
+
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                 <!--   <li class="active">
+                        <a href="index.html"><i class="glyphicon glyphicon-list"></i> Kioskos</a>
+                    </li> -->
+                    <li class="active">
+                        <div class="search">
+                          <input type="text" id="busqueda" placeholder="Buscar ...">
+                          <i class="fa fa-search"></i>
+                        </div>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#lstKioskos"><i class="glyphicon glyphicon-list"></i> Kioscos <span class="badge" id="recuentoTotal">0</span><i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="lstKioskos" class="collapse in">
+                            
+                            
+                          <li>
+                            <a href="#">Sin conexion</a>
+                          <li>
+                          <li>
+                              <a href="#">Sin conexion</a>
+                          <li>
+                        </ul>                        
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper-home">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12 breadcum-margin">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <a href="index.html"><i class="fa fa-home"></i> Inicio</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                   		<div class="row"> class="hidden"
+                             <div id="divContenido">
+
+                                <div class="col-lg-3 col-md-6">
+                                	<div class="panel panel-primary">
+                                	<div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                            	<i class="fa fa-bolt fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge" id="divTotalClientes">0</div>
+                                                <div>Equipos monitoreados</div>
+                                            </div>
+                                        </div>
+                                	</div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">&nbsp;</span>
+                                        <span class="pull-right">
+                                        <!--	<i class="fa fa-arrow-circle-right"></i> -->
+                                        </span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                                </div>
+                                </div>                             
+                                     
+                                   <div class="col-lg-3 col-md-6">
+                                      <div class="panel panel-green">
+                                          <div class="panel-heading">
+                                              <div class="row">
+                                                  <div class="col-xs-3">
+                                                      <i class="fa fa-heartbeat fa-5x"></i>
+                                                  </div>
+                                                  <div class="col-xs-9 text-right">
+                                                      <div class="huge" id="divTotalSinError">0</div>
+                                                      <div>Ready</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <a href="#" onClick="app.mostrarEquiposOk();">
+                                              <div class="panel-footer">
+                                                  <span class="pull-left">Ver Detalles</span>
+                                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                  <div class="clearfix"></div>
+                                              </div>
+                                          </a>
+                                      </div>
+                                  </div>                             
+
+                                  <div class="col-lg-3 col-md-6">
+                                      <div class="panel panel-yellow">
+                                          <div class="panel-heading">
+                                              <div class="row">
+                                                  <div class="col-xs-3">
+                                                      <i class="fa fa-exclamation-circle fa-5x"></i>
+                                                  </div>
+                                                  <div class="col-xs-9 text-right">
+                                                      <div class="huge" id="divWarning">0</div>
+                                                      <div>Warnings!</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <a href="#"  onClick="app.mostrarEquiposAlertados();">
+                                              <div class="panel-footer">
+                                                  <span class="pull-left">Ver Detalles</span>
+                                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                  <div class="clearfix"></div>
+                                              </div>
+                                          </a>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3 col-md-6">
+                                      <div class="panel panel-red">
+                                          <div class="panel-heading">
+                                              <div class="row">
+                                                  <div class="col-xs-3">
+                                                      <i class="fa fa-times-circle-o fa-5x"></i>
+                                                  </div>
+                                                  <div class="col-xs-9 text-right">
+                                                      <div class="huge" id="divOffline">0</div>
+                                                      <div>Equipos Offlline</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <a href="#" onClick="app.mostrarEquiposOffLine();">
+                                              <div class="panel-footer">
+                                                  <span class="pull-left">Ver Detalles</span>
+                                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                  <div class="clearfix"></div>
+                                              </div>
+                                          </a>
+                                      </div>
+                                  </div>
+                             </div> <!--  /divContenido -->
+                         </div> <!-- end Row -->
+
+                      <div class="row">
+                            <div id="divInvEquipo"></div>
+                      </div>
+
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+        
+
+    </div>
+    <!-- /#wrapper -->
+
+
+     <script id="tpl-detalleEquipo" type="text/x-handlebars-template">
+	 {{#with this}}
+		<div id="divDetalleEquipo" class="col-md-6">	 
+			  <div class="panel panel-primary">
+				<div class="panel-heading">
+				  <h3 class="panel-title"><strong>Detalle del equipo: </strong> <span class="badge">{{ip}} </span>  </h3> 
+				</div>
+				<div class="panel-body">
+				  <p><strong>Nombre: </strong> {{nombre}}</p>
+				  <p><strong>IP: </strong>{{ip}} &nbsp; &nbsp; Cliente Monitoreo: <span id="detalle{{ipID}}" class="glyphicon glyphicon-ban-circle alertaE"> </span></p>
+				  <p><strong>S/N: </strong>{{serie}} </p>
+				  <p><strong>Ubicaci&oacute;n: </strong>{{ubicacion}} </p>
+				  <p><strong>Contacto: </strong>{{contacto}} </p>
+				  <p><strong>Tel&eacute;fono: </strong>{{telefono}} </p>
+				  <p><strong>Email: </strong>{{email}}</p>
+				</div>
+			  </div>
+		</div>
+		<div id="divDetallePrinter" class="col-md-6">	  
+			  <div class="panel panel-primary">
+				<div class="panel-heading">
+				  <h3 class="panel-title"><strong>Detalle del Impresor: </strong> <span class="badge"> Default</span></h3> 
+				</div>
+				<div class="panel-body" id="prnBody{{ipID}}" >
+					<p><strong>Nombre: </strong><span id="prnName{{ipID}}"></span> </p>
+					<div class="pull-right">
+						<i id="prnIco{{ipID}}" class="fa fa-refresh fa-spin  fa-fw"></i>
+						<span class="sr-only">Loading...</span>&nbsp;				
+						<img src="img/printer_generic.png" id="prnImg{{ipID}}" class="img-responsive" alt="Priner Image">
+					</div>						
+					<p><strong>Estado: </strong> <span id="prnStatus{{ipID}}"></span> </p> 
+					<p><strong>Error detectado: </strong> <span id="prnError{{ipID}}"></span></p>
+					<p><strong>Informaci&oacute;n del Error: </strong> <span id="prnExtendedError{{ipID}}"></span></p>
+					<p><strong>Descripci&oacute;n: </strong><span id="prnDescription{{ipID}}"></span></p>	
+          <br><br><br>			
+				</div>
+			  </div>	
+		</div>								
+	{{/with}}
+</script>
+
+<!-- 09/11/20017-->
+<script id="tpl-infoEquipo" type="text/x-handlebars-template">
+    <div id="divMostrarInvEquipo" class="">  
+      <div class="col-md-12"> 
+          <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Sistema Operativo </strong>
+              <i class="fa fa-laptop" aria-hidden="true"></i>
+            </h3> 
+          </div>
+          
+          <div class="panel-body" id="equipo{{ipID}}" >
+            <p><strong>Nombre equipo: </strong>{{cpu.NombrePc}}</p> 
+            <p><strong>Sistema Operativo: </strong>{{os.Nombre}}</p> 
+            <p><strong>Arquitectura: </strong>{{os.Arquitect}}</p>  
+            <p><strong>Version: </strong>{{os.Version}}</p> 
+            <p><strong>Estado: </strong>{{os.Estado}}</p>                                     
+            <p><strong>Cpu: </strong>{{cpu.Nombre}}</p>   
+          </div>
+          </div>
+      </div>
+      <div class="col-md-12"> 
+          <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Almacenamiento</strong>
+              <i class="fa fa-hdd-o" aria-hidden="true"></i>
+            </h3> 
+          </div>
+          
+          <div class="panel-body" id="equipo{{ipID}}" >
+            {{#each detDisk}}
+            <div class="col-md-6">
+              <p class="text-center"> <strong> Drive {{ indiceMas1 @index}}</strong> </p>
+              <p><strong>Fabricante: </strong>{{{Fabricante}}}</p>
+              <p><strong>Modelo </strong>{{{Modelo}}}</p>
+              <p><strong>Capacidad (GB): </strong>{{{Size}}}</p>
+              <p><strong>Estado: </strong>{{{Estado}}}</p>
+              <p><strong>Descripci&oacute;n: </strong>{{{Descripcion}}}</p>   
+              <p><strong>Errores: </strong>{{leerErrorCode CodigoError}};</p> 
+            </div>                     
+            {{/each}} 
+          </div>
+          </div>
+      </div> 
+      <div class="col-md-12"> 
+          <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Memoria</strong>
+              <i class="fa fa-microchip" aria-hidden="true"></i>
+            </h3> 
+          </div>
+          
+          <div class="panel-body" id="equipo{{ipID}}" >
+            {{#each detMem}}
+            <div class="col-md-6">
+              <p class="text-center"><strong>Slot {{ indiceMas1 @index}}</strong></p>
+              <p><strong>Ubicaci&oacute;n: </strong>{{{Ubicacion}}}</p>
+              <p><strong>Fabricante: </strong>{{{Fabricante}}}</p>
+              <p><strong>Capacidad (MB): </strong>{{{Capacidad}}}</p>
+              <p><strong>Estado: </strong>{{{Estado}}}</p>
+            </div>
+            {{/each}} 
+          </div>
+          </div>
+      </div>   
+
+    </div>
+</script> 
+<!-- fin de bloque de actualizacion-->
+	<script id="tpl-equiposAlarmados" type="text/x-handlebars-template">
+		<div id="divLstAlarmados" class="col-md-12">
+				<div class="panel panel-default">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading"><strong>Listado de Equipos alarmados</strong> <div class="pull-right  small">{{myDateTime}}</div></div>
+				  <div class="panel-body">
+              <!-- Table -->
+    				  <table id="tblEquiposAlertados" class="table table-hover">
+    						<thead>
+    						  <tr>
+                  <th>#</th>
+    							<th>IP</th>
+    							<th>Ubicaci&oacute;n</th>
+    							<th>Alerta Impresor</th>
+    						  </tr>
+    						</thead>
+    						<tbody>
+    						{{#each this }}
+    							  <tr id="prnAlarma{{ipID}}">
+                    				<td>{{indiceMas1 @index}}</td>
+    								<td>{{ip}}</td>
+    								<td>{{strUbicacion}}</td>
+    								<td>{{strAlertaPrinter}}</td>
+    							  </tr>
+    						{{/each}} 
+    						</tbody>			
+    				  </table>
+          </div>
+          <div class="panel-footer"></div>
+				</div>
+		</div>	
+	</script>  
+ 	<script id="tpl-equiposOk" type="text/x-handlebars-template">
+		<div id="divLstEquiposOk" class="col-md-12">
+				<div class="panel panel-default">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading"><strong>Listado de Equipos sin alertas</strong><div class="pull-right small">{{myDateTime}}</div></div>
+          <div class="panel-body">
+    				  <!-- Table -->
+    				  <table id="tblEquiposOk" class="table table-striped table-bordered" style="width:100%">
+    						<thead>
+    						  <tr>
+                    <th>#</th>
+                    <th>IP</th>
+                    <th>Nombre</th>
+                    <th>Ubicaci&oacute;n</th>
+                    <th>Status</th>
+    						  </tr>
+    						</thead>
+    						<tbody>
+    						{{#each this }}
+    							  <tr id="filaEquipoOk{{ipID}}">
+                        <td>{{indiceMas1 @index}}</td>
+                        <td>{{ip}}</td>
+                        <td>{{nombreEquipo}}</td>
+                        <td>{{ubicacion}}</td>
+                        <td>{{status}}</td>
+    							  </tr>
+    						{{/each}} 
+    						</tbody>			
+    				  </table>
+          </div>
+          <div class="panel-footer"></div>
+				</div>
+		</div>	
+	</script>
+  <script id="tpl-equiposOffLine" type="text/x-handlebars-template">
+    <div id="divLstOffLine" class="col-md-12">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading"><strong>Listado de Equipos - Heartbeat &nbsp;</strong> <button type="button" class="btn btn-primary btn-sm" onclick="app.mostrarEquiposOffLine();"><i class="fa fa-refresh" aria-hidden="true"></i>
+</button><div class="pull-right  small">{{myDateTime}}</div></div>
+          <div class="panel-body">
+              <!-- Table -->
+              <table id="tblEquiposOffLine" class="table table-hover">
+                <thead>
+                  <tr>
+                  <th>#</th>
+                  <th>IP</th>
+                  <th>Ubicaci&oacute;n</th>
+                  <th>Heartbeat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#each this }}
+                    <tr id="equipoOff{{ipID}}">
+                    <td>{{indiceMas1 @index}}</td>
+                    <td>{{ip}}</td>
+                    <td>{{ubicacion}}</td>
+                    <td><i id="ipOff{{ipID}}" class="fa fa-refresh fa-spin  fa-fw" aria-hidden="true" title="Pinging"></i></td>
+                    </tr>
+                {{/each}} 
+                </tbody>      
+              </table>
+          </div>
+          <div class="panel-footer"></div>
+        </div>
+    </div>  
+  </script>   
+ <script type="text/javascript" charset="utf-8" async defer>
+    $( document ).ready(function() {
+          $.get("/username", function (data) {
+            $("#spnUserName").html(data.myUserName);
+            $("#spnUserId").html(data.myUserId);
+            app.validarPerfil(data.myPerfil);
+
+          });
+    });
+  </script>
+  
+  <script type="text/javascript" charset="utf-8" async defer>
+      
+      $('#busqueda').change(function(){
+        var busqueda = $('#busqueda'),
+        titulo = $('#lstKioskos li a');
+        $(titulo).each(function(){
+          var li = $(this);
+          //si presionamos la tecla
+          $(busqueda).keyup(function(){
+            //cambiamos a minusculas
+            this.value = this.value.toLowerCase();
+            //
+            var clase = $('.search i');
+            if($(busqueda).val() != ''){
+              $(clase).attr('class', 'fa fa-times');
+            }else{
+              $(clase).attr('class', 'fa fa-search');
+            }
+            if($(clase).hasClass('fa fa-times')){
+              $(clase).click(function(){
+                //borramos el contenido del input
+                $(busqueda).val('');
+                //mostramos todas las listas
+                $(li).parent().show();
+                //volvemos a añadir la clase para mostrar la lupa
+                $(clase).attr('class', 'fa fa-search');
+              });
+            }
+            //ocultamos toda la lista
+            $(li).parent().hide();
+            //valor del h3
+            var txt = $(this).val();
+            //si hay coincidencias en la búsqueda cambiando a minusculas
+            if($(li).text().toLowerCase().indexOf(txt) > -1){
+              //mostramos las listas que coincidan
+              $(li).parent().show();
+            }
+          });
+        });
+      });
+    </script>
+
+
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,107 @@
+{{> nav_verusuarios}}
+<div class="container p-6">
+    <div class="row">
+        <dir class="pull-right">
+            <a class="btn btn-success" href="/usuario/agregarUsuario" role="button">Agregar Usuario</a>
+        </dir>
+        {{#if success }}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mx-auto">
+                        <div class="alert alert-success" role="alert">
+                            {{success}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">  
+                    <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Perfil</th>
+                                <th scope="col">Creación</th>
+                                <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>                  
+                            <tbody>
+                                {{#each usuarios}}
+                                <tr>
+                                    <td>{{nombre_usuario}}</td>
+                                    <td>{{email}}</td>
+                                    <td>{{nombre_perfil}}</td>
+                                    <td>{{fecha_creacion}}</td>
+                                    <td>
+                                        <div class="btn-group mx-auto" role="group" aria-label="Basic example">
+                                            {{#isAdminAcciones idPerfil idusuario nombre_usuario}} 
+                                            
+                                            {{/isAdminAcciones}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <div class="col-md-12 mx-auto">
+                                    <div class="alert alert-danger" role="alert">
+                                        NO HAY USUARIOS EN EL SISTEMA. 
+                                        <br>
+                                        <a href="/usuario/agregarUsuario" class="alert-link">CREA UN USUARIO NUEVO</a>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var table = $('#usuarios').DataTable();
+ 
+    new $.fn.dataTable.Buttons( table, {
+        buttons: [
+             'excel', 'pdf'
+        ]
+    } );
+    
+    table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+    
+
+</script>
+<script lang="Javascript">
+    //por José Luis Olivares, 17/09/2019
+    function validarBorrado(id,nombre_usuario){
+        //validar borrado de usuario
+        var msg="¿Está seguro que desea eliminar el usuario?<br> <strong>"+nombre_usuario+"</strong>";
+        url="/usuario/borrarusuario/"+id; //url de borrado
+        //usando jquery-confirm
+        $.confirm({
+            title: 'Eliminar usuario',
+            content: msg,
+            closeIcon: true,
+            buttons: {
+                cancelar:{
+                    btnClass: 'btn-blue',
+                    keys:['esc'],
+                },
+                Eliminar: {
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        window.location.href=url;
+                        
+                    }
+                },    
+            }
+        });
+    }
+</script>
