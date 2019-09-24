@@ -79,7 +79,7 @@ var app={
 
 				if(myPrinter.generalState==='-1'){
 					//aqui registrariamos el error en el log
-					alert(myPrinter.generalState);
+					//alert(myPrinter.generalState);
 				}
 
 			//app.showResults();

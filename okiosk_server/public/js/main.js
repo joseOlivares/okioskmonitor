@@ -75,9 +75,15 @@ var app={
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
 				$("#prnName"+equipo.ipID).html(equipo.printerName);
-				$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.generalState);
+				if(estadoEquipoEvaluado.generalState==='-1'){ //para no mostrar -1 cuando tenga error
+					$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.printerStatus.toString());
+				}else{
+					$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.generalState);
+				}
+				
 				$("#prnError"+equipo.ipID).html(estadoEquipoEvaluado.detectedErrorState);
-				$("#prnExtendedError"+equipo.ipID).html(estadoEquipoEvaluado.extendedDetectedErrorState);				
+				$("#prnExtendedError"+equipo.ipID).html(estadoEquipoEvaluado.extendedDetectedErrorState);	
+				$("#prnDescription"+equipo.ipID).html(estadoEquipoEvaluado.extendedPrinterStatus);				
 
 				if(zebraPrinterDefault===1){
 					$("#prnImg"+equipo.ipID).attr("src", "img/zebra_ttp2000.png");//cambiando la imagen del printer	a zebra				
