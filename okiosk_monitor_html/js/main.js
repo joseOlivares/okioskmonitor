@@ -17,8 +17,10 @@
 	  var prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
 	  var myPrinter={};//para ver los errores locales
 
-      var locator = new ActiveXObject("WbemScripting.SWbemLocator");//solo en Iexplorer
-      var service = locator.ConnectServer(".");
+	  var locator = new ActiveXObject("WbemScripting.SWbemLocator");//solo en Iexplorer
+	  
+      //var service = locator.ConnectServer(".");
+	  var service = locator.ConnectServer(".","root/cimv2");
 
     //Varables SocketIO
 	//server local: http://localhost:3000/
@@ -27,14 +29,18 @@
 	//*******
 
 var app={
-	checkPrinterStatus:function(){
-	      var properties = service.ExecQuery("SELECT * FROM Win32_Printer");
+	checkPrinterStatus:function(){  
+		  var properties = service.ExecQuery("SELECT * FROM Win32_Printer");
+		 // var properties=service.ExecQuery("SELECT * FROM  Win32_PrintJob");
 	      var e = new Enumerator (properties);//Este objeto solo es compatible con Internet Explorer, no con las aplicaciones de Tienda Windows 8.x.
-	      var pos=1;
+		  var pos=1;
+
 	      for (;!e.atEnd();e.moveNext())  //atEnd, item, moveNext solo es aplicable en Iexplorer
 	      {
 	            //elementPosition++;
-	            var p = e.item ();
+				var p = e.item ();			
+
+
 	            if (p.Default==true)       
 	            {
 					//Leyendo la data del printer Default, para enviarla al server
@@ -49,13 +55,9 @@ var app={
 					  prLastErrorCode=p.LastErrorCode||-1;//no se envia
 					  strErrorDescription=p.ErrorDescription||-1;//no se envia
 
-					  //esa seccion es solo para hacer pruebas locales de la lectura de errores
-						  myPrinter=checkPrinterStatusDefault(prStatus,prDetectedErrorState,prExtendedDetectedErrorState);
-						  //app.showResults();
-					  //------------------------------------
-					  //var printer=p;
-					  //debugger;
-					  //estado de error detectado 0, estado de error extendido 0, 
+					  var printer=p;
+					  debugger;
+					  
 			    }//End IF		
 
 		            //alert('Corrida # '+pos);
@@ -68,8 +70,17 @@ var app={
 	},	
 
 	sendData: function(){
-		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
-			socket.emit('ver_status',datos);
+		//var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
+		//socket.emit('ver_status',datos);
+
+		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
+			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
+			//app.showResults();
+			if(prStatus){
+
+			}
+		//------------------------------------
+
 	}, 
 
     initialize: function() {
