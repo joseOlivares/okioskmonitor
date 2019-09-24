@@ -5,7 +5,7 @@
 */
 
 //Escribir la IP estatica del equipo a monitorear 192.168.8.100 (Este equipo)
-var cliente={IP:'192.168.229.31'}; 
+var cliente={IP:'192.168.9.30'}; 
 
 //IP y puerto del servidor de monitoreo, ex  'http://192.168.79.128:3000'
 var servidor={IP:'http://192.168.9.149:3000'}; 

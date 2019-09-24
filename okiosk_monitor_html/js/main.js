@@ -70,8 +70,8 @@ var app={
 	},	
 
 	sendData: function(){
-		//var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
-		//socket.emit('ver_status',datos);
+		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
+		socket.emit('ver_status',datos);
 
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
