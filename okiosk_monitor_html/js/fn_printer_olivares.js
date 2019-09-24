@@ -71,6 +71,7 @@ function evaluaEstadoPrinter(printerX){
           break; 
         case 10: 
           strExtendedPrinterStatus = "Busy (Ocupado)"; 
+          generalState='-1'; 
           break; 
         case 11: 
           strExtendedPrinterStatus = "Not Available (No disponible)"; 
@@ -84,6 +85,7 @@ function evaluaEstadoPrinter(printerX){
           break;
         case 14: 
           strExtendedPrinterStatus = "Initialization (Inicializando)"; 
+          generalState='-1'; 
           break;                     
         case 15: 
           strExtendedPrinterStatus = "Power Save (Ahorro de poder)"; 
@@ -111,12 +113,15 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 3: 
             strDetectedErrorstate="Low Paper (Papel Bajo)"; //Low Paper
+            generalState='-1'; 
             break; 
         case 4: 
             strDetectedErrorstate="NoPaper (Sin Papel)"; //NoPaper 
+            generalState='-1'; 
             break; 
         case 5: 
             strDetectedErrorstate="Low Toner (Toner bajo)"; //Low Toner  -para zebra ttp2030 significa papel bajo
+            generalState='-1'; 
             break; 
         case 6: 
             strDetectedErrorstate="NoToner (Sin Toner)"; //NoToner
@@ -126,6 +131,7 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 8: 
             strDetectedErrorstate="Jammed (Atascado)";  //Jammed -
+            generalState='-1'; 
             break; 
         case 9: 
             strDetectedErrorstate="Offline (Fuera de Linea)";//Offline -
@@ -137,6 +143,7 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 11: 
             strDetectedErrorstate="Output Bin Full (Papel en puerta de salida)"; //Output Bin Full 
+            generalState='-1'; 
             break;
     }
 
@@ -152,12 +159,15 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 3: 
             strExtendedDetectedErrorState="Low Paper (Papel Bajo)"; //Low Paper 
+            generalState='-1'; 
             break; 
         case 4: 
             strExtendedDetectedErrorState="No Paper (Sin Papel)"; //No Paper
+            generalState='-1'; 
             break; 
         case 5: 
-            strExtendedDetectedErrorState="Low Toner (Papel Bajo)";//Low Toner 
+            strExtendedDetectedErrorState="Low Toner (Toner Bajo)";//Low Toner 
+            generalState='-1'; 
             break; 
         case 6: 
             strExtendedDetectedErrorState="No Toner (Sin Toner)"; //No Toner
@@ -167,21 +177,27 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 8: 
             strExtendedDetectedErrorState="Jammed (Atascado)"; //Jammed 
+            generalState='-1'; 
             break; 
         case 9: 
             strExtendedDetectedErrorState="Service Requested (Requiere Servicio)"; //Service Requested 
+            generalState='-1'; 
             break; 
         case 10: 
             strExtendedDetectedErrorState="Output Bin Full (Papel en puerta de salida)";//Output Bin Full 
+            generalState='-1'; 
             break; 
         case 11: 
             strExtendedDetectedErrorState="Paper Problem (Problema de Papel)";//Paper Problem 
+            generalState='-1'; 
             break; 
         case 12: 
             strExtendedDetectedErrorState="Cannot Print Page (No se puede imprimir la pagina)";//Cannot Print Page
+            generalState='-1'; 
             break; 
         case 13: 
             strExtendedDetectedErrorState="User Intervantion Required (Requiere intervencion del Usuario)";//User Intervantion Required 
+            generalState='-1'; 
             break; 
         case 14: 
             strExtendedDetectedErrorState="Out of Memory (Sin memoria)"; //Out of Memory 

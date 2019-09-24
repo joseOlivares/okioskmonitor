@@ -66,8 +66,8 @@ var app={
 			zebraPrinterDefault=app.esPrinterZebra(equipo.printerName);//evalua si el printer por default es zebra
 
 //--------------13/08/2017
-			if(estadoEquipoEvaluado.status==="Listo" && zebraPrinterDefault===-1){
-				estadoEquipoEvaluado.status="Listo, Otro Printer";
+			if(estadoEquipoEvaluado.generalState==="Listo" && zebraPrinterDefault===-1){
+				estadoEquipoEvaluado.generalState="Listo, Otro Printer";
 				estadoEquipoEvaluado.extendedDetectedErrorState="Default Printer no es Marca Zebra";
 			}
 //------------
@@ -75,7 +75,7 @@ var app={
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
 				$("#prnName"+equipo.ipID).html(equipo.printerName);
-				$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.status);
+				$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.generalState);
 				$("#prnError"+equipo.ipID).html(estadoEquipoEvaluado.detectedErrorState);
 				$("#prnExtendedError"+equipo.ipID).html(estadoEquipoEvaluado.extendedDetectedErrorState);				
 
@@ -90,7 +90,7 @@ var app={
 			}
 		
 
-			if(estadoEquipoEvaluado.status==="Listo")//si no tiene alertas
+			if(estadoEquipoEvaluado.generalState==="Listo")//si no tiene alertas
 			{
 				$("#"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");	//icono OK en panel nav izquierdo de equipos
 				
@@ -119,7 +119,7 @@ var app={
 
 						if($("#filaEquipoOk"+equipo.ipID).length<=0)//si no esta desplegado en pantalla 
 						{				
-						var lineaTabla2='<tr id="filaEquipoOk'+equipo.ipID+'"><td>'+getRowNumber("tblEquiposOk")+'</td><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion2].nombre+'</td><td>'+lstCompletoEquipos[posUbicacion2].ubicacion+'</td><td>'+estadoEquipoEvaluado.status+'</td></tr>';
+						var lineaTabla2='<tr id="filaEquipoOk'+equipo.ipID+'"><td>'+getRowNumber("tblEquiposOk")+'</td><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion2].nombre+'</td><td>'+lstCompletoEquipos[posUbicacion2].ubicacion+'</td><td>'+estadoEquipoEvaluado.generalState+'</td></tr>';
 						$("#tblEquiposOk tbody").append(lineaTabla2);//agregamos  la fila a la tabla
 						}
 					}	
@@ -135,7 +135,7 @@ var app={
 			}
 
 
-			if(estadoEquipoEvaluado.status!=="Listo"){
+			if(estadoEquipoEvaluado.generalState!=="Listo"){
 				$("#"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");	
 
 				if($("#divDetallePrinter").length>0){
@@ -165,7 +165,7 @@ var app={
 								
 				}
 				
-			}
+			}//cierra If !==Listo
 			
 
 			if ($("#divWarning").length > 0) {//si existe en el dom el Div	

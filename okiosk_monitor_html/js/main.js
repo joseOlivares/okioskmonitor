@@ -75,10 +75,15 @@ var app={
 
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
-			//app.showResults();
-			if(prStatus){
+			
 
-			}
+				if(myPrinter.generalState==='-1'){
+					//aqui registrariamos el error en el log
+					alert(myPrinter.generalState);
+				}
+
+			//app.showResults();
+
 		//------------------------------------
 
 	}, 
