@@ -408,7 +408,7 @@ io.on('connection', function(socket){
 		socket.on('registrar_log',function(equipo){
 
 			pool.getConnection(function(err, connection) { 
-				var query="INSIERT INTO tblalertas_log (idequipo,descripcion)  VALUES (?,?)";
+				var query="INSERT INTO tblalertas_log (idequipo,descripcion)  VALUES (?,?)";
 				  // Use the connection
 				  connection.query(query,[equipo.idequipo,equipo.status],async function(err, rows) {
 						  if(err){
