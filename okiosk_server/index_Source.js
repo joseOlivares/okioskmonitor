@@ -419,7 +419,7 @@ io.on('connection', function(socket){
 							  console.log(err);
 							  return;
 						  }else{
-							  console.log('Se ha registrado un nuevo evento en el log, equipo: '+equipo.idequipo);
+							  console.log('Se ha registrado un nuevo evento en el log, equipo: '+equipo.ip);
 						  }
 					  
 						connection.release();// release connection
