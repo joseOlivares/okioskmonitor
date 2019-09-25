@@ -28,6 +28,13 @@ helpers.perfilSeleccionado=(usuarioIdperfil, perfilIdperfil, perfilNombre)=>{
     return `<option value="${perfilIdperfil}">${perfilNombre}</option>`;
 };
 
+//Fechas con formato
+ helpers.fechaCorta=(myDate)=>{
+     
+     return ` `
+ };
+
+
 //backup
 //"<a href='/usuario/borrarusuario/"+ idusuario + "' class='btn btn-danger'>Borrar</a>"
 
