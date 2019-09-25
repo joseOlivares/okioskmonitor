@@ -82,19 +82,20 @@ var app={
 			debugger;
 				if(myPrinter.generalState==='Listo'){//cuando no existe error en el printer
 					if(existiaError){
-						//socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			
+						socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			
 					}
 
 					existeError=false;
 					existiaError=false;
 				}else{
 					existeError=true; //cuando existe un error en el printer
+					myPrinter.generalState='Error';
 				}
 
 				if(existeError===true && existiaError===false){
 					existiaError=true; //guardamos el estado anterior
 					//hacemos inserción del error
-					//socket.emit('registrar_log',myPrinter);
+					socket.emit('registrar_log',myPrinter);
 				}
 			//app.showResults();
 		//------------------------------------
