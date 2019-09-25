@@ -122,8 +122,6 @@ var pool= mysql.createPool({ //conexion a base de datos mysql  IP_MYSQL
 //////////////////////
 //////////////////////
 
-
-
 router.get('/',requireLogin, function(req, res) {
 	sess=req.session;
 	//18/09/2019 para corregir que se navegue hasta aqui sin estar logueado (Olivares)
@@ -407,7 +405,7 @@ io.on('connection', function(socket){
 
 
 		//Agregado 23/09/2019 Para registrar errores en log
-		socket.on('registrar_error',function(equipo){
+		socket.on('registrar_log',function(equipo){
 
 			pool.getConnection(function(err, connection) { 
 				var query="INSIERT INTO tblalertas_log (idequipo,descripcion)  VALUES (?,?)";

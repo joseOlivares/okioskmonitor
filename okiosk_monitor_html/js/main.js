@@ -15,7 +15,9 @@
       var prStatus=-1, strPrinterStatus=-1, prExtendedPrinterstatus=-1;
       var prDetectedErrorState=-1,strDetectedErrorstate=-1, prExtendedDetectedErrorState=-1, strExtendedDetectedErrorState=-1;
 	  var prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
-	  var myPrinter={};//para ver los errores locales
+	  var myPrinter={};//para guardar los errores locales del printer
+	  var existeError=false;//guarda el estado del equipo, por default no tiene errores 
+	  var existiaError=false;//guarda el estado previo del error
 
 	  var locator = new ActiveXObject("WbemScripting.SWbemLocator");//solo en Iexplorer
 	  
@@ -55,8 +57,8 @@ var app={
 					  prLastErrorCode=p.LastErrorCode||-1;//no se envia
 					  strErrorDescription=p.ErrorDescription||-1;//no se envia
 
-					  var printer=p;
-					  debugger;
+					  //var printer=p;
+					  //debugger;
 					  
 			    }//End IF		
 
@@ -76,16 +78,24 @@ var app={
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
 			
+				if(myPrinter.generalState==='Listo'){//cuando no existe error en el printer
+					if(existiaError){
+						socket.emit('registrar_log',datos); //si ya no existe error, tambien lo registramos			
+					}
 
-				if(myPrinter.generalState==='-1'){
-					//aqui registrariamos el error en el log
-					//alert(myPrinter.generalState);
+					existeError=false;
+					existiaError=false;
+				}else{
+					existeError=true; //cuando existe un error en el printer
 				}
 
+				if(existeError===true && existiaError===false){
+					existiaError=true; //guardamos el estado anterior
+					//hacemos inserción del error
+					socket.emit('registrar_log',datos);
+				}
 			//app.showResults();
-
 		//------------------------------------
-
 	}, 
 
     initialize: function() {

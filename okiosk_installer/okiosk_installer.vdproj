@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_07B6F04E6ED447EE9147286A79ED6C3D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0A15419679A240F4B29A15E75020D790"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0AE692B5DBC34FC9ACF7DEEBD74AAEE6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -99,12 +111,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_399B017B94B548E888751201C7B2B28B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3D4E67D45899494CAFBEA40FAA72F30C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -117,13 +123,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4868732C59EF494D85BDA0B11B28F996"
+        "MsmKey" = "8:_4A1FDED983894DC4A08846523A051FAB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4A1FDED983894DC4A08846523A051FAB"
+        "MsmKey" = "8:_4C9B59B0FB7D45ACAF9436B1C660DCFA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,6 +147,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4EC9C79B68C84F2688A29B768D6D1FCD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4F9C5FB996CE454BA2DD90351AA2DF6C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -148,12 +160,6 @@
         "Entry"
         {
         "MsmKey" = "8:_59ADF776E091491283890AA44FA44EB6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5B84DF9237CC4996A3377F98CD49260A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -207,13 +213,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6FABA3CCBD1D4D1E921825D6A07677FE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6FD8FFB29D254CCFB23FD8320301C96A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7512E68DD2DF40ACB7229460F45A56FB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7E9C97B3B36B43A7B1158900AA783C97"
+        "MsmKey" = "8:_887F15E5E1374172A083A0E3E7180F94"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,13 +321,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B755D9829BA74ECE845AF4A6363DF685"
+        "MsmKey" = "8:_B662970E1A5243388A35BCFB06CA3D18"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BF0D7B37F03147C7A3207532C9436315"
+        "MsmKey" = "8:_C1F7D14882234608B427E268AE27AF3D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -351,12 +369,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E6252A723C1541308F61C0691713C5F9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EA004A7296BD499F9E0D90309383DB6A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -377,12 +389,6 @@
         {
         "MsmKey" = "8:_F0CB56E257319A17D8FE55A905C3D0B5"
         "OwnerKey" = "8:_E08D912F61EB4934B4B44496B17B1952"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F22C9BA111374E71964CF9C16456E4D0"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -504,6 +510,46 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07B6F04E6ED447EE9147286A79ED6C3D"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\config\\setIPs.js"
+            "TargetName" = "8:setIPs.js"
+            "Tag" = "8:"
+            "Folder" = "8:_CD846870303542B9A559184B795F7C8B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A15419679A240F4B29A15E75020D790"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\socket.io-1.4.5.js"
+            "TargetName" = "8:socket.io-1.4.5.js"
+            "Tag" = "8:"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0AE692B5DBC34FC9ACF7DEEBD74AAEE6"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\font-awesome\\less\\mixins.less"
@@ -784,26 +830,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_399B017B94B548E888751201C7B2B28B"
-            {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\config\\setIPs.js"
-            "TargetName" = "8:setIPs.js"
-            "Tag" = "8:"
-            "Folder" = "8:_CD846870303542B9A559184B795F7C8B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3D4E67D45899494CAFBEA40FAA72F30C"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\font-awesome\\fonts\\fontawesome-webfont.svg"
@@ -844,12 +870,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4868732C59EF494D85BDA0B11B28F996"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4A1FDED983894DC4A08846523A051FAB"
             {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\angular.min.js"
-            "TargetName" = "8:angular.min.js"
+            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\css\\style.css"
+            "TargetName" = "8:style.css"
             "Tag" = "8:"
-            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
+            "Folder" = "8:_B05E3A4A623E4A0E816592E26514324E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -864,12 +890,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4A1FDED983894DC4A08846523A051FAB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4C9B59B0FB7D45ACAF9436B1C660DCFA"
             {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\css\\style.css"
-            "TargetName" = "8:style.css"
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\fn_printer_olivares.js"
+            "TargetName" = "8:fn_printer_olivares.js"
             "Tag" = "8:"
-            "Folder" = "8:_B05E3A4A623E4A0E816592E26514324E"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -924,6 +950,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4EC9C79B68C84F2688A29B768D6D1FCD"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\agente_monitoreo.html"
+            "TargetName" = "8:agente_monitoreo.html"
+            "Tag" = "8:"
+            "Folder" = "8:_6DF2BF560EF548E7932D39E7BE03D27C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F9C5FB996CE454BA2DD90351AA2DF6C"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\font-awesome\\scss\\_path.scss"
@@ -950,26 +996,6 @@
             "TargetName" = "8:_screen-reader.scss"
             "Tag" = "8:"
             "Folder" = "8:_9B4FE62668A14ADD86F573080CA8F334"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B84DF9237CC4996A3377F98CD49260A"
-            {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\jquery.js"
-            "TargetName" = "8:jquery.js"
-            "Tag" = "8:"
-            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1144,6 +1170,46 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FABA3CCBD1D4D1E921825D6A07677FE"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\jquery.min.js"
+            "TargetName" = "8:jquery.min.js"
+            "Tag" = "8:"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FD8FFB29D254CCFB23FD8320301C96A"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\jquery.js"
+            "TargetName" = "8:jquery.js"
+            "Tag" = "8:"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7512E68DD2DF40ACB7229460F45A56FB"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\css\\font-awesome.min.css"
@@ -1164,10 +1230,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E9C97B3B36B43A7B1158900AA783C97"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_887F15E5E1374172A083A0E3E7180F94"
             {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\socket.io-1.4.5.js"
-            "TargetName" = "8:socket.io-1.4.5.js"
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\bootstrap.min.js"
+            "TargetName" = "8:bootstrap.min.js"
             "Tag" = "8:"
             "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
             "Condition" = "8:"
@@ -1464,12 +1530,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B755D9829BA74ECE845AF4A6363DF685"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B662970E1A5243388A35BCFB06CA3D18"
             {
-            "SourcePath" = "8:..\\okiosk_monitor_html\\agente_monitoreo.html"
-            "TargetName" = "8:agente_monitoreo.html"
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\angular.min.js"
+            "TargetName" = "8:angular.min.js"
             "Tag" = "8:"
-            "Folder" = "8:_6DF2BF560EF548E7932D39E7BE03D27C"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1484,9 +1550,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF0D7B37F03147C7A3207532C9436315"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C1F7D14882234608B427E268AE27AF3D"
             {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\main.js"
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\main.js"
             "TargetName" = "8:main.js"
             "Tag" = "8:"
             "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
@@ -1604,26 +1670,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6252A723C1541308F61C0691713C5F9"
-            {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\bootstrap.min.js"
-            "TargetName" = "8:bootstrap.min.js"
-            "Tag" = "8:"
-            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EA004A7296BD499F9E0D90309383DB6A"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\css\\bootstrap.min.css"
@@ -1713,26 +1759,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F22C9BA111374E71964CF9C16456E4D0"
-            {
-            "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\js\\jquery.min.js"
-            "TargetName" = "8:jquery.min.js"
-            "Tag" = "8:"
-            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6B54D0D2C0B49B794D96864C9ED050E"
@@ -1942,7 +1968,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:okiosk_installer"
         "ProductCode" = "8:{6A3E28B6-7DD2-487D-93D4-12AC5C52E16C}"
-        "PackageCode" = "8:{1721DD7A-F8BD-48D0-A72C-4FDA5661DF05}"
+        "PackageCode" = "8:{0AC4E8AF-4DBA-4244-84EF-68AAACB07AE3}"
         "UpgradeCode" = "8:{1971CABE-6B7E-4D99-BF1E-BF2B8B2EE9C5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
