@@ -87,6 +87,8 @@ var app={
 
 				if(zebraPrinterDefault===1){
 					$("#prnImg"+equipo.ipID).attr("src", "img/zebra_ttp2000.png");//cambiando la imagen del printer	a zebra				
+				}else{
+					$("#prnImg"+equipo.ipID).attr("src", "img/printer_generic.png");//imagen printer no zebra	
 				}
 
 				/*searchPrinterName=equipo.printerName;
