@@ -410,7 +410,7 @@ io.on('connection', function(socket){
 			pool.getConnection(function(err, connection) { 
 				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
 				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
-				var description=`generalState=${equipo.generalState} - printerStatus=${equipo.printerStatus} 
+				var description=`Printer=${equipo.printerName} - generalState=${equipo.generalState} - printerStatus=${equipo.printerStatus} 
 				- extendedPrinterStatus=${equipo.extendedPrinterStatus} - detectedError=${equipo.detectedErrorState} 
 				- extendedDetectedError=${equipo.extendedDetectedError}`;
 				  // Use the connection

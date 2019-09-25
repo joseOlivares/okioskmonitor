@@ -80,6 +80,7 @@ var app={
 			myPrinter.ip=clientIP;
 			myPrinter.ipID=ipAsID;
 			myPrinter.textStatus=prTextStatus;
+			myPrinter.printerName=printerName;
 			
 			if(myPrinter.generalState==='-1'){//colocamos un mensaje mas entendible
 				myPrinter.generalState='Error';
