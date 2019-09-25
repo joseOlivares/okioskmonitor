@@ -80,6 +80,10 @@ var app={
 			myPrinter.ip=clientIP;
 			myPrinter.ipID=ipAsID;
 			myPrinter.textStatus=prTextStatus;
+			
+			if(myPrinter.generalState==='-1'){//colocamos un mensaje mas entendible
+				myPrinter.generalState='Error';
+			}
 			//debugger;
 				if(myPrinter.generalState==='Listo' && prLastStatus!=='noerror' ){//cuando no existe error en el printer
 						socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			
