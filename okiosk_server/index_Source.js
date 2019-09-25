@@ -408,9 +408,11 @@ io.on('connection', function(socket){
 		socket.on('registrar_log',function(equipo){
 
 			pool.getConnection(function(err, connection) { 
-				var query="INSERT INTO tblalertas_log (idequipo,descripcion)  VALUES (?,?)";
+				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
+				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
+				var descrip=equipo.status;
 				  // Use the connection
-				  connection.query(query,[equipo.idequipo,equipo.status],async function(err, rows) {
+				  connection.query(query,[equipo.ipID,equipo.status],async function(err, rows) {
 						  if(err){
 							  console.log(err);
 							  return;

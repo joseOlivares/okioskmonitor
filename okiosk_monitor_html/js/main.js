@@ -77,10 +77,12 @@ var app={
 
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
-			
+			myPrinter.ip=clientIP;
+			myPrinter.ipID=ipAsID;
+			debugger;
 				if(myPrinter.generalState==='Listo'){//cuando no existe error en el printer
 					if(existiaError){
-						socket.emit('registrar_log',datos); //si ya no existe error, tambien lo registramos			
+						//socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			
 					}
 
 					existeError=false;
@@ -92,7 +94,7 @@ var app={
 				if(existeError===true && existiaError===false){
 					existiaError=true; //guardamos el estado anterior
 					//hacemos inserción del error
-					socket.emit('registrar_log',datos);
+					//socket.emit('registrar_log',myPrinter);
 				}
 			//app.showResults();
 		//------------------------------------
