@@ -12,9 +12,9 @@
       var  ipAsID=clientIP.replace(/[.]/g,'');//usando ip sin puntos como identificador
 	  var  serverIP=servidor.IP; //leida desde setIps.js
 
-      var prStatus=-1, strPrinterStatus=-1, prExtendedPrinterstatus=-1;
+      var prStatus=-1, strPrinterStatus=-1, prExtendedPrinterstatus=-1, prTextStatus=-1;
       var prDetectedErrorState=-1,strDetectedErrorstate=-1, prExtendedDetectedErrorState=-1, strExtendedDetectedErrorState=-1;
-	  var prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
+	  var prLastStatus='noerror', prLastErrorCode=-1,strLastErrorCode=-1, strErrorDescription=-1;
 	  var myPrinter={};//para guardar los errores locales del printer
 	  var existeError=false;//guarda el estado del equipo, por default no tiene errores 
 	  var existiaError=false;//guarda el estado previo del error
@@ -52,7 +52,7 @@ var app={
 		              prDetectedErrorState=p.DetectedErrorState;
 					  prExtendedDetectedErrorState=p.ExtendedDetectedErrorState;
 					  
-					  prStringStatus=p.status;
+					  prTextStatus=p.status;//estado devuelto en string
 					  prDriverName=p.DriverName;//no se envía					  
 					  prLastErrorCode=p.LastErrorCode||-1;//no se envia
 					  strErrorDescription=p.ErrorDescription||-1;//no se envia
@@ -72,31 +72,27 @@ var app={
 	},	
 
 	sendData: function(){
-		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prStringStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
+		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prTextStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
 		socket.emit('ver_status',datos);
 
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
 			myPrinter.ip=clientIP;
 			myPrinter.ipID=ipAsID;
+			myPrinter.textStatus=prTextStatus;
 			debugger;
-				if(myPrinter.generalState==='Listo'){//cuando no existe error en el printer
-					if(existiaError){
+				if(myPrinter.generalState==='Listo' && prLastStatus!=='noerror' ){//cuando no existe error en el printer
 						socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			
+						prLastStatus='noerror';
 					}
 
-					existeError=false;
-					existiaError=false;
-				}else{
-					existeError=true; //cuando existe un error en el printer
-					myPrinter.generalState='Error';
+				if(myPrinter.generalState!=='Listo'){
+					if(myPrinter.textStatus!==prLastStatus){
+						socket.emit('registrar_log',myPrinter); //si es error nuevo
+						prLastStatus=myPrinter.textStatus;
+					}
 				}
 
-				if(existeError===true && existiaError===false){
-					existiaError=true; //guardamos el estado anterior
-					//hacemos inserción del error
-					socket.emit('registrar_log',myPrinter);
-				}
 			//app.showResults();
 		//------------------------------------
 	}, 
