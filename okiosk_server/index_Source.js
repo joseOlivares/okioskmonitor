@@ -69,7 +69,7 @@ app.use('/logs',require('./routes/logs'));
 var http = require('http').Server(app);
 var ping = require('ping'); //ping network
 var io = require('socket.io')(http);
-var dbIp=require('./public/js/setServerIp.js');//importando modulo donde esta la ip del servidor de BD
+var dbIp=require('./public/js/setServerIp.js').dbServer;//importando modulo donde esta la ip del servidor de BD
 //--13/09/2017---
 var router = express.Router(); //express4
 //------------

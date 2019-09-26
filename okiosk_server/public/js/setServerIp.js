@@ -5,14 +5,17 @@
 	Actualización: Septiembre 2019
 */
 
-var servidor={
+const servidor={
 	IP:'http://192.168.9.149:3000' //IP y puerto del servidor de monitoreo, ex  'http://192.168.79.128:3000'
 };
 
-module.exports = {
-	dbServer: '127.0.0.1', 
-	user:'admin',
-	pass:'admin',
-	db:'dbmonitoreo',
-	port:'3306'
-}; //ip del servidor de base de datos, database server IP
+const dbServer={
+		dbServer: '127.0.0.1', 
+		user:'admin',
+		pass:'admin',
+		db:'dbmonitoreo',
+		port:'33068'
+}
+//ip del servidor de base de datos, database server IP
+module.exports.dbServer=dbServer; 
+module.exports.servidor=servidor;
