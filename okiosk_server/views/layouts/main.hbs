@@ -76,9 +76,9 @@
                     <li class="active"><a href="/index.html">KIOSKO MONITOR V2.0 <span class="sr-only">(current)</span></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/usuario/verusuarios"><i class="fa fa-users"></i> USUARIOS</a></li>
-                    <li><a href="/kiosko/verkioskos"><i class="fa fa-desktop"></i> KIOSKOS</a></li>
-                    <li><a href="/logs/verlogkioskos"><i class="fa fa-history"></i> LOG ALERTAS</a></li>
+                    <li id="adminItem1"><a href="/usuario/verusuarios"><i class="fa fa-users"></i> USUARIOS</a></li>
+                    <li id="adminItem2"><a href="/kiosko/verkioskos"><i class="fa fa-desktop"></i> KIOSKOS</a></li>
+                    <li id="generalItem1"><a href="/logs/verlogkioskos"><i class="fa fa-history"></i> LOG ALERTAS</a></li>
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Usuario <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -120,6 +120,10 @@
         $( document ).ready(function() {
             $.get("/username", function (data) {
                 $("#spnUserId").html(data.myUserId);
+                if(data.myPerfil>2){
+                    $("#adminItem1").html('');
+                    $("#adminItem2").html('');
+                }
             });
         });
     </script>
