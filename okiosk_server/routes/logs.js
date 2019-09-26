@@ -40,7 +40,7 @@ router.get('/borrarlog/', async (req, res) => {
     if (!sess.username||!perfil.validarAcceso(sess.idperfil)) {
         res.redirect('/login');
     } else {
-        await pool.query('Select NOW()');
+        await pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 3 MONTH)');
         req.flash('success','Se ha borrado el log anterior a tres meses!');
         res.redirect('/logs/verlogkioskos');
     }
