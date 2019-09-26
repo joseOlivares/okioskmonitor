@@ -10,11 +10,11 @@ const servidor={
 };
 
 const dbServer={
-		dbServer: '127.0.0.1', 
+		host: '127.0.0.1', 
 		user:'admin',
 		pass:'admin',
 		db:'dbmonitoreo',
-		port:'33068'
+		port:'3306'
 }
 //ip del servidor de base de datos, database server IP
 module.exports.dbServer=dbServer; 

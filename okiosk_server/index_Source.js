@@ -69,7 +69,7 @@ app.use('/logs',require('./routes/logs'));
 var http = require('http').Server(app);
 var ping = require('ping'); //ping network
 var io = require('socket.io')(http);
-var dbIp=require('./public/js/setServerIp.js').dbServer;//importando modulo donde esta la ip del servidor de BD
+var database=require('./public/js/setServerIp.js').dbServer;//importando modulo donde esta la ip del servidor de BD
 //--13/09/2017---
 var router = express.Router(); //express4
 //------------
@@ -94,12 +94,12 @@ var mysql = require('mysql');
 
 //port is optional
 var pool= mysql.createPool({ //conexion a base de datos mysql  IP_MYSQL
-  host     : dbIp.dbServer,
-  user     : dbIp.user,
-  password : dbIp.pass,
+  host     : database.host,
+  user     : database.user,
+  password : database.pass,
   insecureAuth: true, 
-  database : dbIp.db,
-  port: dbIp.port
+  database : database.db,
+  port: database.port
 });
 
 
@@ -202,6 +202,7 @@ function requireLogin (req, res, next) {
 
 //---------------Cargando listado de usuarios en memoria------------------------
 	pool.getConnection(function(err, connection) { 
+		console.log(pool);
 		usersInfo.length=0; //borrando contenido
 		var queryUsers="Select idusuario, email, password, idPerfil from tblusuario";
 		  // Use the connection

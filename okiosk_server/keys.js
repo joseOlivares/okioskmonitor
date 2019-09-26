@@ -10,7 +10,7 @@ var dbIp = require('./public/js/setServerIp.js').dbServer; //importando modulo d
 */
 
 module.exports = {
-  host     : dbIp.dbServer,
+  host     : dbIp.host,
   user     : dbIp.user,
   password : dbIp.pass,
   insecureAuth: true, 
