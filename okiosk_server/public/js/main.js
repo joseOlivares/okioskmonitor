@@ -358,12 +358,15 @@ var app={
 	},
 	
 	validarPerfil:function(idperfil){
-		if (idperfil===1||idperfil===2) {
+		
+		if (idperfil===1||idperfil===2) {//root o admin
 			$("#adminItem1").html('<a href="/usuario/verusuarios"><i class="fa fa-users"></i> USUARIOS</a>');
 			$("#adminItem2").html('<a href="/kiosko/verkioskos"><i class="fa fa-desktop"></i> KIOSKOS</a>');
+			$("#generalItem1").html('<a href="/logs/verlogkioskos"><i class="fa fa-history"></i> LOG ALERTAS</a>');
 		}else{
 			$("#adminItem1").html('');
 			$("#adminItem2").html('');
+			$("#generalItem1").html('<a href="/logs/verlogkioskos"><i class="fa fa-history"></i> LOG ALERTAS</a>');
 		}
 	},
 
