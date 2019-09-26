@@ -407,7 +407,7 @@ io.on('connection', function(socket){
 
 		//Agregado 23/09/2019 Para registrar errores en log
 		socket.on('registrar_log',function(equipo){
-
+				console.log("**************************************************************");
 			pool.getConnection(function(err, connection) { 
 				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
 				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
