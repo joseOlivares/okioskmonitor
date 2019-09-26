@@ -17,7 +17,7 @@ const perfil=require('../lib/validarperfil');//Validador de perfil, Jose Olivare
 //por Jose Luis Olivares, 23/09/2019
 router.get('/verlogkioskos', async (req, res) => {
     sess=req.session;
-    if (!sess.username||!perfil.validarAcceso(sess.idperfil)) {
+    if (!sess.username) { //||!perfil.validarAcceso(sess.idperfil)
         res.redirect('/login');
     } else {
         //Codigo aqui
@@ -37,7 +37,7 @@ router.get('/verlogkioskos', async (req, res) => {
 //Borrar log anterior a tres mesas atras
 router.get('/borrarlog/', async (req, res) => {
     sess=req.session;
-    if (!sess.username) { //||!perfil.validarAcceso(sess.idperfil)
+    if (!sess.username ||!perfil.validarAcceso(sess.idperfil)) {
         res.redirect('/login');
     } else {
         await pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 3 MONTH)');
