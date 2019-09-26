@@ -31,8 +31,8 @@ helpers.perfilSeleccionado=(usuarioIdperfil, perfilIdperfil, perfilNombre)=>{
 //Fechas con formato
  helpers.fechaCorta=(myDate)=>{
      
-     return ` `
- };
+    return `test `
+};
 
 //backup
 //"<a href='/usuario/borrarusuario/"+ idusuario + "' class='btn btn-danger'>Borrar</a>"
