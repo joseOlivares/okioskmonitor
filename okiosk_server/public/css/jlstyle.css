@@ -50,10 +50,10 @@
 }
 
 .dt-log-fecha{
-  min-width: 160px;
+  min-width: 160px !important;
 }
 
 .dt-log-equipo{
-  min-width: 200px; 
+  min-width: 200px !important; 
 }
   
