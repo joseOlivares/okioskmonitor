@@ -66,7 +66,9 @@
 </div>
 
 <script>
-    var table = $('#logs').DataTable();
+    var table = $('#logs').DataTable({
+        "order":[[0,"desc"]]
+    });
  
     new $.fn.dataTable.Buttons( table, {
         buttons: [
