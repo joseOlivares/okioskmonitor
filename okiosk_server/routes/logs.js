@@ -34,6 +34,19 @@ router.get('/verlogkioskos', async (req, res) => {
     
 });
 
+//Borrar log anterior a tres mesas atras
+router.get('/borrarlog/', async (req, res) => {
+    sess=req.session;
+    if (!sess.username||!perfil.validarAcceso(sess.idperfil)) {
+        res.redirect('/login');
+    } else {
+        await pool.query('Select NOW()');
+        req.flash('success','Se ha borrado el log anterior a tres meses!');
+        res.redirect('/logs/verlogkioskos');
+    }
+    //console.log(req.params.idusuario);
+});
+
 
 
 
