@@ -28,6 +28,12 @@ helpers.perfilSeleccionado=(usuarioIdperfil, perfilIdperfil, perfilNombre)=>{
     return `<option value="${perfilIdperfil}">${perfilNombre}</option>`;
 };
 
+helpers.fechaCorta=(mydate)=>{
+    var f=new Date(mydate);
+
+    return f.toLocaleString();
+}
+
 //backup
 //"<a href='/usuario/borrarusuario/"+ idusuario + "' class='btn btn-danger'>Borrar</a>"
 
