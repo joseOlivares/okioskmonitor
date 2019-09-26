@@ -43,6 +43,7 @@
 .breadcum-margin{
   margin-top: 2rem;
 }
+
 /* Data table logs kiosko*/
 .dt-log-font{
   font-size: small;
@@ -51,7 +52,6 @@
 .dt-log-fecha{
   min-width: 160px;
 }
-
 
 .dt-log-equipo{
   min-width: 200px; 
