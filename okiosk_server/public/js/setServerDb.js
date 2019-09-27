@@ -16,4 +16,3 @@ const dbServer={
 }
 //ip del servidor de base de datos, database server IP
 module.exports.dbServer=dbServer; 
-module.exports.servidor=servidor;
