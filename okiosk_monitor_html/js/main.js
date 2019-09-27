@@ -93,8 +93,8 @@ var app={
 
 				if(myPrinter.generalState!=='Listo'){
 					if(myPrinter.textStatus!==prLastStatus){
-						socket.emit('registrar_log',myPrinter); //si es error nuevo
 						prLastStatus=myPrinter.textStatus;
+						socket.emit('registrar_log',myPrinter); //si es error nuevo						
 					}
 				}
 
