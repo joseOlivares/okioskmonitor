@@ -1,4 +1,4 @@
-var dbIp = require('./public/js/setServerDb.js/index.js').dbServer; //importando modulo donde esta la ip del servidor de BD
+var dbIp = require('./public/js/setServerDb.js').dbServer; //importando modulo donde esta la ip del servidor de BD
 
 /*
   host     : dbIp.dbServer,
