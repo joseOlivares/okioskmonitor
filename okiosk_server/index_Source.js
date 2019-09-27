@@ -202,7 +202,7 @@ function requireLogin (req, res, next) {
 
 //---------------Cargando listado de usuarios en memoria------------------------
 	pool.getConnection(function(err, connection) { 
-		console.log(pool);
+		//console.log(pool);
 		usersInfo.length=0; //borrando contenido
 		var queryUsers="Select idusuario, email, password, idPerfil from tblusuario";
 		  // Use the connection
