@@ -10,8 +10,7 @@ helpers.isAdminAcciones = (idPerfil, idusuario, nombre_usuario, estado) => {
     let html = "";
     if (idPerfil != 1) {
         if(estado===0){ //si esta eliminado, deshabilitamos todas las opciones
-            html = html + "<a href='#' class='btn btn-info' disabled='disabled'>Editar</a>" + 
-            `<a href='#' class='btn btn-danger' disabled='disabled'>Borrar</a>`;
+            html = html + "<a href='#' class='btn btn-info' disabled='disabled'>Eliminado</a>";
         }else{
             html = html + "<a href='/usuario/editarusuario/"+ idusuario + "' class='btn btn-info'>Editar</a>" + 
             `<a onclick='validarBorrado(${idusuario},"${nombre_usuario}")' class='btn btn-danger'>Borrar</a>`;
