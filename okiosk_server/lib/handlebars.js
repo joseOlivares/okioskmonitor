@@ -47,6 +47,26 @@ helpers.estadoUsuario=(myState)=>{
     return estado;
 }
 
+helpers.mostrarEstadoUsuario=(userState)=>{
+    var check1='', check2='';
+    if(userState===1){
+        check1="checked";
+    }else{
+        check2="checked";
+    }
+
+    var html=`<div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="estado" id="estado1" value="1" ${check1}>
+        <label class="form-check-label" for="estado1">Activo</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="estado" id="estado2" value="2" ${check2}>
+        <label class="form-check-label" for="estado2">Inactivo</label>
+    </div>`;
+
+    return html;
+}
+
 //backup
 //"<a href='/usuario/borrarusuario/"+ idusuario + "' class='btn btn-danger'>Borrar</a>"
 
