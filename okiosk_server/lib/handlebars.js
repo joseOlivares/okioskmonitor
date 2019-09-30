@@ -5,13 +5,17 @@ helpers.timeago = (timestamp) => {
     return format(timestamp);
 };
 
-helpers.isAdminAcciones = (idPerfil, idusuario, nombre_usuario) => {
+helpers.isAdminAcciones = (idPerfil, idusuario, nombre_usuario, estado) => {
    
     let html = "";
     if (idPerfil != 1) {
-        html = html + "<a href='/usuario/editarusuario/"+ idusuario + "' class='btn btn-info'>Editar</a>" + 
-                      `<a onclick='validarBorrado(${idusuario},"${nombre_usuario}")' class='btn btn-danger'>Borrar</a>`;
-
+        if(estado===0){ //si esta eliminado, deshabilitamos todas las opciones
+            html = html + "<a href='#' class='btn btn-info' disabled='disabled'>Editar</a>" + 
+            `<a href='#' class='btn btn-danger' disabled='disabled'>Borrar</a>`;
+        }else{
+            html = html + "<a href='/usuario/editarusuario/"+ idusuario + "' class='btn btn-info'>Editar</a>" + 
+            `<a onclick='validarBorrado(${idusuario},"${nombre_usuario}")' class='btn btn-danger'>Borrar</a>`;
+        }  
     }else{
         html = html + "<a class='btn btn-primary' disabled='disabled'>ROOT</a>";
     }
