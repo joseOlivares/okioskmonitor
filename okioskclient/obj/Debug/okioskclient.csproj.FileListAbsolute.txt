@@ -16,4 +16,3 @@ C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Debug\okioskclient.cspr
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Debug\okioskclient.csproj.CoreCompileInputs.cache
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Debug\okioskclient.exe
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Debug\okioskclient.pdb
-C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Debug\okioskclient.csprojAssemblyReference.cache

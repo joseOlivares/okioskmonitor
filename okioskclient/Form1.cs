@@ -162,5 +162,13 @@ namespace okioskclient
 
           
         }
+
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+
     }
 }

@@ -120,7 +120,7 @@ function evaluaEstadoPrinter(printerX){
             generalState='-1'; 
             break; 
         case 5: 
-            strDetectedErrorstate="Low Toner (Toner bajo)"; //Low Toner  -para zebra ttp2030 significa papel bajo
+            strDetectedErrorstate="Low Toner (Papel/Toner bajo)"; //Low Toner  -para zebra ttp2030 significa papel bajo
             generalState='-1'; 
             break; 
         case 6: 
@@ -166,7 +166,7 @@ function evaluaEstadoPrinter(printerX){
             generalState='-1'; 
             break; 
         case 5: 
-            strExtendedDetectedErrorState="Low Toner (Toner Bajo)";//Low Toner 
+            strExtendedDetectedErrorState="Low Toner (Papel/Toner Bajo)";//Low Toner 
             generalState='-1'; 
             break; 
         case 6: 
