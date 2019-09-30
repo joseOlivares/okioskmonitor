@@ -28,6 +28,7 @@
                                 <th scope="col">Correo</th>
                                 <th scope="col">Perfil</th>
                                 <th scope="col">Creación</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                                 </tr>
                             </thead>                  
@@ -38,6 +39,7 @@
                                     <td>{{email}}</td>
                                     <td>{{nombre_perfil}}</td>
                                     <td>{{fechaCorta fecha_creacion}}</td>
+                                    <td>{{#estadoUsuario estado}}</td>
                                     <td>
                                         <div class="btn-group mx-auto" role="group" aria-label="Basic example">
                                             {{#isAdminAcciones idPerfil idusuario nombre_usuario}} 

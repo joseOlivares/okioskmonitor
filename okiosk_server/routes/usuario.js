@@ -55,10 +55,10 @@ router.get('/borrarusuario/:idusuario', async (req, res) => {
     } else {
         //Codigo aqui
         const { idusuario } = req.params;
-        if (idusuario != 1) {
-            await pool.query('DELETE FROM tblusuario WHERE idusuario = ?', [idusuario]);
+        if (idusuario != 1) {  //solo cambiaremos el estado del usuario 0 eliminado, 1 activo, 2 inactivo
+            await pool.query('UPDATE tblusuario SET estado=0 WHERE idusuario = ?', [idusuario]);
         }
-        req.flash('success','Usuario eliminado con exito');
+        req.flash('success','El estado del usuario se ha establecido a ELIMINADO');
         res.redirect('/usuario/verusuarios');
     }
     //console.log(req.params.idusuario);

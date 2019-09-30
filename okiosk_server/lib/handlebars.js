@@ -34,6 +34,19 @@ helpers.fechaCorta=(mydate)=>{
     return f.toLocaleString();
 }
 
+helpers.estadoUsuario=(myState)=>{
+    var estado="Inactivo";
+    if(myState===1){
+        estado="Activo";
+    }
+
+    if(myState===0){
+        estado="Eliminado";
+    }
+
+    return estado;
+}
+
 //backup
 //"<a href='/usuario/borrarusuario/"+ idusuario + "' class='btn btn-danger'>Borrar</a>"
 

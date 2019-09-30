@@ -57,6 +57,12 @@ namespace okioskclient
                     "<h3>No fue posible encontrar los archivos de configuración en la ruta "+configPath+"</h3>" +
                     "</div></body></html>";
             }
+
+
+            notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+            notifyIcon1.BalloonTipText = "okiosk Monitor Client";
+            notifyIcon1.BalloonTipTitle = "okiosk Monitor";
+            notifyIcon1.ShowBalloonTip(1000);
         }
 
         private void WebBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -120,7 +126,7 @@ namespace okioskclient
 
                         if (ValidarIP(ipServer))// si la ip del server es válida
                         {
-                            MessageBox.Show("IP Valida");
+                            MessageBox.Show("Formato de IP Valido");
                             String newContent2= Regex.Replace(newContent, patIpServer, newIpServer);
 
                             //-----Para validar cambios y ver si se aplicaron
@@ -129,12 +135,15 @@ namespace okioskclient
                             //------------------------------------------------
                             fPermission.Demand();
                             File.WriteAllText(jsFile, newContent2);//Escribimos el nuevo archivo
-                            MessageBox.Show("¡IP's Guardadas correctamente! (Reinicie la apliación)");
-                            this.Close();
+                            MessageBox.Show("¡IP's Guardadas correctamente! (La aplicación se reiniciará)");
+
+                            System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
+                            this.Close(); //to turn off current app
+                            //this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("¡IP del Servidor no válida!");
+                            MessageBox.Show("¡Formato de IP del Servidor no válido!");
                             return;
                         }
                     }
@@ -169,6 +178,9 @@ namespace okioskclient
             this.WindowState = FormWindowState.Normal;
         }
 
-
+        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
+        {   //se agregó menu salir en notificación
+            Application.Exit();
+        }
     }
 }
