@@ -67,7 +67,7 @@ router.post('/usuario/editarUsuario/:idusuario', async (req, res) => {
     } else {
         //Codigo aqui
         const { idusuario } = req.params;
-        let  {nombre_usuario, email, password,idPerfil,} = req.body;
+        let  {nombre_usuario, email, password,idPerfil,estado} = req.body;
         
         //encriptando password
             password=simpleCrypto2.encrypt(password);
@@ -77,7 +77,8 @@ router.post('/usuario/editarUsuario/:idusuario', async (req, res) => {
             nombre_usuario,
             email,
             password,
-            idPerfil
+            idPerfil,
+            estado
         };
         await pool.query('UPDATE tblusuario SET ? WHERE idusuario = ?', [editUser, idusuario]);
         req.flash('success','Usuario actualizado con exito');
