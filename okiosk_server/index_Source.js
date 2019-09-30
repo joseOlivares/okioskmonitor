@@ -204,7 +204,8 @@ function requireLogin (req, res, next) {
 	pool.getConnection(function(err, connection) { 
 		//console.log(pool);
 		usersInfo.length=0; //borrando contenido
-		var queryUsers="Select idusuario, email, password, idPerfil from tblusuario";
+		//estado 0 significa borrado
+		var queryUsers="Select idusuario, email, password, idPerfil,estado from tblusuario WHERE estado <> 0";
 		  // Use the connection
 		  connection.query(queryUsers,async function(err, rows) {
 		  		if(err){
@@ -227,7 +228,7 @@ function requireLogin (req, res, next) {
 		//usamos esta funcion para refrescar el valor de usersInfo, cuando se realizan cambios
 		//en tblusuario                Jose Olivares, Sept 2019
 		pool.getConnection(function(err, connection) { 
-			var queryUsers="Select idusuario, email, password, idPerfil from tblusuario";
+			var queryUsers="SELECT idusuario, email, password, idPerfil, estado FROM tblusuario WHERE estado <> 0";
 			  // Use the connection
 			  connection.query(queryUsers,async function(err, rows) {
 					  if(err){
