@@ -58,8 +58,7 @@ helpers.mostrarEstadoUsuario=(userState)=>{
     var html=`<div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="estado" id="estado1" value="1" ${check1}>
         <label class="form-check-label" for="estado1">Activo</label>
-    </div>
-    <div class="form-check form-check-inline">
+        &nbsp; &nbsp;
         <input class="form-check-input" type="radio" name="estado" id="estado2" value="2" ${check2}>
         <label class="form-check-label" for="estado2">Inactivo</label>
     </div>`;
