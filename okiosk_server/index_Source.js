@@ -284,9 +284,9 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 	}};
 	
 //-----Tarea programada: borrado de logs toods los domingos del mes , 12 pm---
-cron.schedule('* 12 * * sunday', () => {
+cron.schedule('0 12 * * sunday', () => {
 	console.log('running a task every sunday');
-	pool.query('DELETE FROM tblalertas_log WHERE idalerta_log=107');
+	pool.query('DELETE FROM tblalertas_log WHERE idalerta_log=88');
   });
 //--------------------------------
 
