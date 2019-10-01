@@ -46,7 +46,7 @@ router.post('/usuario/agrearUsuario', async (req, res) => {
         };
         //console.log(newUser.email);
         const existe = await pool.query('SELECT * FROM tblusuario WHERE email = ?', [newUser.email]);
-        console.log(existe.length);
+        //console.log(existe.length);
         if(existe.length > 0){
             req.flash('success','El correo que desea ingresar ya esta asignado para otro usuario.');
         }else{
@@ -104,7 +104,7 @@ router.post('/kiosko/agrearKiosko', async (req, res) => {
         const {nombre, serie, ip, ubicacion, contacto, telefono, email} = req.body;
         //Quitar puntos de IP para el IpID
         ipID = ip.split('.').join("");
-        console.log(ipID);
+        //console.log(ipID);
         const newKiosko = {
             nombre, 
             serie, 
