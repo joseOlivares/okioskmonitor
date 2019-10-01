@@ -285,8 +285,8 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 	
 //-----Tarea programada: borrado de logs toods los domingos del mes , 18 pm---
 cron.schedule('0 18 * * sunday', () => {
-	console.log('running a task every sunday');
-	pool.query('DELETE FROM tblalertas_log WHERE idalerta_log=88');
+	pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 2 MONTH)');
+	console.log('Tarea programada... Se ha eliminado el log de alertas anterior a 2 meses!');
   });
 //--------------------------------
 
