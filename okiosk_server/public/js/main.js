@@ -291,6 +291,8 @@ var app={
 	    tplSource3='';
 		tplSource3=$("#tpl-equiposAlarmados").html();
 		var tplEquiposAlarmados=Handlebars.compile(tplSource3);
+		let ksk=equiposAlertadosRT;
+		debugger;
 		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
 	},
 
