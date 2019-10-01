@@ -239,11 +239,6 @@ var app={
 			
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			
-			if ($("#divOffline").length > 0) {//si esta cargado el div del listado de equipos desconectados
-				//actualizamos la vista
-				app.mostrarEquiposOffLine();
-			}
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -326,7 +321,12 @@ var app={
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-	},	
+	},
+	
+	refrescarEquiposOffline(){
+		$("#divContenido").empty();//borramos la vista actual
+		app.mostrarEquiposOffLine(); //recargamos
+	},
 
 	mostrarEquiposOk:function(){
 		$("#divContenido").empty();
