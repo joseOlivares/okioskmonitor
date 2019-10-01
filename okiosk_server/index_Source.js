@@ -12,9 +12,7 @@ let simpleCrypto= new SimpleCrypto(_secretKey);
 //-----------------------
 
 let cron = require('node-cron');//task programming
-cron.schedule('* * * * *', () => {
-	console.log('running a task every minute');
-  });
+
 
 const app = express();
 ////////////////////////////////////
@@ -283,8 +281,14 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 		}
 
 		return -1;//si no encuentra nada
-    }};
-
+	}};
+	
+//-----Tarea programada: borrado de logs toods los domingos del mes------------------
+cron.schedule('* * * Sunday', async () => {
+	console.log('running a task every sunday');
+	await  pool.query('DELETE FROM tblalertas_log WHERE idalerta_log=100');
+  });
+//--------------------------------
 
 io.on('connection', function(socket){
 	ipIdCliente=socket.handshake.query['ipClienteX'];
@@ -304,11 +308,8 @@ io.on('connection', function(socket){
 			
 	}
 
-
-
-    socketCount++;// Socket has connected, increase socket count
-
-
+	socketCount++;// Socket has connected, increase socket count
+	
 	   //Cargando listado de equipo en gui del cliente de monitoreo
 		pool.getConnection(function(err, connection) { 
 			  // Use the connection
