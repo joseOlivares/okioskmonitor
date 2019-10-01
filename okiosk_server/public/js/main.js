@@ -237,10 +237,13 @@ var app={
 			$("#detalle"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");//cambiando estado en panel detalle delequipo
 			$("#prnIco"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");					
 			
-			//if ($("#divOffline").length > 0) {//si existe en el dom el Div
-				totDesconect=totDesconect+1;	
-				$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			//}
+			totDesconect=totDesconect+1;	
+			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
+			
+			if ($("#divOffline").length > 0) {//si esta cargado el div del listado de equipos desconectados
+				//actualizamos la vista
+				app.mostrarEquiposOffLine();
+			}
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -256,7 +259,7 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-						
+
 					}						
 				//}
 			}
