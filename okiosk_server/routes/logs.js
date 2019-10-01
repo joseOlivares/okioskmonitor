@@ -25,7 +25,7 @@ router.get('/verlogkioskos', async (req, res) => {
         tblequipo.telefono, tblequipo.email  FROM tblalertas_log INNER JOIN tblequipo WHERE tblalertas_log.idequipo=tblequipo.idequipo`); 
 
         //console.log(kioskos);
-
+        app.borrarLog3meses();
 	    //18/09/2019 para corregir que se navegue hasta aqui sin estar logueado (Olivares)
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate'); 
                
@@ -34,14 +34,14 @@ router.get('/verlogkioskos', async (req, res) => {
     
 });
 
-//Borrar log anterior a tres mesas atras
+//Borrar el contenido de la tabla alertas_log
 router.get('/borrarlog/', async (req, res) => {
     sess=req.session;
     if (!sess.username ||!perfil.validarAcceso(sess.idperfil)) {
         res.redirect('/login');
     } else {
-        await pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 3 MONTH)');
-        req.flash('success','Se ha borrado el log anterior a tres meses!');
+        await pool.query('TRUNCATE TABLE tblalertas_log');
+        req.flash('success','¡Se ha borrado el contenido del log!');
         res.redirect('/logs/verlogkioskos');
     }
     //console.log(req.params.idusuario);
