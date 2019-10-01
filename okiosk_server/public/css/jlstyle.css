@@ -57,6 +57,6 @@
   min-width: 200px !important; 
 }
 
-login-error-vcenter{
-  margin-top: 40% !important;
+.login-error-vcenter{
+  margin-top: 30% !important;
 }
