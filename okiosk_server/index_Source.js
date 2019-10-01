@@ -8,14 +8,17 @@ const session = require('express-session');
 //-------------Encrypt, Jolivares ----------------------
 const SimpleCrypto=require("simple-crypto-js").default;//password encrypt
 const _secretKey=require('./lib/secret');
-
 let simpleCrypto= new SimpleCrypto(_secretKey);
-//-----------------------ñ-
+//-----------------------
+
+let cron = require('node-cron');//task programming
+cron.schedule('* * * * *', () => {
+	console.log('running a task every minute');
+  });
 
 const app = express();
 ////////////////////////////////////
 //tablas
-
 ////////////////////////////////////
 //configuracion
 app.set('views', path.join(__dirname, 'views'));
