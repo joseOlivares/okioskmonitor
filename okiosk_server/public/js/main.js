@@ -298,7 +298,7 @@ var app={
 		var posOff=-1;
 	
 		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
-	/*	for (var i = equiposOkRT.length - 1; i >= 0; i--) {
+	/* */	for (var i = equiposOkRT.length - 1; i >= 0; i--) {
 			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
 
@@ -314,7 +314,7 @@ var app={
 			if(posOff != -1){
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 			}
-		}*/
+		}
 
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
 		$("#divContenido").empty();
