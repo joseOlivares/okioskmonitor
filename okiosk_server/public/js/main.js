@@ -370,10 +370,6 @@ var app={
 		}
 	},
 
-	borrarLog3meses:function(){
-		alert("Se llama metodo ok");
-	},
-
     initialize: function() {
 		"use strict";
 		var self=this;
