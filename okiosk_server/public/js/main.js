@@ -321,11 +321,11 @@ var app={
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-	},
-	
-	refrescarEquiposOffline(){
-		$("#divContenido").empty();//borramos la vista actual
-		app.mostrarEquiposOffLine(); //recargamos
+
+		let kskOK=equiposOkRT;
+		let kskAlert=equiposAlertadosRT;
+		let kskOff=equiposOffLineRT;
+		debugger;
 	},
 
 	mostrarEquiposOk:function(){
