@@ -197,7 +197,7 @@ var app={
 				var tplInformacion=Handlebars.compile(tplSource);
 				var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
 		        $("#divInvEquipo").html(html); //cargando resultados
-				//************************************7777777777777777777777777777777777777777****************************				
+				//****************************************************************				
 			//}//if
 	});
 //-------------------------------------
@@ -255,7 +255,8 @@ var app={
 					}else{
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
-						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');											
+						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
+						
 					}						
 				//}
 			}
@@ -291,8 +292,6 @@ var app={
 	    tplSource3='';
 		tplSource3=$("#tpl-equiposAlarmados").html();
 		var tplEquiposAlarmados=Handlebars.compile(tplSource3);
-		let ksk=equiposAlertadosRT;
-		debugger;
 		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
 	},
 
