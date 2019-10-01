@@ -25,7 +25,6 @@ router.get('/verlogkioskos', async (req, res) => {
         tblequipo.telefono, tblequipo.email  FROM tblalertas_log INNER JOIN tblequipo WHERE tblalertas_log.idequipo=tblequipo.idequipo`); 
 
         //console.log(kioskos);
-        app.borrarLog3meses();
 	    //18/09/2019 para corregir que se navegue hasta aqui sin estar logueado (Olivares)
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate'); 
                
