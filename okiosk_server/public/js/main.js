@@ -245,7 +245,7 @@ var app={
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
 						//actualizamos estado Offline
-						actualizarEstadoOffline(ipsOfflineResp.ipID);
+						//actualizarEstadoOffline(ipsOfflineResp.ipID);
 						//app.mostrarEquiposOffLine();
 					}						
 			}
