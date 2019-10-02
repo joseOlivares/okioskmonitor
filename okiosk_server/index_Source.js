@@ -333,7 +333,7 @@ io.on('connection', function(socket){
 			console.log("Printer Name: "+equipo.printerName);
 			console.log("Estado del Impresor: "+equipo.generalState);
 			console.log("Estado (string): "+equipo.printerStatus);
-			console.log("Estado extendido  del Impresor: "+equipo.extendedPrinterstatus);				
+			console.log("Estado extendido  del Impresor: "+equipo.extendedPrinterStatus);				
 			console.log("Error Detectado: "+equipo.detectedErrorState);
 			console.log("Error Detectado Extendido: "+equipo.extendedDetectedErrorState);
 			console.log(".......");	

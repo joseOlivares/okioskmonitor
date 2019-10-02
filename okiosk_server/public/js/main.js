@@ -93,15 +93,8 @@ var app={
 					$("#prnImg"+equipo.ipID).attr("src", "img/printer_generic.png");//imagen printer no zebra	
 				}
 
-				/*searchPrinterName=equipo.printerName;
-				if(searchPrinterName.indexOf('Zebra')!==-1 || searchPrinterName.indexOf('zebra')!==-1 ){
-					$("#prnImg"+equipo.ipID).attr("src", "img/zebra_ttp2000.png");//cambiando la imagen del printer
-				}*/
 			}
 		
-			let ksk=equipo;
-			debugger;
-
 			if(estadoEquipoEvaluado.generalState==="Listo")//si no tiene alertas
 			{
 				$("#"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");	//icono OK en panel nav izquierdo de equipos
@@ -253,6 +246,7 @@ var app={
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
 						//actualizamos estado Offline
 						actualizarEstadoOffline(ipsOfflineResp.ipID);
+						app.mostrarEquiposOffLine();
 					}						
 			}
 				
