@@ -394,7 +394,7 @@ io.on('connection', function(socket){
 					    	}else{
         						respuesta=0;
         					}
-							ipsOffLine[this.p].Respuesta=respuesta;	//agregando la repsuesta del ping 
+							ipsOffLine[this.p].Respuesta=respuesta;	//agregando la respuesta del ping 
 							//io.sockets.emit('ping_ipResp',ipsOffLine);
 							io.sockets.emit('ping_ipResp',ipsOffLine[this.p]);
 						}.bind({p:p}));

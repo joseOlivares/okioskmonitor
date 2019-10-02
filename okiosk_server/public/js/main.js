@@ -107,7 +107,6 @@ var app={
 					$("#prnAlarma"+equipo.ipID).remove();//removemos la fila de la tabla
 				}
 
-
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//cambiando icono OK en detalle printer
 				}
@@ -115,6 +114,9 @@ var app={
 //----------------------------------- 14/08/2017 no funciona, corregir
 				if(app.buscarPosicion(equiposOkRT,equipo.ipID)===-1){//si no existe en lista de equipos sin alertas, lo agregamos
 					equiposOkRT.push(equipo);//agregando al listado de equipos sin alertas
+
+					let ksk=equipo;
+					debugger;
 
 					var posUbicacion2=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);					
 					equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion2].ubicacion; //agreagando propiedad strUbicacion
@@ -133,14 +135,13 @@ var app={
 					}	
 
 				}
-
 //-----------------------------------------------------
 				quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
 					equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
 					//alert("Quitando warning "+equipo.ipID);
 				}			
-			}
+			}//cierra IF ==="Listo"
 
 
 			if(estadoEquipoEvaluado.generalState!=="Listo"){
@@ -169,10 +170,8 @@ var app={
 							var lineaTabla='<tr id="prnAlarma'+equipo.ipID+'"><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion].ubicacion+'</td><td>'+estadoEquipoEvaluado.detectedErrorState+'</td></tr>';
 						
 							$("#tblEquiposAlertados tbody").append(lineaTabla);//agregamos  la fila a la tabla
-						}	
-								
-				}
-				
+						}									
+				}				
 			}//cierra If !==Listo
 			
 
@@ -211,7 +210,6 @@ var app={
 			}
 		});
 			//app.mostarStatusPrinter(equipo);
-
 
 	    socket.on('mostrar_lstEquipos',function(rows){
 	    	$("#lstKioskos").empty();//limpiaando zona de carga del listado de Kioskos
@@ -254,7 +252,8 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-
+						//actualizamos estado Offline
+						actualizarEstadoOffline(ipsOfflineResp.ipID);
 					}						
 				//}
 			}
@@ -294,8 +293,7 @@ var app={
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente
-		var posOff=-1;
-	
+		var posOff=-1;	
 		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
 		for (var i = equiposOkRT.length - 1; i >= 0; i--) {
 			
@@ -306,8 +304,7 @@ var app={
 			}
 		}
 
-		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {
-			
+		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
 			//alert("Encontrado en posicion: "+posOff);
 			if(posOff !== -1){
@@ -321,11 +318,6 @@ var app={
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-
-		let kskOK=equiposOkRT;
-		let kskAlert=equiposAlertadosRT;
-		let kskOff=equiposOffLineRT;
-		debugger;
 	},
 
 	mostrarEquiposOk:function(){
@@ -350,9 +342,9 @@ var app={
         $("#"+target).html(html); //cargando resultados
     },
 
-    buscarPosicion:function(arrayObjeto,criterioBusqueda){			  	
+    buscarPosicion:function(arrayObjeto,criterioBusquedaIpID){			  	
 		for(var p = 0; p < arrayObjeto.length; p++) {
-		   if(arrayObjeto[p].ipID === criterioBusqueda) {
+		   if(arrayObjeto[p].ipID === criterioBusquedaIpID) {
 		     return p;
 		   }
 		}
@@ -382,3 +374,14 @@ var app={
 };
 
 app.initialize();
+
+function actualizarEstadoOffline(equipoOfflineIpID){
+	//vamos a actualizar el listado de equipos Offline
+	let posEnLista=app.buscarPosicion(lstCompletoEquipos,equipoOfflineIpID);
+	//si no existe en equipos Offline, lo agregamos
+	if(app.buscarPosicion(equiposOffLineRT,equipoOfflineIpID)===-1){
+		if(posEnLista!==-1){//si existe en el listado general
+			equiposOffLineRT.push(lstCompletoEquipos[pos]); //lo agregamos a los equipos Offline
+		}
+	}	
+}
