@@ -97,6 +97,8 @@ var app={
 				}*/
 			}
 		
+			let ksk=equipo;
+			debugger;
 
 			if(estadoEquipoEvaluado.generalState==="Listo")//si no tiene alertas
 			{
@@ -114,9 +116,6 @@ var app={
 //----------------------------------- 14/08/2017 no funciona, corregir
 				if(app.buscarPosicion(equiposOkRT,equipo.ipID)===-1){//si no existe en lista de equipos sin alertas, lo agregamos
 					equiposOkRT.push(equipo);//agregando al listado de equipos sin alertas
-
-					let ksk=equipo;
-					debugger;
 
 					var posUbicacion2=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);					
 					equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion2].ubicacion; //agreagando propiedad strUbicacion
