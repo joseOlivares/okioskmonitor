@@ -14,7 +14,7 @@ var equiposAlertadosRT=[]; //listado de equipos alertados Real Time, se mantendr
 var equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra en la memoria del cliente de administracion
 var equiposOffLineRT=[]; //listado de equipos offline en real time
 var quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
-var estadoEquipoEvaluado=[];
+var estadoEquipoEvaluado={};
 var zebraPrinterDefault=-1, totDesconect=0;
 
 //Handlebars Helpers
@@ -62,7 +62,8 @@ var app={
 			}
 	//----------------
 
-			estadoEquipoEvaluado=evaluaEstadoPrinter(equipo); //consultado los estados del printer
+			//02 Oct 2019 estadoEquipoEvaluado=evaluaEstadoPrinter(equipo); //consultado los estados del printer
+			estadoEquipoEvaluado=equipo; //Para no alterar el resto del codigo, se hizo esta asignacion
 			zebraPrinterDefault=app.esPrinterZebra(equipo.printerName);//evalua si el printer por default es zebra
 
 //--------------13/08/2017
@@ -75,6 +76,7 @@ var app={
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
 				$("#prnName"+equipo.ipID).html(equipo.printerName);
+
 				if(estadoEquipoEvaluado.generalState==='-1'){ //para no mostrar -1 cuando tenga error
 					$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.printerStatus.toString());
 				}else{
@@ -133,8 +135,9 @@ var app={
 						}
 					}	
 
-				}
+				}				
 //-----------------------------------------------------
+
 				quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
 					equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
@@ -149,7 +152,6 @@ var app={
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");//cambiando estado del printer en panel detalle	
 				}
-
 
 		//----------DOM listado de quipos sin alertas 11/08/2017
 				if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
@@ -200,7 +202,7 @@ var app={
 	});
 //-------------------------------------
 
-		});	//cierra receiveData	
+		});	//cierra Latido_equipo_ok	
 
 		socket.on('conexion_cliente',function(totalClientes2){//si existe en el dom el DivTotalClientes
 			if ($('#divTotalClientes').length > 0) {
@@ -241,8 +243,6 @@ var app={
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
 			if ($('#divLstOffLine').length > 0)
 			{	
-				//for (var i = ipsOfflineResp.length - 1; i >= 0; i--) {
-
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping Responde');
@@ -254,12 +254,11 @@ var app={
 						//actualizamos estado Offline
 						actualizarEstadoOffline(ipsOfflineResp.ipID);
 					}						
-				//}
 			}
 				
 		});
 
-	},
+	}, //cierre receive_data
 
 	mostrarDatosEquipo:function(posEquipo){
 		$("#divContenido").empty();

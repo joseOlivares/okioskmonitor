@@ -72,8 +72,8 @@ var app={
 	},	
 
 	sendData: function(){
-		var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prTextStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
-		socket.emit('ver_status',datos);
+		//02 Oct 2019 var datos={ip:clientIP,ipID:ipAsID,printerName:printerName,prStatus:prStatus,prStringStatus:prTextStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState, prExtendedDetectedErrorState:prExtendedDetectedErrorState};		
+		//02 Oct 2019 socket.emit('ver_status',datos);
 
 		//intentaremos registrar el error del printer en el log ,(aun no se prueba)
 			myPrinter=evaluaEstadoPrinter({prStatus:prStatus,prExtendedPrinterstatus:prExtendedPrinterstatus,prDetectedErrorState:prDetectedErrorState,prExtendedDetectedErrorState:prExtendedDetectedErrorState});
@@ -85,6 +85,9 @@ var app={
 			if(myPrinter.generalState==='-1'){//colocamos un mensaje mas entendible
 				myPrinter.generalState='Error';
 			}
+			
+			socket.emit('ver_status',myPrinter);			
+
 			//debugger;
 				if(myPrinter.generalState==='Listo' && prLastStatus!=='noerror' ){//cuando no existe error en el printer
 						socket.emit('registrar_log',myPrinter); //si ya no existe error, tambien lo registramos			

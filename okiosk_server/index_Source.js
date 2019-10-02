@@ -330,12 +330,12 @@ io.on('connection', function(socket){
 		socket.on('ver_status',function(equipo){//recibe datos de los equipos,desde cliente monitoreo
 			console.log("IP Cliente: "+equipo.ip);
 			console.log("IpId: "+equipo.ipID);
-			console.log("Printer: "+equipo.printerName);
-			console.log("Estado del Impresor: "+equipo.prStatus);
-			console.log("Estado (string): "+equipo.prStringStatus);
-			console.log("Estado extendido  del Impresor: "+equipo.prExtendedPrinterstatus);				
-			console.log("Error Detectado: "+equipo.prDetectedErrorState);
-			console.log("Error Detectado Extendido: "+equipo.prExtendedDetectedErrorState);
+			console.log("Printer Name: "+equipo.printerName);
+			console.log("Estado del Impresor: "+equipo.generalState);
+			console.log("Estado (string): "+equipo.printerStatus);
+			console.log("Estado extendido  del Impresor: "+equipo.extendedPrinterstatus);				
+			console.log("Error Detectado: "+equipo.detectedErrorState);
+			console.log("Error Detectado Extendido: "+equipo.extendedDetectedErrorState);
 			console.log(".......");	
 			
 			if(equiposConectados.indexOf(equipo.ipID)==-1)//si no esta en el array, lo agrega. 
