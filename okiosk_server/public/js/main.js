@@ -16,6 +16,7 @@ let equiposOffLineRT=[]; //listado de equipos offline en real time
 let quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
 let estadoEquipoEvaluado={};
 let zebraPrinterDefault=-1, totDesconect=0;
+const OFFLINE="OFFLINE",ALERTA="ALERTA",OK="OK"; //estados para equipos
 
 //Handlebars Helpers
 	Handlebars.registerHelper('myDateTime',function(){
@@ -198,7 +199,16 @@ var app={
 			
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			//actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
+			
+			//03 Oct 2019 actualizando arreglos de estdos de equipos
+			quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
+			if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
+				equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
+				//alert("Quitando warning "+equipo.ipID);
+			}
+			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+			//AQUI ME QUEDE, FALTA PROBAR
+			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
 			actualizarVistaDivs(idIpEquipo);
 		});
 
@@ -332,23 +342,58 @@ var app={
 
 app.initialize();
 
-function actualizarEstadoOffline(equipoOfflineIpID){
-	//vamos a actualizar el listado de equipos Offline
-	let posEnLista=app.buscarPosicion(lstCompletoEquipos,equipoOfflineIpID);
-	//si no existe en equipos Offline, lo agregamos
-	let posListOffline=app.buscarPosicion(equiposOffLineRT,equipoOfflineIpID);
-	if(posListOffline===-1){//si no existe
-		if(posEnLista!==-1){//pero si existe en el listado general
-			equiposOffLineRT.push(lstCompletoEquipos[posEnLista]); //lo agregamos a los equipos Offline
+function actualizarEstadoEquipo(equipoIpID,estado){
+	if (estado) {
+		estado=OFFLINE;
+	}
+
+	let posListado=app.buscarPosicion(lstCompletoEquipos,equipoIpID);
+	let posAlerta=app.buscarPosicion(equiposAlertadosRT,equipoIpID);
+	let posOffline=app.buscarPosicion(equiposOffLineRT,equipoIpID);
+	let posOK=app.buscarPosicion(equiposOkRT,equipoIpID);
+	
+	if(estado==="OK"){
+		if(posOK===-1){//si no existe, lo agregamos
+			equiposOkRT.push(lstCompletoEquipos[posListado]);
+		}
+
+		if(posOffline!==-1){//si existe en los Offlines, lo borramos
+			equiposOffLineRT.splice(posOffline,1);
+		}
+
+		if(posAlerta!==-1){//si existe en los alertados, lo borramos
+			equiposAlertadosRT.splice(posAlerta,1);
 		}
 	}
 	
-	if ($('#divLstOffLine').length > 0){//si esta visible el div
-		if($('#equipoOff'+equipoOfflineIpID).length <= 0){ //si no existe la fila
-			let lineaTablaOff='<tr id="equipoOff'+equipoOfflineIpID+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[posEnLista].ip+'</td><td>'+lstCompletoEquipos[posEnLista].ubicacion+'</td><td><i id="ipOff'+equipoOfflineIpID+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
-			$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
+	if(estado==="OFFLINE"){
+		if(posOK!==-1){//si existe, lo borramos
+			equiposOkRT.splice(posOK,1);
 		}
-	} 
+
+		if(posOffline===-1){//si no existe
+			equiposOffLineRT.push(lstCompletoEquipos[posListado]);
+		}
+
+		if(posAlerta!==-1){//si existe en los alertados, lo borramos
+			equiposAlertadosRT.splice(posAlerta,1);
+		}
+	}
+
+	if(estado==="ALERTA"){
+		if(posOK!==-1){//si existe, lo borramos
+			equiposOkRT.splice(posOK,1);
+		}
+
+		if(posOffline!==-1){//si existe en los Offlines, lo borramos
+			equiposOffLineRT.splice(posOffline,1);
+		}
+
+		if(posAlerta===-1){//si no existe, lo agregamos
+			equiposAlertadosRT.push(lstCompletoEquipos[posListado]);
+		}
+	}	
+	
 }
 
 function actualizarVistaDivs(ipID){
