@@ -233,6 +233,7 @@ var app={
 			actualizarEstadoOffline(idIpEquipo);
 			if ($('#divLstOffLine').length > 0){//si esta en vista
 				let pos=app.buscarPosicion(lstCompletoEquipos,idIpEquipo);
+				debugger;
 				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[pos].ip+'</td><td>'+lstCompletoEquipos[pos].nombre+'</td><td>'+lstCompletoEquipos[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
 				$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
 			}
