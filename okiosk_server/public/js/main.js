@@ -232,6 +232,7 @@ var app={
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
+			actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
 			if ($('#divLstOffLine').length > 0)
 			{	
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
@@ -242,7 +243,6 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-						actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
 					}						
 			}
 				
@@ -374,7 +374,6 @@ function actualizarEstadoOffline(equipoOfflineIpID){
 	}
 	
 	if ($('#divLstOffLine').length > 0){//si esta visible el div
-		//let pos=app.buscarPosicion(lstCompletoEquipos,equipoOfflineIpID);
 		if($('#equipoOff'+equipoOfflineIpID).length <= 0){ //si no existe
 			debugger;
 			let lineaTablaOff='<tr id="equipoOff'+equipoOfflineIpID+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[posEnLista].ip+'</td><td>'+lstCompletoEquipos[posEnLista].ubicacion+'</td><td><i id="ipOff'+equipoOfflineIpID+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
