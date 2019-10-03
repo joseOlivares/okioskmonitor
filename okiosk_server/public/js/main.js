@@ -197,10 +197,8 @@ var app={
 		socket.on('conexion_cliente',function(totalClientes2){//si existe en el dom el DivTotalClientes
 			if ($('#divTotalClientes').length > 0) {
 				$('#divTotalClientes').html(totalClientes2.toString());
-				//alert("Total Clientes: "+totalClientes2);
 			}
 		});
-			//app.mostarStatusPrinter(equipo);
 
 	    socket.on('mostrar_lstEquipos',function(rows){
 	    	$("#lstKioskos").empty();//limpiaando zona de carga del listado de Kioskos
@@ -228,11 +226,13 @@ var app={
 			
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
+			//actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
+			actualizarVistaDivs(idIpEquipo);
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-			actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
+			//actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
+			actualizarVistaDivs(ipsOfflineResp.ipID);
 			if ($('#divLstOffLine').length > 0)
 			{	
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
@@ -283,23 +283,20 @@ var app={
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
 		var posOff=-1;	
 		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
-		for (var i = equiposOkRT.length - 1; i >= 0; i--) {
-			
+		for (var i = equiposOkRT.length - 1; i >= 0; i--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
-
-			if(posOff !== -1){
+			if(posOff !== -1){//si lo encuentra
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
 			}
 		}
 
 		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
-			//alert("Encontrado en posicion: "+posOff);
-			if(posOff !== -1){
+			if(posOff !== -1){//si lo encuentra
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 			}
 		}
-		/* */
+
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
 		$("#divContenido").empty();
 	    tplSource5='';
@@ -367,20 +364,56 @@ function actualizarEstadoOffline(equipoOfflineIpID){
 	//vamos a actualizar el listado de equipos Offline
 	let posEnLista=app.buscarPosicion(lstCompletoEquipos,equipoOfflineIpID);
 	//si no existe en equipos Offline, lo agregamos
-	if(app.buscarPosicion(equiposOffLineRT,equipoOfflineIpID)===-1){
-		if(posEnLista!==-1){//si existe en el listado general
+	let posListOffline=app.buscarPosicion(equiposOffLineRT,equipoOfflineIpID);
+	if(posListOffline===-1){//si no existe
+		if(posEnLista!==-1){//pero si existe en el listado general
 			equiposOffLineRT.push(lstCompletoEquipos[posEnLista]); //lo agregamos a los equipos Offline
 		}
 	}
 	
 	if ($('#divLstOffLine').length > 0){//si esta visible el div
-		if($('#equipoOff'+equipoOfflineIpID).length <= 0){ //si no existe
-			debugger;
+		if($('#equipoOff'+equipoOfflineIpID).length <= 0){ //si no existe la fila
 			let lineaTablaOff='<tr id="equipoOff'+equipoOfflineIpID+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[posEnLista].ip+'</td><td>'+lstCompletoEquipos[posEnLista].ubicacion+'</td><td><i id="ipOff'+equipoOfflineIpID+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
 			$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
 		}
-
 	} 
-
 }
 
+function actualizarVistaDivs(ipID){
+	let posListaGeneral=app.buscarPosicion(lstCompletoEquipos,ipID);
+	let posOkRT=app.buscarPosicion(equiposOkRT,ipID);
+	let posAlertRT=app.buscarPosicion(equiposAlertadosRT,ipID);
+	let posOfflineRT=app.buscarPosicion(equiposOffLineRT,ipID);
+
+	if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
+		if(posOkRT!==-1 && posAlertRT===-1 && posOfflineRT===-1){//si existe en el array
+			$("#divContenido").empty();
+			tplSource4='';
+			tplSource4=$("#tpl-equiposOk").html();
+			var tplEquiposOk=Handlebars.compile(tplSource4);
+			app.showTemplate(tplEquiposOk,equiposOkRT,"divContenido",1);
+		}
+	}
+	
+	if($("#divLstAlarmados").length>0){//si esta cargado en el DOM
+		if(posOkRT===-1 && posAlertRT!==-1 && posOfflineRT===-1){//si existe en el array
+			$("#divContenido").empty();
+			tplSource3='';
+			tplSource3=$("#tpl-equiposAlarmados").html();
+			var tplEquiposAlarmados=Handlebars.compile(tplSource3);
+			app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
+		}	
+	}
+
+
+	if ($('#divLstOffLine').length > 0){//si esta cargado en el DOM
+		if(posOkRT===-1 && posAlertRT===-1 && posOfflineRT!==-1){//si existe en el array
+			$("#divContenido").empty();
+			tplSource5='';
+			tplSource5=$("#tpl-equiposOffLine").html();
+			var tplEquiposOffLine=Handlebars.compile(tplSource5);
+			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
+		}
+	}	
+		
+}
