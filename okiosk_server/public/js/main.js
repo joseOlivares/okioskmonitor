@@ -231,7 +231,7 @@ var app={
 
 			//actualizamos estado Offline
 			alert("Desconectado "+idIpEquipo);
-			actualizarEstadoOffline(ipsOfflineResp.ipID);
+			actualizarEstadoOffline(idIpEquipo);
 			app.mostrarEquiposOffLine();
 
 		});
