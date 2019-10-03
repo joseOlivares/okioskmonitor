@@ -9,7 +9,7 @@
 //Global Vars***
 var tplSource='', tplSource2='',tplSource3='',tplSource4='',tplSource5='';
 var icono='<span id="icoKsk" class="glyphicon glyphicon-asterisk"></span>';	
-var lstCompletoEquipos=[];  //listado completo de equipos, se mantendra siempr en memoria para no consultar la db muchas veces
+const lstCompletoEquipos=[];  //listado completo de equipos, se mantendra siempr en memoria para no consultar la db muchas veces
 var equiposAlertadosRT=[]; //listado de equipos alertados Real Time, se mantendra en la memoria del cliente de administracion
 var equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra en la memoria del cliente de administracion
 var equiposOffLineRT=[]; //listado de equipos offline en real time
