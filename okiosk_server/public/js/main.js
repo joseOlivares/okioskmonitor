@@ -292,6 +292,7 @@ var app={
 
 		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
+			debugger;
 			if(posOff !== -1){//si lo encuentra
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 			}
