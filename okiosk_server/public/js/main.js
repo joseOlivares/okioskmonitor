@@ -7,15 +7,15 @@
 //-----------------------------------------------------------------------------
 
 //Global Vars***
-var tplSource='', tplSource2='',tplSource3='',tplSource4='',tplSource5='';
-var icono='<span id="icoKsk" class="glyphicon glyphicon-asterisk"></span>';	
-const lstCompletoEquipos=[];  //listado completo de equipos, se mantendra siempr en memoria para no consultar la db muchas veces
-var equiposAlertadosRT=[]; //listado de equipos alertados Real Time, se mantendra en la memoria del cliente de administracion
-var equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra en la memoria del cliente de administracion
-var equiposOffLineRT=[]; //listado de equipos offline en real time
-var quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
-var estadoEquipoEvaluado={};
-var zebraPrinterDefault=-1, totDesconect=0;
+let tplSource='', tplSource2='',tplSource3='',tplSource4='',tplSource5='';
+let icono='<span id="icoKsk" class="glyphicon glyphicon-asterisk"></span>';	
+let lstCompletoEquipos=[];  //listado completo de equipos, se mantendra siempr en memoria para no consultar la db muchas veces
+let equiposAlertadosRT=[]; //listado de equipos alertados Real Time, se mantendra en la memoria del cliente de administracion
+let equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra en la memoria del cliente de administracion
+let equiposOffLineRT=[]; //listado de equipos offline en real time
+let quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
+let estadoEquipoEvaluado={};
+let zebraPrinterDefault=-1, totDesconect=0;
 
 //Handlebars Helpers
 	Handlebars.registerHelper('myDateTime',function(){
@@ -205,9 +205,7 @@ var app={
 	    socket.on('mostrar_lstEquipos',function(rows){
 	    	$("#lstKioskos").empty();//limpiaando zona de carga del listado de Kioskos
 			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
-            debugger;
-
-			equiposOffLineRT=rows;//por default tomo todos como desconectados
+			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div
 				$("#divOffline").html(rows.length);//actualizamos el total de clientes desconectados
 			}
