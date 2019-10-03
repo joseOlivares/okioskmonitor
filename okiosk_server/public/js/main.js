@@ -231,12 +231,12 @@ var app={
 
 			//actualizamos estado Offline 03/10/2019
 			actualizarEstadoOffline(idIpEquipo);
-			if ($('#divLstOffLine').length > 0){//si esta en vista
+/* 			if ($('#divLstOffLine').length > 0){//si esta en vista
 				let pos=app.buscarPosicion(lstCompletoEquipos,idIpEquipo);
 				debugger;
-				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[pos].ip+'</td><td>'+lstCompletoEquipos[pos].nombre+'</td><td>'+lstCompletoEquipos[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
+				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[pos].ip+'</td><td>'+lstCompletoEquipos[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
 				$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
-			}
+			} */
 
 		});
 
@@ -251,6 +251,7 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
+						actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
 					}						
 			}
 				
@@ -288,7 +289,7 @@ var app={
 		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
 	},
 
-	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente
+	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
 		var posOff=-1;	
 		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
 		for (var i = equiposOkRT.length - 1; i >= 0; i--) {
