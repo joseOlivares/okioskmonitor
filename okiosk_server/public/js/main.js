@@ -251,7 +251,7 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-						actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
+						actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
 					}						
 			}
 				
