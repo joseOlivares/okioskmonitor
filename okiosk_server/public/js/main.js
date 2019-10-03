@@ -45,7 +45,6 @@ var socket = io.connect(servidor.IP); //creating socket connection to server, se
 var app={
 	receiveData:function(){
 		socket.on('latido_equipo_ok',function(equipo,totalClientes){//recibe los datos actuales del equipo
-
 			if ($("#divTotalClientes").length > 0) {//si existe en el dom el DivTotalClientes
 				$("#divTotalClientes").html(totalClientes);//actualizamos el total de clientes conectados
 			}
@@ -93,7 +92,7 @@ var app={
 					$("#prnImg"+equipo.ipID).attr("src", "img/printer_generic.png");//imagen printer no zebra	
 				}
 
-			}
+			}//fin detalle printer
 		
 			if(estadoEquipoEvaluado.generalState==="Listo")//si no tiene alertas
 			{
@@ -153,16 +152,14 @@ var app={
 		//------------------------------------------------------------------
 				
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)===-1){//si no existe en lista de equipos warning, lo agregamos
-					equiposAlertadosRT.push(equipo);//agregando al listado de equipos alertados
-						
+					equiposAlertadosRT.push(equipo);//agregando al listado de equipos alertados						
 						//DOM listado de quipos alermados
 						equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter=estadoEquipoEvaluado.detectedErrorState; //anexando el string status al array de objetos equiposAlertadosRT;
 						var posUbicacion=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);
 						equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion].ubicacion;
-						if($("#divLstAlarmados").length>0){//si esta cargado en el DOM	
-
-							var lineaTabla='<tr id="prnAlarma'+equipo.ipID+'"><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion].ubicacion+'</td><td>'+estadoEquipoEvaluado.detectedErrorState+'</td></tr>';
 						
+						if($("#divLstAlarmados").length>0){//si esta cargado en el DOM	
+							var lineaTabla='<tr id="prnAlarma'+equipo.ipID+'"><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion].ubicacion+'</td><td>'+estadoEquipoEvaluado.detectedErrorState+'</td></tr>';						
 							$("#tblEquiposAlertados tbody").append(lineaTabla);//agregamos  la fila a la tabla
 						}									
 				}				
@@ -174,7 +171,7 @@ var app={
 				}
 
 //--------------11/08/2017------------------------
-				quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equios sin alertas
+				quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equipos sin alertas
 				if(app.buscarPosicion(equiposOkRT,equipo.ipID)!==-1){
 					equiposOkRT.splice(quitarDeLista,1);//quitando equipo de lista de equipos ok
 				}
@@ -231,6 +228,11 @@ var app={
 			
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
+
+			//actualizamos estado Offline
+			actualizarEstadoOffline(ipsOfflineResp.ipID);
+			app.mostrarEquiposOffLine();
+
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -244,9 +246,6 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-						//actualizamos estado Offline
-						//actualizarEstadoOffline(ipsOfflineResp.ipID);
-						//app.mostrarEquiposOffLine();
 					}						
 			}
 				

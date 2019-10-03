@@ -437,7 +437,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function () {
         socketCount--; // Decrease the socket count on a disconnect	       
         //io.sockets.emit('users connected', socketCount);    // Let all sockets know how many are connected
-     	quitarIpId=socket.handshake.query['ipClienteX']; //ipId dele quipo desconectado
+     	quitarIpId=socket.handshake.query['ipClienteX']; //ipId del quipo desconectado
 		if(typeof quitarIpId !== 'undefined' &&  quitarIpId!== null )//si el cliente envia el idIP
 		{
         	quitarIpIdPos=equiposConectados.indexOf(quitarIpId); //posicion del equipo desconectado en el array
