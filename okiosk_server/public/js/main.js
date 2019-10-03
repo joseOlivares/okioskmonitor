@@ -205,6 +205,8 @@ var app={
 	    socket.on('mostrar_lstEquipos',function(rows){
 	    	$("#lstKioskos").empty();//limpiaando zona de carga del listado de Kioskos
 			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
+            debugger;
+
 			equiposOffLineRT=rows;//por default tomo todos como desconectados
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div
 				$("#divOffline").html(rows.length);//actualizamos el total de clientes desconectados
@@ -232,9 +234,9 @@ var app={
 			//actualizamos estado Offline 03/10/2019
 			actualizarEstadoOffline(idIpEquipo);
 			if ($('#divLstOffLine').length > 0){//si esta en vista
-				let pos=app.buscarPosicion(equiposOffLineRT,idIpEquipo);
+				let pos=app.buscarPosicion(lstCompletoEquipos,idIpEquipo);
 				debugger;
-				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+equiposOffLineRT[pos].ip+'</td><td>'+equiposOffLineRT[pos].nombre+'</td><td>'+equiposOffLineRT[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
+				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[pos].ip+'</td><td>'+lstCompletoEquipos[pos].nombre+'</td><td>'+lstCompletoEquipos[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
 				$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
 			}
 
