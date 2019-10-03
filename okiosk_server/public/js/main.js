@@ -200,12 +200,6 @@ var app={
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
 			
-			//03 Oct 2019 actualizando arreglos de estdos de equipos
-			quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
-			if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
-				equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
-				//alert("Quitando warning "+equipo.ipID);
-			}
 			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			//AQUI ME QUEDE, FALTA PROBAR
 			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
