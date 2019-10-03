@@ -398,7 +398,7 @@ function actualizarVistaDivs(ipID){
 
 	if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
 		if(posOkRT!==-1 && posAlertRT===-1 && posOfflineRT===-1){//si existe en el array
-			alert("#divLstEquiposOk");
+			console.log("Cargado #divLstEquiposOk");
 			$("#divContenido").empty();
 			tplSource4='';
 			tplSource4=$("#tpl-equiposOk").html();
@@ -409,7 +409,7 @@ function actualizarVistaDivs(ipID){
 	
 	if($("#divLstAlarmados").length>0){//si esta cargado en el DOM
 		if(posOkRT===-1 && posAlertRT!==-1 && posOfflineRT===-1){//si existe en el array
-			alert("#divLstAlarmados");
+			console.log("Cargado #divLstAlarmados");
 			$("#divContenido").empty();
 			tplSource3='';
 			tplSource3=$("#tpl-equiposAlarmados").html();
@@ -421,7 +421,7 @@ function actualizarVistaDivs(ipID){
 
 	if ($('#divLstOffLine').length > 0){//si esta cargado en el DOM
 		if(posOkRT===-1 && posAlertRT===-1 && posOfflineRT!==-1){//si existe en el array
-			alert('#divLstOffLine');
+			console.log('Cargado #divLstOffLine');
 			$("#divContenido").empty();
 			tplSource5='';
 			tplSource5=$("#tpl-equiposOffLine").html();
