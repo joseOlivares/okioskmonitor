@@ -230,6 +230,7 @@ var app={
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
 
 			//actualizamos estado Offline
+			alert("Desconectado "+idIpEquipo);
 			actualizarEstadoOffline(ipsOfflineResp.ipID);
 			app.mostrarEquiposOffLine();
 
