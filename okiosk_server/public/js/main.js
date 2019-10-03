@@ -377,7 +377,7 @@ function actualizarEstadoOffline(equipoOfflineIpID){
 	//si no existe en equipos Offline, lo agregamos
 	if(app.buscarPosicion(equiposOffLineRT,equipoOfflineIpID)===-1){
 		if(posEnLista!==-1){//si existe en el listado general
-			equiposOffLineRT.push(lstCompletoEquipos[pos]); //lo agregamos a los equipos Offline
+			equiposOffLineRT.push(lstCompletoEquipos[posEnLista]); //lo agregamos a los equipos Offline
 		}
 	}	
 }
