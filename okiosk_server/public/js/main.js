@@ -55,22 +55,22 @@ var app={
 				$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
 			}
 
-	//----------13/08/2017
+			//----------13/08/2017
 			if ($("#divTotalSinError").length > 0) {//si existe en el dom el Div	
 				$("#divTotalSinError").html(totalClientes-equiposAlertadosRT.length);//actualizamos el total de equipos ready
 			}
-	//----------------
+			//----------------
 
 			//02 Oct 2019 estadoEquipoEvaluado=evaluaEstadoPrinter(equipo); //consultado los estados del printer
 			estadoEquipoEvaluado=equipo; //Para no alterar el resto del codigo, se hizo esta asignacion
 			zebraPrinterDefault=app.esPrinterZebra(equipo.printerName);//evalua si el printer por default es zebra
 
-//--------------13/08/2017
+			//--------------13/08/2017
 			if(estadoEquipoEvaluado.generalState==="Listo" && zebraPrinterDefault===-1){
 				estadoEquipoEvaluado.generalState="Listo, Otro Printer";
 				estadoEquipoEvaluado.extendedDetectedErrorState="Default Printer no es Marca Zebra";
 			}
-//------------
+			//------------
 
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
@@ -91,50 +91,31 @@ var app={
 				}else{
 					$("#prnImg"+equipo.ipID).attr("src", "img/printer_generic.png");//imagen printer no zebra	
 				}
-
 			}//fin detalle printer
 		
 			if(estadoEquipoEvaluado.generalState==="Listo")//si no tiene alertas
 			{
 				$("#"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");	//icono OK en panel nav izquierdo de equipos
 				
-				//DOM listado de quipos alarmados
-				if($("#divLstAlarmados").length>0){//si esta cargado en el DOM
-					$("#prnAlarma"+equipo.ipID).remove();//removemos la fila de la tabla
-				}
-
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//cambiando icono OK en detalle printer
 				}
 
-//----------------------------------- 14/08/2017 no funciona, corregir
 				if(app.buscarPosicion(equiposOkRT,equipo.ipID)===-1){//si no existe en lista de equipos sin alertas, lo agregamos
 					equiposOkRT.push(equipo);//agregando al listado de equipos sin alertas
-
 					var posUbicacion2=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);					
 					equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion2].ubicacion; //agreagando propiedad strUbicacion
 					equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posUbicacion2].nombre;//agregando propiedad strNombreEquipo															
 					
-					//alert("equiposOkRT.ipI="+equiposOkRT[equiposOkRT.length-1].ipID+" equiposOkRT.strNombreEquipo="+equiposOkRT[equiposOkRT.length-1].strNombreEquipo);
-					//DOM listado de quipos sin alerats
-					//equiposOkRT[equiposOkRT.length-1].strAlertaPrinter=estadoEquipoEvaluado.detectedErrorState; //anexando el string status al array de objetos equiposAlertadosRT;
-					if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
-
-						if($("#filaEquipoOk"+equipo.ipID).length<=0)//si no esta desplegado en pantalla 
-						{				
-						var lineaTabla2='<tr id="filaEquipoOk'+equipo.ipID+'"><td>'+getRowNumber("tblEquiposOk")+'</td><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion2].nombre+'</td><td>'+lstCompletoEquipos[posUbicacion2].ubicacion+'</td><td>'+estadoEquipoEvaluado.generalState+'</td></tr>';
-						$("#tblEquiposOk tbody").append(lineaTabla2);//agregamos  la fila a la tabla
-						}
-					}	
-
 				}				
-//-----------------------------------------------------
 
 				quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
 					equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
 					//alert("Quitando warning "+equipo.ipID);
-				}			
+				}
+				
+				actualizarVistaDivs(equipo.ipID);
 			}//cierra IF ==="Listo"
 
 
@@ -144,53 +125,44 @@ var app={
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");//cambiando estado del printer en panel detalle	
 				}
-
-		//----------DOM listado de quipos sin alertas 11/08/2017
-				if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
-					$("#filaEquipoOk"+equipo.ipID).remove();//removemos la fila de la tabla de equipos sin alertas
-				}
-		//------------------------------------------------------------------
-				
+		
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)===-1){//si no existe en lista de equipos warning, lo agregamos
 					equiposAlertadosRT.push(equipo);//agregando al listado de equipos alertados						
 						//DOM listado de quipos alermados
 						equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter=estadoEquipoEvaluado.detectedErrorState; //anexando el string status al array de objetos equiposAlertadosRT;
 						var posUbicacion=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);
-						equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion].ubicacion;
-						
-						if($("#divLstAlarmados").length>0){//si esta cargado en el DOM	
-							var lineaTabla='<tr id="prnAlarma'+equipo.ipID+'"><td>'+equipo.ip+'</td><td>'+lstCompletoEquipos[posUbicacion].ubicacion+'</td><td>'+estadoEquipoEvaluado.detectedErrorState+'</td></tr>';						
-							$("#tblEquiposAlertados tbody").append(lineaTabla);//agregamos  la fila a la tabla
-						}									
-				}				
+						equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion].ubicacion;								
+				}
+				
+				actualizarVistaDivs(equipo.ipID);
 			}//cierra If !==Listo
 			
 
 			if ($("#divWarning").length > 0) {//si existe en el dom el Div	
-					$("#divWarning").html(equiposAlertadosRT.length);//actualizamos el total de equipos connwarnings
-				}
+				$("#divWarning").html(equiposAlertadosRT.length);//actualizamos el total de equipos connwarnings
+			}
 
-//--------------11/08/2017------------------------
-				quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equipos sin alertas
-				if(app.buscarPosicion(equiposOkRT,equipo.ipID)!==-1){
-					equiposOkRT.splice(quitarDeLista,1);//quitando equipo de lista de equipos ok
-				}
-//---------------------------------------------------
+			quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equipos sin alertas
+			if(app.buscarPosicion(equiposOkRT,equipo.ipID)!==-1){
+				equiposOkRT.splice(quitarDeLista,1);//quitando equipo de lista de equipos ok
+				actualizarVistaDivs(equipo.ipID);
+			}
 
-//-------leyendo detalle de hardware 09/11/2017 modificacion
-	socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
-			//alert("Sistema Operativo del cliente: "+os.Nombre);			
-			//if ($('#divMostrarInventario').length > 0) {//Cargando datos
-			    tplSource='';
-				tplSource=$("#tpl-infoEquipo").html();
-				$("#divInvEquipo").empty();//limpiando
-				var tplInformacion=Handlebars.compile(tplSource);
-				var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
-		        $("#divInvEquipo").html(html); //cargando resultados
-				//****************************************************************				
-			//}//if
-	});
-//-------------------------------------
+
+			//-------leyendo detalle de hardware 09/11/2017 modificacion
+			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
+					//alert("Sistema Operativo del cliente: "+os.Nombre);			
+					//if ($('#divMostrarInventario').length > 0) {//Cargando datos
+						tplSource='';
+						tplSource=$("#tpl-infoEquipo").html();
+						$("#divInvEquipo").empty();//limpiando
+						var tplInformacion=Handlebars.compile(tplSource);
+						var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
+						$("#divInvEquipo").html(html); //cargando resultados
+						//****************************************************************				
+					//}//if
+			});
+			//-------------------------------------
 
 		});	//cierra Latido_equipo_ok	
 
@@ -201,7 +173,7 @@ var app={
 		});
 
 	    socket.on('mostrar_lstEquipos',function(rows){
-	    	$("#lstKioskos").empty();//limpiaando zona de carga del listado de Kioskos
+	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
 			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
 			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div
@@ -292,7 +264,6 @@ var app={
 
 		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
-			debugger;
 			if(posOff !== -1){//si lo encuentra
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 			}
