@@ -228,16 +228,7 @@ var app={
 			
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-
-			//actualizamos estado Offline 03/10/2019
-			actualizarEstadoOffline(idIpEquipo);
-/* 			if ($('#divLstOffLine').length > 0){//si esta en vista
-				let pos=app.buscarPosicion(lstCompletoEquipos,idIpEquipo);
-				debugger;
-				let lineaTablaOff='<tr id="equipoOff'+idIpEquipo+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[pos].ip+'</td><td>'+lstCompletoEquipos[pos].ubicacion+'</td><td><i id="ipOff'+idIpEquipo+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
-				$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
-			} */
-
+			actualizarEstadoOffline(idIpEquipo);//actualizamos estado Offline 03/10/2019
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -380,5 +371,17 @@ function actualizarEstadoOffline(equipoOfflineIpID){
 		if(posEnLista!==-1){//si existe en el listado general
 			equiposOffLineRT.push(lstCompletoEquipos[posEnLista]); //lo agregamos a los equipos Offline
 		}
-	}	
+	}
+	
+	if ($('#divLstOffLine').length > 0){//si esta visible el div
+		//let pos=app.buscarPosicion(lstCompletoEquipos,equipoOfflineIpID);
+		if($('#equipoOff'+equipoOfflineIpID).length <= 0){ //si no existe
+			debugger;
+			let lineaTablaOff='<tr id="equipoOff'+equipoOfflineIpID+'"><td>'+getRowNumber("tblEquiposOffLine")+'</td><td>'+lstCompletoEquipos[posEnLista].ip+'</td><td>'+lstCompletoEquipos[posEnLista].ubicacion+'</td><td><i id="ipOff'+equipoOfflineIpID+'" class="fa fa-times-circle-o alertaE" aria-hidden="true" title="Ping No responde"></i></td></tr>';
+			$("#tblEquiposOffLine tbody").append(lineaTablaOff);//agregamos  la fila a la tabla
+		}
+
+	} 
+
 }
+
