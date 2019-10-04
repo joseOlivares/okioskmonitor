@@ -338,8 +338,8 @@ function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
 			equiposAlertadosRT.splice(posAlerta,1);
 		}
 
-		$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-		$("#ipOff"+ipID).attr('title', 'Ping No responde');		
+		$("#ipOff"+equipoIpID).attr('class','fa fa-times-circle-o alertaE');	
+		$("#ipOff"+equipoIpID).attr('title', 'Ping No responde');		
 	}
 
 	if(estado==="ALERTA"){
