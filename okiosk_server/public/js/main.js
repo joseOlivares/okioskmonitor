@@ -453,11 +453,11 @@ function actualizarVistaDivs(ipID,pingResp){
 		}
 
 		if(pingResp===1){//si la ip responde el ping
-			$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
-			$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping Responde');
+			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
+			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
-			$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
+			$("#ipOff"+ipID).attr("class","fa fa-times-circle-o alertaE");	
+			$("#ipOff"+ipID).attr('title', 'Ping No responde');	
 		}	
 	}	
 		
