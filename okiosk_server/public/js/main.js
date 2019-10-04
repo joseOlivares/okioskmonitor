@@ -180,6 +180,8 @@ var app={
 		socket.on('ping_ipResp', function(ipsOfflineResp){// 28-12-2017
 			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
+			}else{
+				respondePorIp(); //lo quitará del listado de Offline
 			}
 
 			actualizarVistaDivs(ipsOfflineResp.ipID);				
@@ -218,23 +220,7 @@ var app={
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
-	/*	
-		var posOff=-1;		
-		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
-		for (var i = equiposOkRT.length - 1; i >= 0; i--) {			
-			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
-			if(posOff !== -1){//si lo encuentra
-				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
-			}
-		}
-
-		for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
-			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
-			if(posOff !== -1){//si lo encuentra
-				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
-			}
-		}
-	*/
+		respondePorIp(); //evaluara si lo quita del listado de offline
 		$("#divContenido").empty();
 	    tplSource5='';
 		tplSource5=$("#tpl-equiposOffLine").html();
@@ -416,4 +402,23 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr('title', 'Ping No responde');			
 		}	
 	}		
+}
+
+function respondePorIp(){
+	//actualizara el estado del equipo si responde por IP, quitandolo de equipos Offilne
+	let posOff=-1;		
+	//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
+	for (var i = equiposOkRT.length - 1; i >= 0; i--) {			
+		posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
+		if(posOff !== -1){//si lo encuentra
+			equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
+		}
+	}
+
+	for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
+		posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
+		if(posOff !== -1){//si lo encuentra
+			equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
+		}
+	}	
 }
