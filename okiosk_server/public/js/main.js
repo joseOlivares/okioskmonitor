@@ -409,10 +409,11 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			//setTimeout(()=>{ 			},500);
-				//fa fa-refresh fa-spin  fa-fw
-				$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-				$("#ipOff"+ipID).attr('title', 'Ping No responde');				
+			$("#ipOff"+ipID).attr('class','fa fa-refresh fa-spin  fa-fw');
+			setTimeout(()=>{ 
+				//fa fa-refresh fa-spin  fa-fw	
+				$("#ipOff"+ipID).attr('title', 'Ping No responde');	
+			},700);			
 
 		}	
 	}		
