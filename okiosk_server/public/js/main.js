@@ -181,9 +181,8 @@ var app={
 			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}else{
-				respondePorIp(); //lo quitará del listado de Offline
 				let posOff=-1;		
-				//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
+				//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de offline
 				posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(ipsOfflineResp.ipID);
 				if(posOff !== -1){//si lo encuentra
 					equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
