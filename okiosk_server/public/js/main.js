@@ -226,9 +226,6 @@ var app={
 	},
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
-		//spining
-		$("#refreshOffline").removeClass("fa fa-refresh");
-		$("#refreshOffline").addClass("fa fa-refresh fa-spin  fa-fw");
 
 		$("#divContenido").empty();
 		tplSource5='';
@@ -237,11 +234,14 @@ var app={
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS	
 
+		//spining
+		$("#refreshOffline").removeClass("fa fa-refresh");
+		$("#refreshOffline").addClass("fa fa-refresh fa-spin  fa-fw");
 
 		setTimeout(()=>{
 			$("#refreshOffline").removeClass("fa fa-refresh fa-spin  fa-fw");
 			$("#refreshOffline").addClass("fa fa-refresh");
-		},5000);	
+		},900);	
 
 	},
 
