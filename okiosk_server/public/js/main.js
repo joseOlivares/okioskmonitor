@@ -224,13 +224,20 @@ var app={
 		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);	
 	},
 
-	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
-		$("#divContenido").empty();
-	    tplSource5='';
-		tplSource5=$("#tpl-equiposOffLine").html();
-		var tplEquiposOffLine=Handlebars.compile(tplSource5);
-		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
+	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente			
+		//Mostrando spinner temporal		
+		for (let p = 0; p < equiposOffLineRT.length; p++) {
+			 $("#ipOff"+equiposOffLineRT[p].ipID).attr('class','fa fa-refresh fa-spin  fa-fw');					 				
+		}
+
+		setTimeout(()=>{ 
+			$("#divContenido").empty();
+			tplSource5='';
+			tplSource5=$("#tpl-equiposOffLine").html();
+			var tplEquiposOffLine=Handlebars.compile(tplSource5);
+			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
+			socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
+		},700);				
 	},
 
 	mostrarEquiposOk:function(){
