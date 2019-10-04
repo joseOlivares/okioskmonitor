@@ -241,7 +241,7 @@ var app={
 		setTimeout(()=>{
 			$("#refreshOffline").removeClass("fa fa-refresh fa-spin  fa-fw");
 			$("#refreshOffline").addClass("fa fa-refresh");
-		},900);	
+		},1000);	
 
 	},
 
