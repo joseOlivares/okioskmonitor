@@ -398,10 +398,6 @@ function actualizarVistaDivs(ipID,pingResp){
 	if ($('#divLstOffLine').length > 0){//si esta cargado en el DOM
 		if(posOkRT===-1 && posAlertRT===-1 && posOfflineRT!==-1){//si existe en el array
 			console.log('Cargado #divLstOffLine');
-
-			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-			$("#ipOff"+ipID).attr('title', 'Ping No responde');
-
 			$("#divContenido").empty();
 			tplSource5='';
 			tplSource5=$("#tpl-equiposOffLine").html();
@@ -413,11 +409,11 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-			$("#ipOff"+ipID).attr('title', 'Ping No responde');
-			//setTimeout(()=>{
+			setTimeout(()=>{
 				//fa fa-refresh fa-spin  fa-fw
-			//},2000);
+				$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+				$("#ipOff"+ipID).attr('title', 'Ping No responde');				
+			},1000);
 		}	
 	}		
 }
