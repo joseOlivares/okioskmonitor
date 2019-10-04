@@ -67,9 +67,9 @@
 
 <script>
     var table = $('#logs').DataTable({
-        "order":[[0,"desc"]]
+        "aaSorting":[[0,"desc"]]
     });
- 
+ //        "order":[[0,"desc"]]
     new $.fn.dataTable.Buttons( table, {
         buttons: [
              'excel', 'pdf'
