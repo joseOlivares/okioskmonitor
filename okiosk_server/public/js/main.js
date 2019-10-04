@@ -224,7 +224,10 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-					}						
+					}	
+					
+					$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
+					$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
 			}
 				
 		});
