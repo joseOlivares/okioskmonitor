@@ -227,8 +227,8 @@ var app={
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
 		//spining
-		$("#refreshOffline").removeClass( "fa fa-refresh" )
-		$("#refreshOffline").addClass( "fa fa-refresh fa-spin  fa-fw" )
+		$("#refreshOffline").removeClass("fa fa-refresh");
+		$("#refreshOffline").addClass("fa fa-refresh fa-spin  fa-fw");
 
 		$("#divContenido").empty();
 		tplSource5='';
@@ -239,8 +239,8 @@ var app={
 
 
 		setTimeout(()=>{
-			$("#refreshOffline").removeClass( "fa fa-refresh fa-spin  fa-fw" )
-			$("#refreshOffline").addClass( "fa fa-refresh" )
+			$("#refreshOffline").removeClass("fa fa-refresh fa-spin  fa-fw");
+			$("#refreshOffline").addClass("fa fa-refresh");
 		},5000);	
 
 	},
