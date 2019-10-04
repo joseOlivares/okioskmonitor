@@ -102,7 +102,7 @@ var app={
 					$("#prnIco"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//cambiando icono OK en detalle printer
 				}
 
-				actualizarEstadoEquipo(equipo.ipID,OK);//estado OK
+				actualizarEstadoEquipo(equipo.ipID,OK,estadoEquipoEvaluado);//estado OK
 				actualizarVistaDivs(equipo.ipID);			
 			}//cierra IF ==="Listo"
 
@@ -177,10 +177,8 @@ var app={
 			actualizarVistaDivs(idIpEquipo,0);
 		});
 
-		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-			if (ipsOfflineResp.Respuesta===1) {//si responde ping
-				//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-			} else {
+		socket.on('ping_ipResp', function(ipsOfflineResp){// 28-12-2017
+			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}
 
