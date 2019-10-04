@@ -452,17 +452,17 @@ function actualizarVistaDivs(ipID,pingResp){
 			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
 		}
 
+		$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+		$("#ipOff"+ipID).attr('title', 'Ping No responde');
+		
 		if(pingResp===1){//si la ip responde el ping
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
 			//setTimeout(()=>{
 				//fa fa-refresh fa-spin  fa-fw
-				debugger;
-				$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-				$("#ipOff"+ipID).attr('title', 'Ping No responde');	
+	
 			//},2000);
-
 		}	
 	}	
 		
