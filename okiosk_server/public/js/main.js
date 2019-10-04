@@ -182,6 +182,12 @@ var app={
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}else{
 				respondePorIp(); //lo quitará del listado de Offline
+				let posOff=-1;		
+				//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
+				posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(ipsOfflineResp.ipID);
+				if(posOff !== -1){//si lo encuentra
+					equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
+				}									
 			}
 
 			actualizarVistaDivs(ipsOfflineResp.ipID);				
@@ -220,13 +226,11 @@ var app={
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
-		respondePorIp(); //evaluara si lo quita del listado de offline
 		$("#divContenido").empty();
 	    tplSource5='';
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-		debugger;
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
 	},
 
