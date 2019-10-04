@@ -226,13 +226,20 @@ var app={
 	},
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
-		//setTimeout(()=>{ 		},700);
-			$("#divContenido").empty();
-			tplSource5='';
-			tplSource5=$("#tpl-equiposOffLine").html();
-			var tplEquiposOffLine=Handlebars.compile(tplSource5);
-			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-			socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS		
+		$("#refreshOffline").attr('class','fa fa-refresh fa-spin  fa-fw');
+
+		$("#divContenido").empty();
+		tplSource5='';
+		tplSource5=$("#tpl-equiposOffLine").html();
+		var tplEquiposOffLine=Handlebars.compile(tplSource5);
+		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
+		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS	
+
+
+		setTimeout(()=>{ 	
+			$("#refreshOffline").attr('class','fa fa-refresh');	
+		},700);	
+
 	},
 
 	mostrarEquiposOk:function(){
