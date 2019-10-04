@@ -175,7 +175,7 @@ var app={
 			
 			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
-			actualizarVistaDivs(idIpEquipo);
+			actualizarVistaDivs(idIpEquipo,0);
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -337,6 +337,9 @@ function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
 		if(posAlerta!==-1){//si existe en los alertados, lo borramos
 			equiposAlertadosRT.splice(posAlerta,1);
 		}
+
+		$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+		$("#ipOff"+ipID).attr('title', 'Ping No responde');		
 	}
 
 	if(estado==="ALERTA"){
@@ -409,11 +412,11 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			setTimeout(()=>{
+			//setTimeout(()=>{
 				//fa fa-refresh fa-spin  fa-fw
 				$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
 				$("#ipOff"+ipID).attr('title', 'Ping No responde');				
-			},1000);
+			//},1000);
 		}	
 	}		
 }
