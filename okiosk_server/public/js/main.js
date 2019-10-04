@@ -103,22 +103,7 @@ var app={
 				}
 
 				actualizarEstadoEquipo(equipo.ipID,OK);//estado OK
-				await actualizarVistaDivs(equipo.ipID);
-				/*
-				if(app.buscarPosicion(equiposOkRT,equipo.ipID)===-1){//si no existe en lista de equipos sin alertas, lo agregamos
-					equiposOkRT.push(equipo);//agregando al listado de equipos sin alertas
-					var posUbicacion2=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);					
-					equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion2].ubicacion; //agreagando propiedad strUbicacion
-					equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posUbicacion2].nombre;//agregando propiedad strNombreEquipo																				
-				}				
-
-				quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
-				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)!==-1){
-					equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
-					//alert("Quitando warning "+equipo.ipID);
-				}
-				*/
-				
+				actualizarVistaDivs(equipo.ipID);			
 			}//cierra IF ==="Listo"
 
 
@@ -129,31 +114,14 @@ var app={
 					$("#prnIco"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");//cambiando estado del printer en panel detalle	
 				}
 
-				/*		
-				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)===-1){//si no existe en lista de equipos warning, lo agregamos
-					equiposAlertadosRT.push(equipo);//agregando al listado de equipos alertados						
-						//DOM listado de quipos alermados
-						equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter=estadoEquipoEvaluado.detectedErrorState; //anexando el string status al array de objetos equiposAlertadosRT;
-						var posUbicacion=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);
-						equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion].ubicacion;								
-				}
-				*/
 				actualizarEstadoEquipo(equipo.ipID,ALERTA,estadoEquipoEvaluado);//solo aqui agregamos un tercer param
-				await actualizarVistaDivs(equipo.ipID);
+				actualizarVistaDivs(equipo.ipID);
 			}//cierra If !==Listo
 			
 
 			if ($("#divWarning").length > 0) {//si existe en el dom el Div	
 				$("#divWarning").html(equiposAlertadosRT.length);//actualizamos el total de equipos connwarnings
 			}
-
-			/*
-			quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equipos sin alertas
-			if(app.buscarPosicion(equiposOkRT,equipo.ipID)!==-1){
-				equiposOkRT.splice(quitarDeLista,1);//quitando equipo de lista de equipos ok
-				actualizarVistaDivs(equipo.ipID);
-			}
-			*/
 
 			//-------leyendo detalle de hardware 09/11/2017 modificacion
 			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
@@ -207,16 +175,15 @@ var app={
 			
 			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
-			await actualizarVistaDivs(idIpEquipo);
+			actualizarVistaDivs(idIpEquipo);
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
 
 			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
-			}
-			
-			await actualizarVistaDivs(ipsOfflineResp.ipID);				
+			}	
+			actualizarVistaDivs(ipsOfflineResp.ipID);				
 		});
 
 	}, //cierre receive_data
@@ -395,7 +362,7 @@ function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
 	
 }
 
-async function actualizarVistaDivs(ipID,pingResp){
+function actualizarVistaDivs(ipID,pingResp){
 	if (!pingResp) {
 		pingResp=0;	
 	}
@@ -431,6 +398,10 @@ async function actualizarVistaDivs(ipID,pingResp){
 	if ($('#divLstOffLine').length > 0){//si esta cargado en el DOM
 		if(posOkRT===-1 && posAlertRT===-1 && posOfflineRT!==-1){//si existe en el array
 			console.log('Cargado #divLstOffLine');
+
+			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+			$("#ipOff"+ipID).attr('title', 'Ping No responde');
+
 			$("#divContenido").empty();
 			tplSource5='';
 			tplSource5=$("#tpl-equiposOffLine").html();
@@ -448,6 +419,5 @@ async function actualizarVistaDivs(ipID,pingResp){
 				//fa fa-refresh fa-spin  fa-fw
 			//},2000);
 		}	
-	}	
-	return true;	
+	}		
 }
