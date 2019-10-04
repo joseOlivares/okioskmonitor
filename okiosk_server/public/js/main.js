@@ -212,10 +212,10 @@ var app={
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
 			actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
-
+			actualizarVistaDivs(ipsOfflineResp.ipID);
+			debugger;
 			if ($('#divLstOffLine').length > 0)
-			{	
-				actualizarVistaDivs(ipsOfflineResp.ipID);
+			{					
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping Responde');
