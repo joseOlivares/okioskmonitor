@@ -68,7 +68,8 @@
 <script>
     alert("Hola");
     var table = $('#logs').DataTable({
-        "aaSorting":[[0,"desc"]]
+        "columnDefs": [ { type: 'date', 'targets': [0] } ],
+        "order":[[0,"desc"]],
     });
  //        "order":[[0,"desc"]]
     new $.fn.dataTable.Buttons( table, {
