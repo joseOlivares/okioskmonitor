@@ -102,12 +102,14 @@ var app={
 					$("#prnIco"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//cambiando icono OK en detalle printer
 				}
 
+				actualizarEstadoEquipo(equipo.ipID,OK);//estado OK
+				actualizarVistaDivs(equipo.ipID);
+				/*
 				if(app.buscarPosicion(equiposOkRT,equipo.ipID)===-1){//si no existe en lista de equipos sin alertas, lo agregamos
 					equiposOkRT.push(equipo);//agregando al listado de equipos sin alertas
 					var posUbicacion2=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);					
 					equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion2].ubicacion; //agreagando propiedad strUbicacion
-					equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posUbicacion2].nombre;//agregando propiedad strNombreEquipo															
-					
+					equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posUbicacion2].nombre;//agregando propiedad strNombreEquipo																				
 				}				
 
 				quitarDeLista=app.buscarPosicion(equiposAlertadosRT,equipo.ipID);
@@ -115,8 +117,8 @@ var app={
 					equiposAlertadosRT.splice(quitarDeLista,1);//quitando equipo de lista de warnings
 					//alert("Quitando warning "+equipo.ipID);
 				}
+				*/
 				
-				actualizarVistaDivs(equipo.ipID);
 			}//cierra IF ==="Listo"
 
 
@@ -126,7 +128,8 @@ var app={
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");//cambiando estado del printer en panel detalle	
 				}
-		
+
+				/*		
 				if(app.buscarPosicion(equiposAlertadosRT,equipo.ipID)===-1){//si no existe en lista de equipos warning, lo agregamos
 					equiposAlertadosRT.push(equipo);//agregando al listado de equipos alertados						
 						//DOM listado de quipos alermados
@@ -134,7 +137,8 @@ var app={
 						var posUbicacion=app.buscarPosicion(lstCompletoEquipos,equipo.ipID);
 						equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posUbicacion].ubicacion;								
 				}
-				
+				*/
+				actualizarEstadoEquipo(equipo.ipID,ALERTA,estadoEquipoEvaluado);//solo aqui agregamos un tercer param
 				actualizarVistaDivs(equipo.ipID);
 			}//cierra If !==Listo
 			
@@ -143,12 +147,13 @@ var app={
 				$("#divWarning").html(equiposAlertadosRT.length);//actualizamos el total de equipos connwarnings
 			}
 
+			/*
 			quitarDeLista=app.buscarPosicion(equiposOkRT,equipo.ipID);//quitando de lista de equipos sin alertas
 			if(app.buscarPosicion(equiposOkRT,equipo.ipID)!==-1){
 				equiposOkRT.splice(quitarDeLista,1);//quitando equipo de lista de equipos ok
 				actualizarVistaDivs(equipo.ipID);
 			}
-
+			*/
 
 			//-------leyendo detalle de hardware 09/11/2017 modificacion
 			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
@@ -207,8 +212,9 @@ var app={
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-			//actualizarEstadoOffline(ipsOfflineResp.ipID);//actualizamos estado Offline 03/10/2019
+			actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			actualizarVistaDivs(ipsOfflineResp.ipID);
+
 			if ($('#divLstOffLine').length > 0)
 			{	
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
@@ -336,8 +342,8 @@ var app={
 
 app.initialize();
 
-function actualizarEstadoEquipo(equipoIpID,estado){
-	if (estado) {
+function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
+	if (!estado) {
 		estado=OFFLINE;
 	}
 
@@ -349,6 +355,9 @@ function actualizarEstadoEquipo(equipoIpID,estado){
 	if(estado==="OK"){
 		if(posOK===-1){//si no existe, lo agregamos
 			equiposOkRT.push(lstCompletoEquipos[posListado]);
+
+			equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posListado].ubicacion; //agreagando propiedad strUbicacion
+			equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posListado].nombre;			
 		}
 
 		if(posOffline!==-1){//si existe en los Offlines, lo borramos
@@ -385,6 +394,13 @@ function actualizarEstadoEquipo(equipoIpID,estado){
 
 		if(posAlerta===-1){//si no existe, lo agregamos
 			equiposAlertadosRT.push(lstCompletoEquipos[posListado]);
+			equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posListado].ubicacion;
+			if (pEstadoEquipoEvaluado) {
+				//anexando el string status al array de objetos equiposAlertadosRT;
+				equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter=pEstadoEquipoEvaluado.detectedErrorState; 
+			}else{
+				equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter="Error: function actualizarEstadoEquipo (main.js)"; 
+			}
 		}
 	}	
 	
