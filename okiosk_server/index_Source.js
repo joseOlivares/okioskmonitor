@@ -412,25 +412,25 @@ io.on('connection', function(socket){
 		//Agregado 23/09/2019 Para registrar errores en log
 		socket.on('registrar_log',function(equipo){
 				console.log("**************************************************************");
-			pool.getConnection(function(err, connection) { 
-				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
-				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
-				var description=`Printer=${equipo.printerName} - generalState=${equipo.generalState} - printerStatus=${equipo.printerStatus} 
-				- extendedPrinterStatus=${equipo.extendedPrinterStatus} - detectedError=${equipo.detectedErrorState} 
-				- extendedDetectedError=${equipo.extendedDetectedError}`;
-				  // Use the connection
-				  connection.query(query,[equipo.ipID,description],async function(err, rows) {
-						  if(err){
-							  console.log(err);
-							  return;
-						  }else{
-							  console.log('Se ha registrado un nuevo evento en el log, equipo: '+equipo.ip);
-						  }
-					  
-						connection.release();// release connection
-					  //Don't use the connection here, it has been returned to the pool.
-				  });//cierra query
-			});	
+				pool.getConnection(function(err, connection) { 
+					var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
+					  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
+					var description=`Printer=${equipo.printerName} - generalState=${equipo.generalState} - printerStatus=${equipo.printerStatus} 
+					- extendedPrinterStatus=${equipo.extendedPrinterStatus} - detectedError=${equipo.detectedErrorState} 
+					- extendedDetectedError=${equipo.extendedDetectedError}`;
+					  // Use the connection
+					  connection.query(query,[equipo.ipID,description],async function(err, rows) {
+							  if(err){
+								  console.log(err);
+								  return;
+							  }else{
+								  console.log('Se ha registrado un nuevo evento en el log, equipo: '+equipo.ip);
+							  }
+						  
+							connection.release();// release connection
+						  //Don't use the connection here, it has been returned to the pool.
+					  });//cierra query
+				});	
 		});
 
 
@@ -444,7 +444,8 @@ io.on('connection', function(socket){
         	equiposConectados.splice(quitarIpIdPos,1); //quitando el ipid del array de equipos conectados
 			//socketConnectedId.splice(quitarIpIdPos,1); //quitando socket.id 19/10/17
 
- 			io.sockets.emit('conexion_cliente', equiposConectados.length);    // actualizamos el total de clientes conectados, 02/07/2017 11:35pm        		
+ 			io.sockets.emit('conexion_cliente', equiposConectados.length);    // actualizamos el total de clientes conectados, 02/07/2017 11:35pm        			
+			registrarLogEquipo(quitarIpId, "Se perdió conexión con cliente de monitoreo");
 		}
                
         io.sockets.emit('equipo_desconectado',socket.handshake.query['ipClienteX']);
@@ -452,7 +453,30 @@ io.on('connection', function(socket){
         console.log('Cliente desconectado...'+socket.handshake.query['ipClienteX']);
         console.log('Total clientes conectados: '+equiposConectados.length);
         console.log("---");
-    });
+	});
+	
+	function registrarLogEquipo(equipoIpID, logDesc){
+		if(idEquipo>0 && logDesc!=='' && logDesc!==undefined && logDesc!==null){
+			pool.getConnection(function(err, connection) { 
+				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
+				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
+				  // Use the connection
+				  connection.query(query,[equipoIpID,logDesc],async function(err, rows) {
+						  if(err){
+							  console.log(err);
+							  return;
+						  }else{
+							  console.log('Se ha registrado un nuevo evento en el log, equipo: '+idEquipo);
+						  }
+					  
+						connection.release();// release connection
+					  //Don't use the connection here, it has been returned to the pool.
+				  });//cierra query
+			});	
+
+		}
+
+	}
 
 });
 
