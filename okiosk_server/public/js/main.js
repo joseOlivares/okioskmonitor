@@ -139,7 +139,7 @@ var app={
 				}
 				*/
 				actualizarEstadoEquipo(equipo.ipID,ALERTA,estadoEquipoEvaluado);//solo aqui agregamos un tercer param
-				await actualizarVistaDivs(equipo.ipID);
+				actualizarVistaDivs(equipo.ipID);
 			}//cierra If !==Listo
 			
 
@@ -207,7 +207,7 @@ var app={
 			
 			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
-			await actualizarVistaDivs(idIpEquipo);
+			actualizarVistaDivs(idIpEquipo);
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
@@ -216,7 +216,7 @@ var app={
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}
 			
-			await actualizarVistaDivs(ipsOfflineResp.ipID);				
+			actualizarVistaDivs(ipsOfflineResp.ipID);				
 		});
 
 	}, //cierre receive_data
