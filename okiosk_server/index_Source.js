@@ -456,7 +456,7 @@ io.on('connection', function(socket){
 	});
 	
 	function registrarLogEquipo(equipoIpID, logDesc){
-		if(idEquipo>0 && logDesc!=='' && logDesc!==undefined && logDesc!==null){
+		if(equipoIpID>0 && logDesc!=='' && logDesc!==undefined && logDesc!==null){
 			pool.getConnection(function(err, connection) { 
 				var query=`INSERT INTO tblalertas_log (idequipo,descripcion)
 				  VALUES ((SELECT idequipo FROM tblequipo WHERE ipID=?),?)`;
