@@ -458,7 +458,8 @@ function actualizarVistaDivs(ipID,pingResp){
 		}else{
 			//setTimeout(()=>{
 				//fa fa-refresh fa-spin  fa-fw
-				$("#ipOff"+ipID).attr("class","fa fa-times-circle-o alertaE");	
+				debugger;
+				$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
 				$("#ipOff"+ipID).attr('title', 'Ping No responde');	
 			//},2000);
 
