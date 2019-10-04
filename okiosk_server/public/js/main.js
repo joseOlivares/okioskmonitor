@@ -449,5 +449,5 @@ async function actualizarVistaDivs(ipID,pingResp){
 			//},2000);
 		}	
 	}	
-		
+	return true;	
 }
