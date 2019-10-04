@@ -178,7 +178,9 @@ var app={
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
+			if (ipsOfflineResp.Respuesta===1) {//si responde ping
+				//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+			} else {
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}
 
@@ -214,19 +216,12 @@ var app={
 	    tplSource3='';
 		tplSource3=$("#tpl-equiposAlarmados").html();
 		var tplEquiposAlarmados=Handlebars.compile(tplSource3);
-		
-		for (let i = 0; i < equiposAlertadosRT.length; i++) {	
-			$("#ipOff"+equiposAlertadosRT[i].ipID).attr('class','fa fa-refresh fa-spin  fa-fw');	
-		}
-
-		setTimeout(()=>{
-			//para efecto de carga spinner, restrasamos la renderizacion
-			app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
-		},700);
+		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);	
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
-		var posOff=-1;	
+	/*	
+		var posOff=-1;		
 		//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
 		for (var i = equiposOkRT.length - 1; i >= 0; i--) {			
 			posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
@@ -241,13 +236,14 @@ var app={
 				equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 			}
 		}
-
-		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
+	*/
 		$("#divContenido").empty();
 	    tplSource5='';
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
+		debugger;
+		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
 	},
 
 	mostrarEquiposOk:function(){
