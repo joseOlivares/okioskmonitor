@@ -173,16 +173,15 @@ var app={
 			totDesconect=totDesconect+1;	
 			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
 			
-			//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
 			actualizarVistaDivs(idIpEquipo,0);
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-
 			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
-			}	
+			}
+
 			actualizarVistaDivs(ipsOfflineResp.ipID);				
 		});
 
@@ -215,7 +214,15 @@ var app={
 	    tplSource3='';
 		tplSource3=$("#tpl-equiposAlarmados").html();
 		var tplEquiposAlarmados=Handlebars.compile(tplSource3);
-		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
+		
+		for (let i = 0; i < equiposAlertadosRT.length; i++) {	
+			$("#ipOff"+equiposAlertadosRT[i].ipID).attr('class','fa fa-refresh fa-spin  fa-fw');	
+		}
+
+		setTimeout(()=>{
+			//para efecto de carga spinner, restrasamos la renderizacion
+			app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
+		},700);
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente		
@@ -409,12 +416,10 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			$("#ipOff"+ipID).attr('class','fa fa-refresh fa-spin  fa-fw');
-			setTimeout(()=>{ 
-				//fa fa-refresh fa-spin  fa-fw	
-				$("#ipOff"+ipID).attr('title', 'Ping No responde');	
-			},700);			
-
+			//setTimeout(()=>{ },700);	
+			//fa fa-refresh fa-spin  fa-fw
+			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+			$("#ipOff"+ipID).attr('title', 'Ping No responde');			
 		}	
 	}		
 }
