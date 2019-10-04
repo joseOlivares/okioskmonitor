@@ -211,10 +211,14 @@ var app={
 		});
 
 		socket.on('ping_ipResp',function(ipsOfflineResp){// 28-12-2017
-			actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
+
+			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
+				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
+			}
+			
 			actualizarVistaDivs(ipsOfflineResp.ipID);
-			debugger;
-			if ($('#divLstOffLine').length > 0)
+
+/* 			if ($('#divLstOffLine').length > 0)
 			{					
 					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
@@ -224,11 +228,8 @@ var app={
 						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
 						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
 						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-					}	
-					
-					$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
-					$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-			}
+					}				
+			} */
 				
 		});
 
@@ -408,7 +409,11 @@ function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
 	
 }
 
-function actualizarVistaDivs(ipID){
+function actualizarVistaDivs(ipID,pingResp){
+	if (!pingResp) {
+		pingResp=0;	
+	}
+
 	let posListaGeneral=app.buscarPosicion(lstCompletoEquipos,ipID);
 	let posOkRT=app.buscarPosicion(equiposOkRT,ipID);
 	let posAlertRT=app.buscarPosicion(equiposAlertadosRT,ipID);
@@ -446,6 +451,14 @@ function actualizarVistaDivs(ipID){
 			var tplEquiposOffLine=Handlebars.compile(tplSource5);
 			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
 		}
+
+		if(pingResp===1){//si la ip responde el ping
+			$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
+			$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping Responde');
+		}else{
+			$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
+			$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
+		}	
 	}	
 		
 }
