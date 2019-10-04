@@ -62,6 +62,7 @@ var app={
 			}
 			//----------------
 
+			actualizarVistaDivs(equipo.ipID);
 			//02 Oct 2019 estadoEquipoEvaluado=evaluaEstadoPrinter(equipo); //consultado los estados del printer
 			estadoEquipoEvaluado=equipo; //Para no alterar el resto del codigo, se hizo esta asignacion
 			zebraPrinterDefault=app.esPrinterZebra(equipo.printerName);//evalua si el printer por default es zebra
