@@ -216,21 +216,7 @@ var app={
 				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
 			}
 			
-			actualizarVistaDivs(ipsOfflineResp.ipID);
-
-/* 			if ($('#divLstOffLine').length > 0)
-			{					
-					if(ipsOfflineResp.Respuesta===1){//si la ip responde el ping
-						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-heartbeat alertaOk");
-						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping Responde');
-						//$("#ipOff"+ipsOfflineResp[i].ipID).html('Responde');
-					}else{
-						//$("#ipOff"+ipsOfflineResp[i].ipID).html('No responde');
-						$("#ipOff"+ipsOfflineResp.ipID).attr("class","fa fa-times-circle-o alertaE");	
-						$("#ipOff"+ipsOfflineResp.ipID).attr('title', 'Ping No responde');	
-					}				
-			} */
-				
+			let x=await actualizarVistaDivs(ipsOfflineResp.ipID);				
 		});
 
 	}, //cierre receive_data
@@ -409,7 +395,7 @@ function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
 	
 }
 
-function actualizarVistaDivs(ipID,pingResp){
+async function actualizarVistaDivs(ipID,pingResp){
 	if (!pingResp) {
 		pingResp=0;	
 	}
@@ -452,16 +438,14 @@ function actualizarVistaDivs(ipID,pingResp){
 			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
 		}
 
-		$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-		$("#ipOff"+ipID).attr('title', 'Ping No responde');
-		
 		if(pingResp===1){//si la ip responde el ping
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
+			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
+			$("#ipOff"+ipID).attr('title', 'Ping No responde');
 			//setTimeout(()=>{
 				//fa fa-refresh fa-spin  fa-fw
-	
 			//},2000);
 		}	
 	}	
