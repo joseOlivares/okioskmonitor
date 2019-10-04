@@ -229,7 +229,7 @@ var app={
 		//spining
 		$("#refreshOffline").removeClass( "fa fa-refresh" )
 		$("#refreshOffline").addClass( "fa fa-refresh fa-spin  fa-fw" )
-		debugger;
+
 		$("#divContenido").empty();
 		tplSource5='';
 		tplSource5=$("#tpl-equiposOffLine").html();
@@ -239,10 +239,9 @@ var app={
 
 
 		setTimeout(()=>{
-			debugger;
 			$("#refreshOffline").removeClass( "fa fa-refresh fa-spin  fa-fw" )
 			$("#refreshOffline").addClass( "fa fa-refresh" )
-		},900);	
+		},5000);	
 
 	},
 
