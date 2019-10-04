@@ -466,7 +466,7 @@ io.on('connection', function(socket){
 							  console.log(err);
 							  return;
 						  }else{
-							  console.log('Se ha registrado un nuevo evento en el log, equipo: '+idEquipo);
+							  console.log('Se ha registrado un nuevo evento desconexion el log, equipo: '+equipoIpID);
 						  }
 					  
 						connection.release();// release connection
