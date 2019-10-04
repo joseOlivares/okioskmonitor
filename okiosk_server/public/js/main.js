@@ -230,14 +230,14 @@ var app={
 			 $("#ipOff"+equiposOffLineRT[p].ipID).attr('class','fa fa-refresh fa-spin  fa-fw');					 				
 		}
 
-		setTimeout(()=>{ 
+		//setTimeout(()=>{ 		},700);
 			$("#divContenido").empty();
 			tplSource5='';
 			tplSource5=$("#tpl-equiposOffLine").html();
 			var tplEquiposOffLine=Handlebars.compile(tplSource5);
 			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
 			socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS
-		},700);				
+				
 	},
 
 	mostrarEquiposOk:function(){
