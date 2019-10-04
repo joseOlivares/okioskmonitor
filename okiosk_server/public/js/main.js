@@ -225,11 +225,6 @@ var app={
 	},
 
 	mostrarEquiposOffLine:function(){// creado 27-12-2017 Probar donde Cliente			
-		//Mostrando spinner temporal		
-		for (let p = 0; p < equiposOffLineRT.length; p++) {
-			 $("#ipOff"+equiposOffLineRT[p].ipID).attr('class','fa fa-refresh fa-spin  fa-fw');					 				
-		}
-
 		//setTimeout(()=>{ 		},700);
 			$("#divContenido").empty();
 			tplSource5='';
