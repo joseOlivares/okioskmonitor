@@ -456,8 +456,11 @@ function actualizarVistaDivs(ipID,pingResp){
 			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
 			$("#ipOff"+ipID).attr('title', 'Ping Responde');
 		}else{
-			$("#ipOff"+ipID).attr("class","fa fa-times-circle-o alertaE");	
-			$("#ipOff"+ipID).attr('title', 'Ping No responde');	
+			setTimeout(()=>{
+				$("#ipOff"+ipID).attr("class","fa fa-times-circle-o alertaE");	
+				$("#ipOff"+ipID).attr('title', 'Ping No responde');	
+			},2000);
+
 		}	
 	}	
 		
