@@ -92,9 +92,9 @@
 
         if(op!==1 && op!==2){return false;}
 
-        var msg="Se eliminarán <strong>todos los logs</strong> almacenados<br> <strong>¿Desea confirmar la acción?</strong><br>";
+        var msg="Se eliminarán <strong>todos los logs</strong> almacenados<br><br> <strong>¿Desea confirmar la acción?</strong><br>";
         if(op===2){
-            msg="Se eliminarán los logs <strong>posteriores a 2 meses</strong><br> <strong>¿Desea confirmar la acción?</strong><br>";
+            msg="Se eliminarán los logs <strong>posteriores a 2 meses</strong><br><br> <strong>¿Desea confirmar la acción?</strong><br>";
         }
         url="/logs/borrarlog/"+op; //url de borrado
         //usando jquery-confirm
