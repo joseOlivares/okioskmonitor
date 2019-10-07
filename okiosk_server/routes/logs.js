@@ -36,6 +36,7 @@ router.get('/verlogkioskos', async (req, res) => {
 //Borrar el contenido de la tabla alertas_log
 router.get('/borrarlog/:op', async (req, res) => {
     sess=req.session;
+    const op=req.params.op; //recibiendo parametro
     if (!sess.username ||!perfil.validarAcceso(sess.idperfil)) {
         res.redirect('/login');
     } else {
