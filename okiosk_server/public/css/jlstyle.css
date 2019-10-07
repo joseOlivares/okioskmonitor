@@ -64,3 +64,7 @@
 #btnRefreshOffLine{
   min-width: 34px;
 }
+
+.txt-centrado{
+  text-align: center !important;
+}
