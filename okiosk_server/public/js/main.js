@@ -235,12 +235,12 @@ var app={
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS	
 
 		//spining
-		$("#refreshOffline").removeClass("fa fa-refresh");
-		$("#refreshOffline").addClass("fa fa-refresh fa-spin fa-fw");
+		//$("#refreshOffline").removeClass("fa fa-refresh");
+		$("#refreshOffline").addClass("fa-spin fa-fw");
 
 		setTimeout(()=>{
-			$("#refreshOffline").removeClass("fa fa-refresh fa-spin fa-fw");
-			$("#refreshOffline").addClass("fa fa-refresh");
+			$("#refreshOffline").removeClass("fa-spin fa-fw");
+			//$("#refreshOffline").addClass("fa fa-refresh");
 		},1000);	
 
 	},
