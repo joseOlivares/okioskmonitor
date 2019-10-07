@@ -34,19 +34,27 @@ router.get('/verlogkioskos', async (req, res) => {
 });
 
 //Borrar el contenido de la tabla alertas_log
-router.get('/borrarlog/', async (req, res) => {
+router.get('/borrarlog/:op', async (req, res) => {
     sess=req.session;
     if (!sess.username ||!perfil.validarAcceso(sess.idperfil)) {
         res.redirect('/login');
     } else {
-        await pool.query('TRUNCATE TABLE tblalertas_log');
-        req.flash('success','¡Se ha borrado el contenido del log!');
+        var myQuery='Select 0+0';//valor sin significado
+        var msg='¡Se ha borrado el contenido del log!';
+        if (op===1) {
+            myQuery='TRUNCATE TABLE tblalertas_log';
+        }
+
+        if(op===2){
+            myQuery='DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 2 MONTH)';
+            msg='¡Se ha borrado el contenido del log posterior a 2 meses!';
+        }
+
+        await pool.query(myQuery);
+        req.flash('success',msg);
         res.redirect('/logs/verlogkioskos');
     }
     //console.log(req.params.idusuario);
 });
-
-
-
 
 module.exports = router;

@@ -87,9 +87,16 @@
 <script lang="Javascript">
     //por José Luis Olivares, 18/09/2019
     function eliminarLog(op){
-        //validar borrado de kiosco
-        var msg="Se eliminarán todos los logs almacenados<br> <strong>¿Desea confirmar la acción?</strong>";
-        url="/logs/borrarlogX/"+op; //url de borrado
+        //validar borrado de log kiosco        
+        if(!op){return false;}
+
+        if(op!==1 && op!==2){return false;}
+
+        var msg="Se eliminarán <strong>todos los logs</strong> almacenados<br> <strong>¿Desea confirmar la acción?</strong>";
+        if(op===2){
+            msg="Se eliminarán los logs <strong>posteriores a 2 meses</strong><br> <strong>¿Desea confirmar la acción?</strong>";
+        }
+        url="/logs/borrarlog/"+op; //url de borrado
         //usando jquery-confirm
         $.confirm({
             title: 'Eliminar Logs',
