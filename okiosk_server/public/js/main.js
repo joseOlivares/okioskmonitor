@@ -242,7 +242,7 @@ var app={
 			$("#refreshOffline").removeClass("fa-spin fa-fw");
 			//$("#refreshOffline").addClass("fa fa-refresh");
 		},1000);	
-		debugger;
+
 	},
 
 	mostrarEquiposOk:function(){
