@@ -2,7 +2,9 @@
 <div class="container p-12">
     <div class="row">
         <dir class="pull-right">
-            <button id="btnLog" class="btn btn-warning" onclick="eliminarLog()" role="button">Borrar Log</button> 
+            <button id="btnLog2" class="btn btn-warning" onclick="eliminarLog(2)" role="button">Borrar > 2 Meses </button>
+            &nbsp;
+            <button id="btnLog" class="btn btn-warning" onclick="eliminarLog(1)" role="button">Borrar todo</button> 
         </dir>
         {{#if success }}
             <div class="container">
@@ -84,10 +86,10 @@
 
 <script lang="Javascript">
     //por José Luis Olivares, 18/09/2019
-    function eliminarLog(){
+    function eliminarLog(op){
         //validar borrado de kiosco
         var msg="Se eliminarán todos los logs almacenados<br> <strong>¿Desea confirmar la acción?</strong>";
-        url="/logs/borrarlog/"; //url de borrado
+        url="/logs/borrarlogX/"+op; //url de borrado
         //usando jquery-confirm
         $.confirm({
             title: 'Eliminar Logs',
