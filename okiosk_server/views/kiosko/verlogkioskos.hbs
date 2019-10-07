@@ -70,6 +70,7 @@
     var table = $('#logs').DataTable({
         "columnDefs": [ { type: 'date', 'targets': [0] } ],
         "order":[[0,"desc"]],
+        "pageLength":25,
     });
  //        "order":[[0,"desc"]]
     new $.fn.dataTable.Buttons( table, {
