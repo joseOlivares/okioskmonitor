@@ -60,3 +60,8 @@
 .login-error-vcenter{
   margin-top: 30% !important;
 }
+
+.fixRefresh-btn{
+  padding-left: 10px;
+  padding-right: 10px;
+}

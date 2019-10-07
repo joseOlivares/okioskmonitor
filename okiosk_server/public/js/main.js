@@ -237,8 +237,10 @@ var app={
 		//spining
 		//$("#refreshOffline").removeClass("fa fa-refresh");
 		$("#refreshOffline").addClass("fa-spin fa-fw");
+		$("#btnRefreshOffLine").removeClass("fixRefresh-btn");
 
 		setTimeout(()=>{
+			$("#btnRefreshOffLine").addClass("fixRefresh-btn");
 			$("#refreshOffline").removeClass("fa-spin fa-fw");
 			//$("#refreshOffline").addClass("fa fa-refresh");
 		},1000);	
