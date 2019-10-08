@@ -84,33 +84,46 @@ namespace okioskclient
             return false;
         }
 
-        private void BtnConfig_Click(object sender, EventArgs e)
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
+        {   //se agregó menu salir en notificación
+            Application.Exit();
+        }
+
+        private void IPServidorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Configurando IP Cliente
+            this.TopMost = false;//enviando main form al fondo
+
             String ipCliente = Microsoft.VisualBasic.Interaction.InputBox("Escriba la Ip del cliente (este equipo):",
                                 "Ip a monitorear", "192.168.7.224");
 
             ipCliente = ipCliente.Trim(); //borrando espacios
+            this.TopMost = true;
 
-            if (ipCliente==" ")
+            if (ipCliente == "")
             {
-                return; //si presino cancelar
+                return; //si presinó cancelar
             }
 
             String appPath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             appPath = Directory.GetParent(appPath).FullName;
-            String jsFile =appPath+@"\okiosk_installer\app\config\setIPs.js";
+            String jsFile = appPath + @"\okiosk_installer\app\config\setIPs.js";
 
             if (ValidarIP(ipCliente)) //validamos la IP
             {
                 string fileContent;
-
+                MessageBox.Show("Formato de IP Válido");
                 try
                 {
                     fileContent = File.ReadAllText(jsFile);
-                    MessageBox.Show("IP Valida");
                     String patIpCliente = @"cliente={IP:\'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b\'}";
                     String newIpCliente = @"cliente={IP:'" + ipCliente + "'}";
-                    String patIpServer = @"servidor={IP:\'http://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:3000\b\'}";
                     String newContent = Regex.Replace(fileContent, patIpCliente, newIpCliente);
 
                     //definiendo permisos de escritura en archivo
@@ -118,34 +131,12 @@ namespace okioskclient
 
                     try
                     {
-                        String ipServer = Microsoft.VisualBasic.Interaction.InputBox("Escriba la Ip del Servidor de Monitoreo:",
-                                "Ip Servidor", "192.168.1.1");
-                        ipServer = ipServer.Trim();
+                        fPermission.Demand();
+                        File.WriteAllText(jsFile, newContent);//Escribimos el nuevo archivo
+                        MessageBox.Show("¡IP Guardada correctamente! (La aplicación se reiniciará)");
 
-                        String newIpServer = @"servidor={IP:'http://" + ipServer + ":3000'}"; 
-
-                        if (ValidarIP(ipServer))// si la ip del server es válida
-                        {
-                            MessageBox.Show("Formato de IP Valido");
-                            String newContent2= Regex.Replace(newContent, patIpServer, newIpServer);
-
-                            //-----Para validar cambios y ver si se aplicaron
-                                //MessageBox.Show(fileContent);
-                                //MessageBox.Show(newContent2);
-                            //------------------------------------------------
-                            fPermission.Demand();
-                            File.WriteAllText(jsFile, newContent2);//Escribimos el nuevo archivo
-                            MessageBox.Show("¡IP's Guardadas correctamente! (La aplicación se reiniciará)");
-
-                            System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
-                            this.Close(); //to turn off current app
-                            //this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("¡Formato de IP del Servidor no válido!");
-                            return;
-                        }
+                        System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
+                        this.Close(); //to turn off current app         
                     }
                     catch (Exception)//SecurityException
                     {
@@ -157,7 +148,74 @@ namespace okioskclient
                 }
                 catch (Exception err)
                 {
+                    MessageBox.Show(err.ToString());
+                    throw;
+                }
+            }
+            else
+            {
+                MessageBox.Show("¡Formato de Ip introducido no es válido!");
+                return;
+            }
+        }
 
+        private void IPServidorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //IP Server
+            String appPath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            appPath = Directory.GetParent(appPath).FullName;
+            String jsFile = appPath + @"\okiosk_installer\app\config\setIPs.js";
+
+            this.TopMost = false;  //enaviando form principal al fondo
+
+            String ipServer = Microsoft.VisualBasic.Interaction.InputBox("Escriba la Ip del Servidor de Monitoreo:",
+        "Ip Servidor", "192.168.1.1");
+
+            this.TopMost = true;
+            ipServer = ipServer.Trim();
+            String newIpServer = @"servidor={IP:'http://" + ipServer + ":3000'}";
+
+            if (ipServer == "")
+            {
+                return; //si presinó cancelar
+            }
+
+
+            if (ValidarIP(ipServer))// si la ip del server es válida
+            {
+                string fileContent;
+                MessageBox.Show("Formato de IP Válido");
+
+                try
+                {
+                    fileContent = File.ReadAllText(jsFile);
+                    String patIpServer = @"servidor={IP:\'http://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:3000\b\'}";
+                    //definiendo permisos de escritura en archivo
+                    FileIOPermission fPermission = new FileIOPermission(FileIOPermissionAccess.Write | FileIOPermissionAccess.Read, jsFile);
+                    try
+                    {                      
+                        String newContent2 = Regex.Replace(fileContent, patIpServer, newIpServer);
+                        //-----Para validar cambios y ver si se aplicaron
+                        //MessageBox.Show(fileContent);
+                        //MessageBox.Show(newContent2);
+                        //------------------------------------------------
+                        fPermission.Demand();
+                        File.WriteAllText(jsFile, newContent2);//Escribimos el nuevo archivo
+                        MessageBox.Show("¡IP Guardada correctamente! (La aplicación se reiniciará)");
+
+                        System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
+                        this.Close(); //to turn off current app
+                    }
+                    catch (Exception)//SecurityException
+                    {
+                        MessageBox.Show(@"No tiene permisos para escribir directamente en .\config\setIPs.js" +
+                            Environment.NewLine + "Intente ejecutar la aplicación como administrador");
+                        throw;
+                    }
+
+                }
+                catch (Exception err)
+                {
                     MessageBox.Show(err.ToString());
                     throw;
                 }
@@ -169,18 +227,6 @@ namespace okioskclient
                 return;
             }
 
-          
-        }
-
-        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-        }
-
-        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
-        {   //se agregó menu salir en notificación
-            Application.Exit();
-        }
+        }        
     }
 }

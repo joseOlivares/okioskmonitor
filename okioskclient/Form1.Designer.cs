@@ -31,11 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.btnConfig = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.configuraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iPServidorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iPServidorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -46,19 +50,9 @@
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(883, 463);
+            this.webBrowser1.Size = new System.Drawing.Size(883, 462);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser1_DocumentCompleted);
-            // 
-            // btnConfig
-            // 
-            this.btnConfig.Image = global::okioskclient.Properties.Resources.config;
-            this.btnConfig.Location = new System.Drawing.Point(16, 405);
-            this.btnConfig.Name = "btnConfig";
-            this.btnConfig.Size = new System.Drawing.Size(53, 46);
-            this.btnConfig.TabIndex = 1;
-            this.btnConfig.UseVisualStyleBackColor = true;
-            this.btnConfig.Click += new System.EventHandler(this.BtnConfig_Click);
             // 
             // notifyIcon1
             // 
@@ -86,18 +80,60 @@
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.ToolStripMenuItemExit_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configuraciónToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.menuStrip1.Location = new System.Drawing.Point(0, 434);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(883, 28);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // configuraciónToolStripMenuItem
+            // 
+            this.configuraciónToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.configuraciónToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.iPServidorToolStripMenuItem,
+            this.iPServidorToolStripMenuItem1});
+            this.configuraciónToolStripMenuItem.Image = global::okioskclient.Properties.Resources.config;
+            this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(34, 24);
+            this.configuraciónToolStripMenuItem.Text = "Configuración";
+            this.configuraciónToolStripMenuItem.ToolTipText = "Configuración";
+            // 
+            // iPServidorToolStripMenuItem
+            // 
+            this.iPServidorToolStripMenuItem.Name = "iPServidorToolStripMenuItem";
+            this.iPServidorToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
+            this.iPServidorToolStripMenuItem.Text = "IP Cliente";
+            this.iPServidorToolStripMenuItem.ToolTipText = "Define la IP del cliente (este equipo)";
+            this.iPServidorToolStripMenuItem.Click += new System.EventHandler(this.IPServidorToolStripMenuItem_Click);
+            // 
+            // iPServidorToolStripMenuItem1
+            // 
+            this.iPServidorToolStripMenuItem1.Name = "iPServidorToolStripMenuItem1";
+            this.iPServidorToolStripMenuItem1.Size = new System.Drawing.Size(163, 26);
+            this.iPServidorToolStripMenuItem1.Text = "IP Servidor";
+            this.iPServidorToolStripMenuItem1.ToolTipText = "Define la IP del servidor de monitoreo";
+            this.iPServidorToolStripMenuItem1.Click += new System.EventHandler(this.IPServidorToolStripMenuItem1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 463);
-            this.Controls.Add(this.btnConfig);
+            this.ClientSize = new System.Drawing.Size(883, 462);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.webBrowser1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(920, 510);
+            this.MaximumSize = new System.Drawing.Size(919, 509);
             this.Name = "Form1";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -105,17 +141,23 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.Button btnConfig;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem configuraciónToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iPServidorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iPServidorToolStripMenuItem1;
     }
 }
 

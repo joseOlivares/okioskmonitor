@@ -7,10 +7,10 @@ C:\Users\Developer\Documents\C#\okioskclient\obj\Release\okioskclient.csproj.Gen
 C:\Users\Developer\Documents\C#\okioskclient\obj\Release\okioskclient.csproj.CoreCompileInputs.cache
 C:\Users\Developer\Documents\C#\okioskclient\obj\Release\okioskclient.exe
 C:\Users\Developer\Documents\C#\okioskclient\obj\Release\okioskclient.pdb
-C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Release\okioskclient.Form1.resources
 C:\Users\Developer\github\okioskmonitor\okioskclient\bin\Release\okioskclient.exe.config
 C:\Users\Developer\github\okioskmonitor\okioskclient\bin\Release\okioskclient.exe
 C:\Users\Developer\github\okioskmonitor\okioskclient\bin\Release\okioskclient.pdb
+C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Release\okioskclient.Form1.resources
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Release\okioskclient.Properties.Resources.resources
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Release\okioskclient.csproj.GenerateResource.cache
 C:\Users\Developer\github\okioskmonitor\okioskclient\obj\Release\okioskclient.csproj.CoreCompileInputs.cache
