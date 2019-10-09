@@ -17,6 +17,7 @@ const perfil=require('../lib/validarperfil');//Validador de perfil, Jose Olivare
 //por Jose Luis Olivares, 23/09/2019
 router.get('/verlogkioskos', async (req, res) => {
     sess=req.session;
+    let mostrarBotones=perfil.validarAcceso(sess.idperfil) || false;
     if (!sess.username) { //||!perfil.validarAcceso(sess.idperfil)
         res.redirect('/login');
     } else {
@@ -28,7 +29,7 @@ router.get('/verlogkioskos', async (req, res) => {
 	    //18/09/2019 para corregir que se navegue hasta aqui sin estar logueado (Olivares)
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate'); 
                
-        res.render('kiosko/verlogkioskos', {logKioskos});
+        res.render('kiosko/verlogkioskos', {logKioskos,mostrarBotones});
     }
     
 });

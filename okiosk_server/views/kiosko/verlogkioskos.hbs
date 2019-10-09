@@ -2,9 +2,11 @@
 <div class="container p-12">
     <div class="row">
         <dir class="pull-right">
+            {{#if mostrarBotones}}
             <button id="btnLog2" class="btn btn-warning" onclick="eliminarLog(2)" role="button">Borrar > 2 Meses </button>
             &nbsp;
             <button id="btnLog" class="btn btn-warning" onclick="eliminarLog(1)" role="button">Borrar todo</button> 
+            {{/if}}
         </dir>
         {{#if success }}
             <div class="container">
