@@ -3,9 +3,9 @@
     <div class="row">
         <dir class="pull-right">
             {{#if mostrarBotones}}
-            <button id="btnLog2" class="btn btn-warning" onclick="eliminarLog(2)" role="button">Borrar > 2 Meses </button>
+            <button id="btnLog2" class="btn btn-warning" onclick="eliminarLog(2)" role="button" title="Elimina logs posteriores a 2 meses">Borrar > 2 Meses </button>
             &nbsp;
-            <button id="btnLog" class="btn btn-warning" onclick="eliminarLog(1)" role="button">Borrar todo</button> 
+            <button id="btnLog" class="btn btn-warning" onclick="eliminarLog(1)" role="button" title="Elimina todos los logs">Borrar todo</button> 
             {{/if}}
         </dir>
         {{#if success }}
