@@ -125,9 +125,10 @@ var app={
 			}
 
 			//-------leyendo detalle de hardware 09/11/2017 modificacion
+			//####################################AQUI DESCOMENTARIE EL IF INTERNO
 			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
 					//alert("Sistema Operativo del cliente: "+os.Nombre);			
-					//if ($('#divMostrarInventario').length > 0) {//Cargando datos
+					if ($('#divMostrarInventario').length > 0) {//Cargando datos
 						tplSource='';
 						tplSource=$("#tpl-infoEquipo").html();
 						$("#divInvEquipo").empty();//limpiando
@@ -135,7 +136,7 @@ var app={
 						var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
 						$("#divInvEquipo").html(html); //cargando resultados
 						//****************************************************************				
-					//}//if
+					}//if
 			});
 			//-------------------------------------
 
