@@ -287,21 +287,25 @@ cron.schedule('0 18 * * sunday', () => {
 
 io.on('connection', function(socket){
 	ipIdCliente=socket.handshake.query['ipClienteX'];
-	console.log('Cliente Conectado...'+ipIdCliente);
-	console.log(socket);
+	
 	//console.log('session id...'+socket.id);
 	console.log('++++');
 
 	if(typeof ipIdCliente !== 'undefined' &&  ipIdCliente!== null )//si el cliente envia el idIP
 	{
-			if(equiposConectados.indexOf(ipIdCliente)==-1)//si no esta en el array, lo agrega
-			{
-				equiposConectados.push(ipIdCliente);
-				//socketConnectedId.push(socket.id); //agregando socket.id 19/10/17
-			}
+		console.log('Cliente Conectado...'+ipIdCliente);
+		if(equiposConectados.indexOf(ipIdCliente)==-1)//si no esta en el array, lo agrega
+		{
+			equiposConectados.push(ipIdCliente);
+			//socketConnectedId.push(socket.id); //agregando socket.id 19/10/17
+		}
 
 			console.log('Total clientes conectados: '+equiposConectados.length);		
 			
+	}else{
+		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
+		let todosLosEquipos=pool.query("SELECT ipID from tblequipo WHERE estado=1");//1 es activo, no eliminado
+		console.log(todosLosEquipos);
 	}
 
 	socketCount++;// Socket has connected, increase socket count
