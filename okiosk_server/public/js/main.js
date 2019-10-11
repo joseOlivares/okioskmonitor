@@ -128,7 +128,7 @@ var app={
 			//####################################PROBANDO IF
 			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
 					//alert("Sistema Operativo del cliente: "+os.Nombre);			
-					if ($('divDetalleEquipo').length > 0) {//si esta cargada la vista divDetalleEquipo
+					if ($('#divDetalleEquipo').length > 0) {//si esta cargada la vista divDetalleEquipo
 						tplSource='';
 						tplSource=$("#tpl-infoEquipo").html();
 						$("#divInvEquipo").empty();//limpiando
