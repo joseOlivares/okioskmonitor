@@ -307,9 +307,9 @@ io.on('connection', function(socket){
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
 		//let todosLosEquipos=pool.query("SELECT ipID FROM tblequipo WHERE estado=1");//1 es activo, no eliminado
 
-		pool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+		pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) {
 			if (error) throw error;
-			console.log('The solution is: ', results[0].solution);
+			console.log('Registros', results);
 		  });
 
 		//console.log(todosLosEquipos);
