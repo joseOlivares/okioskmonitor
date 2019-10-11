@@ -12,7 +12,7 @@ let simpleCrypto= new SimpleCrypto(_secretKey);
 //-----------------------
 
 let cron = require('node-cron');//task programming
-
+let estado=require('./contadores');//manejando estado de equipos
 
 const app = express();
 ////////////////////////////////////
@@ -288,6 +288,7 @@ cron.schedule('0 18 * * sunday', () => {
 io.on('connection', function(socket){
 	ipIdCliente=socket.handshake.query['ipClienteX'];
 	console.log('Cliente Conectado...'+ipIdCliente);
+	console.log(socket);
 	//console.log('session id...'+socket.id);
 	console.log('++++');
 
