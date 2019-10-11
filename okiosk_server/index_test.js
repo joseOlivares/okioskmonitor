@@ -305,14 +305,17 @@ io.on('connection', function(socket){
 			
 	}else{
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		//let todosLosEquipos=pool.query("SELECT ipID FROM tblequipo WHERE estado=1");//1 es activo, no eliminado
-
+		//1 es activo, no eliminado
 		pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) {
 			if (error) throw error;
-			console.log('Registros', results[0]);
+			//definiendo estados
+			estado.setTotal(results.length);//total de equipos conectados
+			
+			estado.fillOffline(results);
+			console.log(estado.offline);
 		  });
 
-		//console.log(todosLosEquipos);
+		
 	}
 
 	socketCount++;// Socket has connected, increase socket count

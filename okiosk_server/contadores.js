@@ -4,6 +4,15 @@ let contadorEquipo={
     warning:[],
     ready:[],
     total:0,
+    fillOffline:function(rows){
+        if(rows && rows.length>0){
+            contadorEquipo.offline= Object.values(rows);
+            /*for (let i = 0; i < rows.length; i++) {
+                contadorEquipo.offline.push(rows[i].ipID);
+            }
+            */
+        }
+    },
     addOffline:function(ipId){
         if(ipId && contadorEquipo.total>contadorEquipo.offline.length && ipId.length>3){
             contadorEquipo.offline.push(ipId);
