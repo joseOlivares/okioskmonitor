@@ -305,7 +305,7 @@ io.on('connection', function(socket){
 			
 	}else{
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		let todosLosEquipos=await pool2.query("SELECT ipID from tblequipo WHERE estado=1");//1 es activo, no eliminado
+		let todosLosEquipos=pool2.query("SELECT ipID from tblequipo WHERE estado=1");//1 es activo, no eliminado
 		console.log(todosLosEquipos);
 	}
 
