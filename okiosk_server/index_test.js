@@ -280,8 +280,9 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 	
 //-----Tarea programada: borrado de logs toods los domingos del mes , 18 pm---
 cron.schedule('0 18 * * sunday', () => {
+	//pool se ejecuta bien, pero deberiamos revisar a futuro si se hace de forma tradicional ########################
 	pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 2 MONTH)');
-	console.log('Tarea programada... Se ha eliminado el log de alertas posterior a 2 meses!');
+	console.log('Tarea programada ejecutada... Se ha eliminado el log de alertas posterior a 2 meses!');
   });
 //--------------------------------
 
@@ -304,8 +305,14 @@ io.on('connection', function(socket){
 			
 	}else{
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		let todosLosEquipos=pool.query("SELECT ipID FROM tblequipo WHERE estado=1");//1 es activo, no eliminado
-		console.log(todosLosEquipos);
+		//let todosLosEquipos=pool.query("SELECT ipID FROM tblequipo WHERE estado=1");//1 es activo, no eliminado
+
+		pool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+			if (error) throw error;
+			console.log('The solution is: ', results[0].solution);
+		  });
+
+		//console.log(todosLosEquipos);
 	}
 
 	socketCount++;// Socket has connected, increase socket count
