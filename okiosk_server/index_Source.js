@@ -399,9 +399,9 @@ io.on('connection', function(socket){
 							io.sockets.emit('ping_ipResp',ipsOffLine[this.p]);
 						}.bind({p:p}));
 					
-					/*console.log("Respuesta = "+respuesta);
+					/**/console.log("Respuesta = "+respuesta);
 					console.log("################################################");
-					console.log("IP: "+ipsOffLine[p].ip+" "+ipsOffLine[p].Respuesta);*/
+					console.log("IP: "+ipsOffLine[p].ip+" "+ipsOffLine[p].Respuesta);
 				}
 
 
