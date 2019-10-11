@@ -309,7 +309,7 @@ io.on('connection', function(socket){
 
 		pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) {
 			if (error) throw error;
-			console.log('Registros', results);
+			console.log('Registros', results[0]);
 		  });
 
 		//console.log(todosLosEquipos);
