@@ -304,7 +304,7 @@ io.on('connection', function(socket){
 			
 	}else{
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		let todosLosEquipos=pool.query("DELETE FROM tblalertas_log WHERE idalerta_log=16");//1 es activo, no eliminado
+		let todosLosEquipos=pool.query("SELECT ipID FROM tblequipo WHERE estado=1");//1 es activo, no eliminado
 		console.log(todosLosEquipos);
 	}
 
