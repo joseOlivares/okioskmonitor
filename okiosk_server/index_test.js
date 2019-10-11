@@ -13,6 +13,7 @@ let simpleCrypto= new SimpleCrypto(_secretKey);
 
 let cron = require('node-cron');//task programming
 let estado=require('./contadores');//manejando estado de equipos
+const pool2 = require('./database');//Nuevo pool mysql
 
 const app = express();
 ////////////////////////////////////
@@ -304,7 +305,7 @@ io.on('connection', function(socket){
 			
 	}else{
 		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		let todosLosEquipos=await pool.query("SELECT count(*) from tblequipo");//1 es activo, no eliminado
+		let todosLosEquipos=await pool2.query("SELECT ipID from tblequipo WHERE estado=1");//1 es activo, no eliminado
 		console.log(todosLosEquipos);
 	}
 
