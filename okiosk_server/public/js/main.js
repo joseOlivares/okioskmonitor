@@ -18,6 +18,9 @@ let estadoEquipoEvaluado={};
 let totDesconect=0;
 const OFFLINE="OFFLINE",ALERTA="ALERTA",OK="OK"; //estados para equipos
 
+
+let  listosIpId=[],alertadosIpId=[],offlineIpId=[];
+
 //Handlebars Helpers
 	Handlebars.registerHelper('myDateTime',function(){
 		var fecha=new Date();
@@ -45,6 +48,31 @@ var socket = io.connect(servidor.IP); //creating socket connection to server, se
 
 var app={
 	receiveData:function(){
+
+		socket.on('mostrar_lstEquipos',function(rows,ready,warning,offline,totConectados){
+	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
+			lstCompletoEquipos=Array.from(rows);//CLONAMOS listado de equipo en memoria
+			//equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
+
+			let totEquipos=lstCompletoEquipos.length;
+
+			actualizarTablero(totConectados,ready.length,warning.length,offline.length);
+		
+	    	var cadena='';
+	    	for (var i = 0; i < rows.length; i++) {		
+	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+rows[i].ip+'<br> <p>'+rows[i].nombre+' '+ rows[i].ubicacion+'</p></div></a></li>';
+	    	   $("#lstKioskos").append(cadena);//cargando contenido en index.html 
+	    	}
+			
+			$("#recuentoTotal").html(totEquipos);//badge
+			
+
+			actualizarEstadosLocales(ready,warning,offline);
+
+			asignarRegistrosPorEstado();
+
+	    });
+
 		socket.on('latido_equipo_ok',function(equipo,totalClientes,ready,warning,offline){//recibe los datos actuales del equipo
 			
 			actualizarTablero(totalClientes,ready.length,warning.length,offline.length);
@@ -91,6 +119,10 @@ var app={
 				}
 			}//cierra If !==Listo
 		
+
+			 actualizarEstadosLocales(ready,warning,offline);
+			asignarRegistrosPorEstado();
+
 		});	//cierra Latido_equipo_ok
 
 		//-------leyendo detalle de hardware 09/11/2017 modificacion
@@ -114,48 +146,32 @@ var app={
 			}
 		});
 
-	    socket.on('mostrar_lstEquipos',function(rows,ready,warning,offline,totConectados){
-	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
-			lstCompletoEquipos=Array.from(rows);//guardando listado de equipo en memoria
-			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
-
-			let totEquipos=lstCompletoEquipos.length;
-
-			actualizarTablero(totConectados,ready.length,warning.length,offline.length);
-		
-	    	var cadena='';
-	    	for (var i = 0; i < rows.length; i++) {
-				//var x=JSON.stringify(rows[i], null, 4); //creo q no se usa
-				
-	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+rows[i].ip+'<br> <p>'+rows[i].nombre+' '+ rows[i].ubicacion+'</p></div></a></li>';
-	    	   $("#lstKioskos").append(cadena);//cargando contenido en index.html 
-	    	}
-			
-	    	$("#recuentoTotal").html(totEquipos);//badge
-
-	    });
-
 		socket.on('equipo_desconectado',function(idIpEquipo, totConectados, ready,warning,offline){
 			$("#"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");
 			$("#detalle"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");//cambiando estado en panel detalle delequipo
 			$("#prnIco"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");					
 			
 			actualizarTablero(totConectados,ready.length,warning.length,offline.length);
+
+			actualizarEstadosLocales(ready,warning,offline);
+			asignarRegistrosPorEstado();
+
 		});
 
 		socket.on('ping_ipResp', function(ipsOfflineResp){// 28-12-2017
+			//NOTA: Esta funcion deberá utiliarse al constatr el PING de una IP
+			//dados los cambios actuales de la V2, por el momento no haace nada
 			if (ipsOfflineResp.Respuesta!==1) {//si no responde ping
-				actualizarEstadoEquipo(ipsOfflineResp.ipID,OFFLINE);//actualizamos estado del equipo 03/10/2019	
+
 			}else{
 				let posOff=-1;		
 				//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de offline
-				posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(ipsOfflineResp.ipID);
+				/*posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(ipsOfflineResp.ipID);
 				if(posOff !== -1){//si lo encuentra
 					equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
-				}									
-			}
-
-			actualizarVistaDivs(ipsOfflineResp.ipID);				
+				}
+				*/									
+			}			
 		});
 
 	}, //cierre receive_data
@@ -180,6 +196,13 @@ var app={
 		tplSource3=$("#tpl-equiposAlarmados").html();
 		var tplEquiposAlarmados=Handlebars.compile(tplSource3);
 		app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);	
+
+		let totReadyx=listosIpId.length;
+		let totWarn=alertadosIpId.length;
+		let totOff=offlineIpId.length;
+		let totConn=totReadyx+totWarn;
+
+		actualizarTablero(totConn,totReadyx,totWarn,totOff);//JL
 	},
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
@@ -188,6 +211,8 @@ var app={
 		tplSource5=$("#tpl-equiposOffLine").html();
 		var tplEquiposOffLine=Handlebars.compile(tplSource5);
 		app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
+
+
 		socket.emit('ping_ip',equiposOffLineRT);//consultando PING de IPS	
 
 		//spining
@@ -199,6 +224,13 @@ var app={
 			//$("#refreshOffline").addClass("fa fa-refresh");
 		},1000);	
 
+		let totReadyx=listosIpId.length;
+		let totWarn=alertadosIpId.length;
+		let totOff=offlineIpId.length;
+		let totConn=totReadyx+totWarn;
+
+		actualizarTablero(totConn,totReadyx,totWarn,totOff);//JL
+
 	},
 
 	mostrarEquiposOk:function(){
@@ -207,6 +239,13 @@ var app={
 		tplSource4=$("#tpl-equiposOk").html();
 		var tplEquiposOk=Handlebars.compile(tplSource4);
 		app.showTemplate(tplEquiposOk,equiposOkRT,"divContenido",1);
+
+		let totReadyx=listosIpId.length;
+		let totWarn=alertadosIpId.length;
+		let totOff=offlineIpId.length;
+		let totConn=totReadyx+totWarn;
+
+		actualizarTablero(totConn,totReadyx,totWarn,totOff);//JL
 	},
 
 	esPrinterZebra:function(defaultPrinterName){
@@ -231,11 +270,9 @@ var app={
 		}
 
 		return -1;//si no encuentra nada
-
 	},
 	
 	validarPerfil:function(idperfil){
-		
 		if (idperfil===1||idperfil===2) {//root o admin
 			$("#adminItem1").html('<a href="/usuario/verusuarios"><i class="fa fa-users"></i> USUARIOS</a>');
 			$("#adminItem2").html('<a href="/kiosko/verkioskos"><i class="fa fa-desktop"></i> KIOSKOS</a>');
@@ -256,144 +293,9 @@ var app={
 
 app.initialize();
 
-function actualizarEstadoEquipo(equipoIpID,estado,pEstadoEquipoEvaluado){
-	if (!estado) {
-		estado=OFFLINE;
-	}
-
-	let posListado=app.buscarPosicion(lstCompletoEquipos,equipoIpID);
-	let posAlerta=app.buscarPosicion(equiposAlertadosRT,equipoIpID);
-	let posOffline=app.buscarPosicion(equiposOffLineRT,equipoIpID);
-	let posOK=app.buscarPosicion(equiposOkRT,equipoIpID);
-	
-	if(estado==="OK"){
-		if(posOK===-1){//si no existe, lo agregamos
-			equiposOkRT.push(lstCompletoEquipos[posListado]);
-
-			equiposOkRT[equiposOkRT.length-1].strUbicacion=lstCompletoEquipos[posListado].ubicacion; //agreagando propiedad strUbicacion
-			equiposOkRT[equiposOkRT.length-1].strNombreEquipo=lstCompletoEquipos[posListado].nombre;			
-		}
-
-		if(posOffline!==-1){//si existe en los Offlines, lo borramos
-			equiposOffLineRT.splice(posOffline,1);
-		}
-
-		if(posAlerta!==-1){//si existe en los alertados, lo borramos
-			equiposAlertadosRT.splice(posAlerta,1);
-		}
-	}
-	
-	if(estado==="OFFLINE"){
-		if(posOK!==-1){//si existe, lo borramos
-			equiposOkRT.splice(posOK,1);
-		}
-
-		if(posOffline===-1){//si no existe
-			equiposOffLineRT.push(lstCompletoEquipos[posListado]);
-		}
-
-		if(posAlerta!==-1){//si existe en los alertados, lo borramos
-			equiposAlertadosRT.splice(posAlerta,1);
-		}	
-	}
-
-	if(estado==="ALERTA"){
-		if(posOK!==-1){//si existe, lo borramos
-			equiposOkRT.splice(posOK,1);
-		}
-
-		if(posOffline!==-1){//si existe en los Offlines, lo borramos
-			equiposOffLineRT.splice(posOffline,1);
-		}
-
-		if(posAlerta===-1){//si no existe, lo agregamos
-			equiposAlertadosRT.push(lstCompletoEquipos[posListado]);
-			equiposAlertadosRT[equiposAlertadosRT.length-1].strUbicacion=lstCompletoEquipos[posListado].ubicacion;
-			if (pEstadoEquipoEvaluado) {
-				//anexando el string status al array de objetos equiposAlertadosRT;
-				equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter=pEstadoEquipoEvaluado.detectedErrorState; 
-			}else{
-				equiposAlertadosRT[equiposAlertadosRT.length-1].strAlertaPrinter="Error: function actualizarEstadoEquipo (main.js)"; 
-			}
-		}
-	}	
-	
-}
-
-function actualizarVistaDivs(ipID,pingResp){
-	if (!pingResp) {
-		pingResp=0;	
-	}
-
-	let posListaGeneral=app.buscarPosicion(lstCompletoEquipos,ipID);
-	let posOkRT=app.buscarPosicion(equiposOkRT,ipID);
-	let posAlertRT=app.buscarPosicion(equiposAlertadosRT,ipID);
-	let posOfflineRT=app.buscarPosicion(equiposOffLineRT,ipID);
-
-	if($("#divLstEquiposOk").length>0){//si esta cargado en el DOM
-		if(posOkRT!==-1 && posAlertRT===-1 && posOfflineRT===-1){//si existe en el array
-			console.log("Cargado #divLstEquiposOk");
-			$("#divContenido").empty();
-			tplSource4='';
-			tplSource4=$("#tpl-equiposOk").html();
-			var tplEquiposOk=Handlebars.compile(tplSource4);
-			app.showTemplate(tplEquiposOk,equiposOkRT,"divContenido",1);
-		}
-	}
-	
-	if($("#divLstAlarmados").length>0){//si esta cargado en el DOM
-		if(posOkRT===-1 && posAlertRT!==-1 && posOfflineRT===-1){//si existe en el array
-			console.log("Cargado #divLstAlarmados");
-			$("#divContenido").empty();
-			tplSource3='';
-			tplSource3=$("#tpl-equiposAlarmados").html();
-			var tplEquiposAlarmados=Handlebars.compile(tplSource3);
-			app.showTemplate(tplEquiposAlarmados,equiposAlertadosRT,"divContenido",1);
-		}	
-	}
 
 
-	if ($('#divLstOffLine').length > 0){//si esta cargado en el DOM
-		if(posOkRT===-1 && posAlertRT===-1 && posOfflineRT!==-1){//si existe en el array
-			console.log('Cargado #divLstOffLine');
-			$("#divContenido").empty();
-			tplSource5='';
-			tplSource5=$("#tpl-equiposOffLine").html();
-			var tplEquiposOffLine=Handlebars.compile(tplSource5);
-			app.showTemplate(tplEquiposOffLine,equiposOffLineRT,"divContenido",1);
-		}
-
-		if(pingResp===1){//si la ip responde el ping
-			$("#ipOff"+ipID).attr("class","fa fa-heartbeat alertaOk");
-			$("#ipOff"+ipID).attr('title', 'Ping Responde');
-		}else{
-			//setTimeout(()=>{ },700);	
-			//fa fa-refresh fa-spin  fa-fw
-			$("#ipOff"+ipID).attr('class','fa fa-times-circle-o alertaE');	
-			$("#ipOff"+ipID).attr('title', 'Ping No responde');			
-		}	
-	}		
-}
-
-function respondePorIp(){
-	//actualizara el estado del equipo si responde por IP, quitandolo de equipos Offilne
-	let posOff=-1;		
-	//si equipo esta en listado de equipos monitoreados, lo quitamos de la lista de desconectados
-	for (var i = equiposOkRT.length - 1; i >= 0; i--) {			
-		posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposOkRT[i].ipID);
-		if(posOff !== -1){//si lo encuentra
-			equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline
-		}
-	}
-
-	for (var y = equiposAlertadosRT.length - 1; y >= 0; y--) {			
-		posOff=equiposOffLineRT.map(function(e) { return e.ipID; }).indexOf(equiposAlertadosRT[y].ipID);
-		if(posOff !== -1){//si lo encuentra
-			equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
-		}
-	}	
-}
-
+//12/10/2019 NEW  Olivares
 function actualizarTablero(totConected,totReady,totWarning,totOffline){
 	if($("#divTotalClientes").length>0){
 		$("#divTotalClientes").empty();
@@ -414,4 +316,47 @@ function actualizarTablero(totConected,totReady,totWarning,totOffline){
 		$("#divTotalSinError").empty();
 		$("#divTotalSinError").html(totReady);
 	}
+}
+
+ function actualizarEstadosLocales(arrayReady, arrayWarning, arrayOffline){
+	try {
+		listosIpId=Array.from(arrayReady);
+		alertadosIpId=Array.from(arrayWarning);
+		offlineIpId=Array.from(arrayOffline);	
+	} catch (error) {
+		console.log("Error en función actualizarEstadosLocales();");
+		console.log(error);
+	}
+
+}
+
+
+function asignarRegistrosPorEstado(){
+	//limpiando contenido
+	equiposOkRT.length=0;
+	equiposOffLineRT.length=0;
+	equiposAlertadosRT.length=0;
+	
+	//llenando arrays con data completa 
+	for (let i = 0; i < listosIpId.length; i++) {//equiposOkRT
+		let pos=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(listosIpId[i]);
+		if(pos!==-1){
+			equiposOkRT.push(lstCompletoEquipos[pos]);
+		}
+	}
+
+	for (let i = 0; i < alertadosIpId.length; i++) {//equiposAlertadosRT
+		let pos2=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(alertadosIpId[i]);
+		if(pos2!==-1){
+			equiposAlertadosRT.push(lstCompletoEquipos[pos2]);
+		}
+	}
+
+	for (let i = 0; i < offlineIpId.length; i++) {//equiposOffLineRT
+		let pos3=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(offlineIpId[i]);
+		if(pos3!==-1){
+			equiposOffLineRT.push(lstCompletoEquipos[pos3]);
+		}
+	}	
+
 }
