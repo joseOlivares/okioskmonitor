@@ -15,11 +15,9 @@ let equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra e
 let equiposOffLineRT=[]; //listado de equipos offline en real time
 let quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
 let estadoEquipoEvaluado={};
-let totDesconect=0;
-const OFFLINE="OFFLINE",ALERTA="ALERTA",OK="OK"; //estados para equipos
+let estadoImpresores=[];
 
-
-let  listosIpId=[],alertadosIpId=[],offlineIpId=[];
+let  listosIpId=[],alertadosIpId=[],offlineIpId=[]; //solo guardan los ipID
 
 //Handlebars Helpers
 	Handlebars.registerHelper('myDateTime',function(){
@@ -120,8 +118,10 @@ var app={
 			}//cierra If !==Listo
 		
 
-			 actualizarEstadosLocales(ready,warning,offline);
+			actualizarEstadosLocales(ready,warning,offline);
 			asignarRegistrosPorEstado();
+
+			setEstadosImpresores(equipo);
 
 		});	//cierra Latido_equipo_ok
 
@@ -336,7 +336,9 @@ function asignarRegistrosPorEstado(){
 	equiposOkRT.length=0;
 	equiposOffLineRT.length=0;
 	equiposAlertadosRT.length=0;
-	
+
+	estadoImpresores.length=0;//Testing 
+
 	//llenando arrays con data completa 
 	for (let i = 0; i < listosIpId.length; i++) {//equiposOkRT
 		let pos=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(listosIpId[i]);
@@ -359,4 +361,31 @@ function asignarRegistrosPorEstado(){
 		}
 	}	
 
+}
+
+function setEstadosImpresores(datosPrinter){
+
+		if(estadoImpresores.length>0){
+			
+			let p=estadoImpresores.map(function(elemento) { return elemento.ipID; }).indexOf(datosPrinter.ipID);
+
+			if(p===-1){//si no existe en objeto, lo agregamos
+				let cadena=datosPrinter.printerName+': '+datosPrinter.generalState;
+				try {
+					estadoImpresores.push({ipID:datosPrinter.ipID,resumenPrinter:cadena});	
+				} catch (error) {
+					console.log(error);
+				}
+			}
+
+		}else{//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+			let resumenPrinter=datosPrinter.printerName+': '+datosPrinter.generalState;
+			try {
+				let myipID=datosPrinter.ipID;
+				estadoImpresores[myipID]=resumenPrinter;	
+			} catch (error) {
+				console.log(error);
+			}
+			
+		}
 }
