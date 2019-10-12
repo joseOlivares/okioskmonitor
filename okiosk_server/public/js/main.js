@@ -148,22 +148,22 @@ var app={
 			}
 		});
 
-	    socket.on('mostrar_lstEquipos',function(rows){
+	    socket.on('mostrar_lstEquipos',function(data){
 	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
-			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
-			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
+			lstCompletoEquipos=data.rows;//guardando listado de equipo en memoria
+			equiposOffLineRT=Array.from(data.rows);// CLONAMOS por default tomo todos como desconectados
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div
-				$("#divOffline").html(rows.length);//actualizamos el total de clientes desconectados
+				$("#divOffline").html(data.contaOffline);//actualizamos el total de clientes desconectados
 			}
 		
 	    	var cadena='';
-	    	for (var i = 0; i < rows.length; i++) {
-	    		var x=JSON.stringify(rows[i], null, 4);
-	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+rows[i].ip+'<br> <p>'+rows[i].nombre+' '+ rows[i].ubicacion+'</p></div></a></li>';
+	    	for (var i = 0; i < data.rows.length; i++) {
+	    		var x=JSON.stringify(data.rows[i], null, 4);
+	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+data.rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+data.rows[i].ip+'<br> <p>'+data.rows[i].nombre+' '+ data.rows[i].ubicacion+'</p></div></a></li>';
 	    	   $("#lstKioskos").append(cadena);//cargando contenido en index.html 
 	    	}
 
-	    	$("#recuentoTotal").html(rows.length);
+	    	$("#recuentoTotal").html(data.rows.length);
 
 	    });
 

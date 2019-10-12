@@ -79,9 +79,6 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 //----------
 
-//--18/09/2017--- Sesiones
-	
-//-----
 
 /* Linea original, server y pagina html a mostrar estan  en misma carpeta*/
 //app.use(express.static(__dirname + '/public')); //serving statics files like css, js, images
@@ -108,7 +105,7 @@ var pool= mysql.createPool({ //conexion a base de datos mysql  IP_MYSQL
 	var equiposAlertados=[];
 	var ipIdCliente=-1;
 	var quitarIpId=-1, quitarIpIdPos=-1;
-	var listEquipos='SELECT * FROM tblequipo'; //seleccionando las categorias disponibles
+	var listEquipos='SELECT * FROM tblequipo WHERE estado=1'; //seleccionando todos los equipos habilitados
 	var usersInfo=[];//guarda informacion del listado de usuarios
 	var usuariosConectados=[];
 	//var socketConnectedId=[]; //guarda socket e ipid del cliente, para comunicacion privada 19/10/2017 
@@ -219,7 +216,6 @@ function requireLogin (req, res, next) {
 		  });//cierra query
 	});
 
-
 	function refrescarUsuarios(){
 		//usamos esta funcion para refrescar el valor de usersInfo, cuando se realizan cambios
 		//en tblusuario                Jose Olivares, Sept 2019
@@ -286,9 +282,22 @@ cron.schedule('0 18 * * sunday', () => {
   });
 //--------------------------------
 
+//----cargando todos los ipIDs de los equipos 11/10/2019		
+function iniciarEstadosKioskos(){
+	estado.setInitialState();//inicializando estados de equipos
+	pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) { //1 es activo, no eliminado
+		if (error) throw error;
+		//definiendo estados
+		estado.setTotal(results.length);//total de equipos conectados
+		estado.fillOffline(results);
+		//console.log(estado.offline);
+	  });	
+}		
+
+iniciarEstadosKioskos();
+
 io.on('connection', function(socket){
 	ipIdCliente=socket.handshake.query['ipClienteX'];
-	
 	//console.log('session id...'+socket.id);
 	console.log('++++');
 
@@ -301,21 +310,9 @@ io.on('connection', function(socket){
 			//socketConnectedId.push(socket.id); //agregando socket.id 19/10/17
 		}
 
-			console.log('Total clientes conectados: '+equiposConectados.length);		
-			
+		console.log('Total clientes conectados: '+equiposConectados.length);				
 	}else{
-		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);
-		//1 es activo, no eliminado
-		pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) {
-			if (error) throw error;
-			//definiendo estados
-			estado.setTotal(results.length);//total de equipos conectados
-			
-			estado.fillOffline(results);
-			console.log(estado.offline);
-		  });
-
-		
+		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);		
 	}
 
 	socketCount++;// Socket has connected, increase socket count
@@ -327,8 +324,8 @@ io.on('connection', function(socket){
 			  		if(err){
 			  			console.log(err);
 			  			return;
-			  		}else{
-			  			io.sockets.emit('mostrar_lstEquipos',rows);//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
+			  		}else{ 
+			  			io.sockets.emit('mostrar_lstEquipos',{rows:rows,contaOffline:estado.offline.length});//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
 						  console.log('Listado de equipos enviados a GUI de monitoreo!');
 						  //console.log(rows);
 			  		}
