@@ -15,7 +15,7 @@ let equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra e
 let equiposOffLineRT=[]; //listado de equipos offline en real time
 let quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
 let estadoEquipoEvaluado={};
-let zebraPrinterDefault=-1, totDesconect=0;
+let totDesconect=0;
 const OFFLINE="OFFLINE",ALERTA="ALERTA",OK="OK"; //estados para equipos
 
 //Handlebars Helpers
@@ -63,16 +63,7 @@ var app={
 			//----------------
 
 			actualizarVistaDivs(equipo.ipID);
-			//02 Oct 2019 estadoEquipoEvaluado=evaluaEstadoPrinter(equipo); //consultado los estados del printer
 			estadoEquipoEvaluado=equipo; //Para no alterar el resto del codigo, se hizo esta asignacion
-			zebraPrinterDefault=app.esPrinterZebra(equipo.printerName);//evalua si el printer por default es zebra
-
-			//--------------13/08/2017
-			if(estadoEquipoEvaluado.generalState==="Listo" && zebraPrinterDefault===-1){
-				estadoEquipoEvaluado.generalState="Listo, Otro Printer";
-				estadoEquipoEvaluado.extendedDetectedErrorState="Default Printer no es Marca Zebra";
-			}
-			//------------
 
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
@@ -88,7 +79,7 @@ var app={
 				$("#prnExtendedError"+equipo.ipID).html(estadoEquipoEvaluado.extendedDetectedErrorState);	
 				$("#prnDescription"+equipo.ipID).html(estadoEquipoEvaluado.extendedPrinterStatus);				
 
-				if(zebraPrinterDefault===1){
+				if(equipo.esPrinterZebra===true){
 					$("#prnImg"+equipo.ipID).attr("src", "img/zebra_ttp2000.png");//cambiando la imagen del printer	a zebra				
 				}else{
 					$("#prnImg"+equipo.ipID).attr("src", "img/printer_generic.png");//imagen printer no zebra	

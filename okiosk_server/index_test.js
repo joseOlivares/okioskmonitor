@@ -345,11 +345,13 @@ io.on('connection', function(socket){
 			console.log("Estado extendido  del Impresor: "+equipo.extendedPrinterStatus);				
 			console.log("Error Detectado: "+equipo.detectedErrorState);
 			console.log("Error Detectado Extendido: "+equipo.extendedDetectedErrorState);
+			console.log("¿Es printer Zebra?",equipo.esPrinterZebra);
 			console.log(".......");	
 			
 			if(equiposConectados.indexOf(equipo.ipID)==-1)//si no esta en el array, lo agrega. 
 			{
 				equiposConectados.push(equipo.ipID);	//Si se esta afectando el performance, es posible quitar este bloque 
+				estado.delOffline(equipo.ipID);//J
 			}
 
 

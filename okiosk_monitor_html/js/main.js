@@ -81,9 +81,16 @@ var app={
 			myPrinter.ipID=ipAsID;
 			myPrinter.textStatus=prTextStatus;
 			myPrinter.printerName=printerName;
-			
+			myPrinter.esPrinterZebra=esprinterZebra(myPrinter.printerName);
+
+
 			if(myPrinter.generalState==='-1'){//colocamos un mensaje mas entendible
 				myPrinter.generalState='Error';
+			}
+
+			if(myPrinter.esPrinterZebra===false && myPrinter.generalState==="Listo"){//si esta listo y no es Zebra
+				myPrinter.generalState="Listo, Otro Printer";
+				myPrinter.extendedDetectedErrorState="Default Printer no es Marca Zebra";
 			}
 			
 			socket.emit('ver_status',myPrinter);			
