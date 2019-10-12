@@ -1,5 +1,3 @@
-import { read } from "fs";
-
 //-----------------------------------------------------------------------------
 //Libreria para leer estatus de impresor Zebra TTP
 //Basada en las especificaciones del fabricante
@@ -142,7 +140,7 @@ var app={
 			$("#detalle"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");//cambiando estado en panel detalle delequipo
 			$("#prnIco"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");					
 			
-			actualizarTablero(totConectados,read.length,warning.length,offline.length);
+			actualizarTablero(totConectados,ready.length,warning.length,offline.length);
 		});
 
 		socket.on('ping_ipResp', function(ipsOfflineResp){// 28-12-2017
@@ -170,18 +168,10 @@ var app={
 		var tplDetalleEquipo=Handlebars.compile(tplSource);
 		app.showTemplate(tplDetalleEquipo,lstCompletoEquipos[posEquipo],"divContenido",0); //cargando template de tipo mensaje, param 0
 	
-		//19/10/2017solicitando detalle de hardware del cliente, se envia al servidor
+		//mostramos un spinner mientras carga
 		$("#divInvEquipo").html('<div class="text-center txt-claro"> Cargando datos adicionales... <span class="fa fa-refresh fa-spin  fa-fw"></span></div>');
+		//solicitando detalle de hardware del cliente, se envia al servidor
 		socket.emit('ver_hwCliente',lstCompletoEquipos[posEquipo].ipID); 
-	},
-
-	mostarStatusPrinter:function(myPrinter){
-		$("#divDetallePrinter").empty();	
-		tplSource2="";
-		tplSource2=$("#tpl-detallePrinter").html(); //creo que este tpl no existe, validar sino quitarlo
-		var tplDetallePrinter=Handlebars.compile(tplSource2);
-		app.showTemplate(tplDetallePrinter,myPrinter,"divDetallePrinter",0); //cargando template de tipo mensaje, param 0
-
 	},
 
 	mostrarEquiposAlertados:function(){
