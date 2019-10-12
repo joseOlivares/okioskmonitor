@@ -261,7 +261,6 @@ function requireLogin (req, res, next) {
 		}
 		console.log("*****ERROR en funcion encryptOnDataBase, index.js");
 	}
-//--------------------------------------------------------
 
 var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){			  	
 		for(var p = 0; p < arrayObjeto.length; p++) {
@@ -273,6 +272,7 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 
 		return -1;//si no encuentra nada
 	}};
+//--------------------------------------------------------	
 	
 //-----Tarea programada: borrado de logs toods los domingos del mes , 18 pm---
 cron.schedule('0 18 * * sunday', () => {
@@ -285,12 +285,12 @@ cron.schedule('0 18 * * sunday', () => {
 //----cargando todos los ipIDs de los equipos 11/10/2019		
 function iniciarEstadosKioskos(){
 	estado.setInitialState();//inicializando estados de equipos
-	pool.query('SELECT ipID FROM tblequipo WHERE estado=1', function (error, results, fields) { //1 es activo, no eliminado
+	pool.query(listEquipos, function (error, results, fields) { //1 es activo, no eliminado
 		if (error) throw error;
 		//definiendo estados
 		estado.setTotal(results.length);//total de equipos conectados
 		estado.fillOffline(results);
-		//console.log(estado.offline);
+		estado.fillDatosTblEquipo(results);
 	  });	
 }		
 
@@ -299,43 +299,28 @@ iniciarEstadosKioskos();
 io.on('connection', function(socket){
 	ipIdCliente=socket.handshake.query['ipClienteX'];
 	//console.log('session id...'+socket.id);
-	console.log('++++');
 
-	if(typeof ipIdCliente !== 'undefined' &&  ipIdCliente!== null )//si el cliente envia el idIP
+	socketCount++;// Socket has connected, increase socket count
+
+	console.log('++++');
+	if(typeof ipIdCliente !== 'undefined' &&  ipIdCliente!== null )//si el cliente envia el ipID
 	{
 		console.log('Cliente Conectado...'+ipIdCliente);
 		if(equiposConectados.indexOf(ipIdCliente)==-1)//si no esta en el array, lo agrega
 		{
 			equiposConectados.push(ipIdCliente);
-			estado.delOffline(ipIdCliente);//JL
+			estado.addReady(ipIdCliente);//JL lo ponemos ready por default, hastq eu reporte status del printer
 		}
 
 		console.log('Total clientes conectados: '+equiposConectados.length);				
 	}else{
-		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);		
+		console.log("Cliente conectado a Interfaz de monitoreo, socket.id="+socket.id);	
+
+		//cargados listado de equipos en GUI de monitoreo
+		io.sockets.emit('mostrar_lstEquipos',estado.datosTblEquipo,estado.ready,estado.warning,estado.offline,equiposConectados.length);//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
+		
+		console.log('Listado de equipos enviados a GUI de monitoreo!');			
 	}
-
-	socketCount++;// Socket has connected, increase socket count
-	
-	   //Cargando listado de equipo en gui del cliente de monitoreo
-		pool.getConnection(function(err, connection) { 
-			  // Use the connection
-			  connection.query(listEquipos,function(err, rows) {
-			  		if(err){
-			  			console.log(err);
-			  			return;
-			  		}else{ 
-						let totDesconect=estado.offline.length;
-			  			io.sockets.emit('mostrar_lstEquipos',rows,totDesconect,estado.total);//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
-						  console.log('Listado de equipos enviados a GUI de monitoreo!');
-						  //console.log(rows);
-			  		}
-			      
-			    	connection.release();// release connection
-			      //Don't use the connection here, it has been returned to the pool.
-			  });//cierra query
-		});
-
 
 		socket.on('ver_status',function(equipo){//recibe datos de los equipos,desde cliente monitoreo
 			console.log("IP Cliente: "+equipo.ip);
@@ -352,12 +337,16 @@ io.on('connection', function(socket){
 			if(equiposConectados.indexOf(equipo.ipID)==-1)//si no esta en el array, lo agrega. 
 			{
 				equiposConectados.push(equipo.ipID);	//Si se esta afectando el performance, es posible quitar este bloque 
-				estado.delOffline(equipo.ipID);//JL
 			}
 
-			let totDesconect=estado.offline.length;
-			let totReady=estado.ready.length;
-			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length,totDesconect,totReady);
+			if(equipo.generalState==="Listo")//si no tiene alertas
+			{
+				estado.addReady(equipo.ipID);		
+			}else{
+				estado.addWarning(equipo.ipID);//si esta alertado
+			}
+
+			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length,estado.ready,estado.warning,estado.offline);
 		});
 
 
@@ -366,6 +355,7 @@ io.on('connection', function(socket){
 		socket.on('ver_hwCliente',function(myIpID){
 				//enviando peticion a todos los clientes, responderà quien tenga el ipID solicitado
 				//console.log("Llama ver_hwCliente ipId="+myIpID);
+
 				io.sockets.emit('ver_hwClienteData',myIpID);
 		});
 
@@ -409,6 +399,7 @@ io.on('connection', function(socket){
         					}
 							ipsOffLine[this.p].Respuesta=respuesta;	//agregando la respuesta del ping 
 							//io.sockets.emit('ping_ipResp',ipsOffLine);
+							
 							io.sockets.emit('ping_ipResp',ipsOffLine[this.p]);
 						}.bind({p:p}));
 					
@@ -454,6 +445,7 @@ io.on('connection', function(socket){
 		if(typeof quitarIpId !== 'undefined' &&  quitarIpId!== null )//si el cliente envia el idIP
 		{
 			estado.addOffline(quitarIpId);//JL
+
 			quitarIpIdPos=equiposConectados.indexOf(quitarIpId); //posicion del equipo desconectado en el array
         	equiposConectados.splice(quitarIpIdPos,1); //quitando el ipid del array de equipos conectados
 			//socketConnectedId.splice(quitarIpIdPos,1); //quitando socket.id 19/10/17
@@ -462,9 +454,9 @@ io.on('connection', function(socket){
 			registrarLogEquipo(quitarIpId, "Se perdió conexión con cliente de monitoreo");
 		}
                
-        io.sockets.emit('equipo_desconectado',socket.handshake.query['ipClienteX']);
+        io.sockets.emit('equipo_desconectado',quitarIpId, equiposConectados.length,estado.ready,estado.warning,estado.offline);
         console.log("----");
-        console.log('Cliente desconectado...'+socket.handshake.query['ipClienteX']);
+        console.log('Cliente desconectado...'+quitarIpId);
         console.log('Total clientes conectados: '+equiposConectados.length);
         console.log("---");
 	});
@@ -492,7 +484,7 @@ io.on('connection', function(socket){
 
 	}
 
-});
+});//cierra io.connection
 
 /////Inicializando el servidor
 http.listen(port, function(){

@@ -3,6 +3,7 @@ let contadorEquipo={
     offline:[],
     warning:[],
     ready:[],
+    datosTblEquipo:[],
     total:0,
     fillOffline:function(rows){
         if(rows && rows.length>0){
@@ -11,10 +12,19 @@ let contadorEquipo={
             }
         }
     },
+    fillDatosTblEquipo:function(rows){
+        contadorEquipo.datosTblEquipo=Array.from(rows);
+        //console.log("XXXXXXXXXXXXXXX ARRAY FROM XXXXXXXXX");
+        //console.log(this.datosTblEquipo);
+    },
     addOffline:function(ipId){
         if(ipId && contadorEquipo.total>contadorEquipo.offline.length && ipId.length>3){ 
             try{
-                contadorEquipo.offline.push(ipId);
+                const p=contadorEquipo.offline.indexOf(ipId);
+                if(p===-1){//si no existe lo agrega
+                    contadorEquipo.offline.push(ipId);
+                }
+
                 contadorEquipo.delReady(ipId);
                 contadorEquipo.delWarning(ipId);
             }finally{
@@ -25,7 +35,11 @@ let contadorEquipo={
     addWarning:function(ipId){
         if(ipId &&  contadorEquipo.total>contadorEquipo.warning.length && ipId.length>3){
             try{
-                contadorEquipo.warning.push(ipId);
+                const p=contadorEquipo.warning.indexOf(ipId);
+                if(p===-1){//si no existe lo agrega
+                    contadorEquipo.warning.push(ipId);
+                }
+
                 contadorEquipo.delOffline(ipId);
                 contadorEquipo.delReady(ipId);
             }finally{
@@ -36,7 +50,11 @@ let contadorEquipo={
     addReady:function(ipId){
         if(ipId && contadorEquipo.total>contadorEquipo.ready.length && ipId.length>3){
             try{
-                contadorEquipo.ready.push(ipId);
+                const p=contadorEquipo.ready.indexOf(ipId);
+                if(p===-1){//si no existe lo agrega
+                    contadorEquipo.ready.push(ipId);
+                }
+
                 contadorEquipo.delWarning(ipId);
                 contadorEquipo.delOffline(ipId);
             }finally{
@@ -92,7 +110,7 @@ let contadorEquipo={
         contadorEquipo.warning.length=0;
         contadorEquipo.ready.length=0;
     },
-    eliminarIpID:function(ipId){
+    eliminarIpID:function(ipId){//lo quita de todas las variables
         if(ipId && ipId.length>3){
             try {
                 contadorEquipo.delOffline(ipId);

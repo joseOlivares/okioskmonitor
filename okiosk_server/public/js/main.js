@@ -1,3 +1,5 @@
+import { read } from "fs";
+
 //-----------------------------------------------------------------------------
 //Libreria para leer estatus de impresor Zebra TTP
 //Basada en las especificaciones del fabricante
@@ -45,31 +47,17 @@ var socket = io.connect(servidor.IP); //creating socket connection to server, se
 
 var app={
 	receiveData:function(){
-		socket.on('latido_equipo_ok',function(equipo,totalClientes,totDesconect,totReady){//recibe los datos actuales del equipo
-			if ($("#divTotalClientes").length > 0) {//si existe en el dom el DivTotalClientes
-				$("#divTotalClientes").html(totalClientes);//actualizamos el total de clientes conectados
-			}
+		socket.on('latido_equipo_ok',function(equipo,totalClientes,ready,warning,offline){//recibe los datos actuales del equipo
+			
+			actualizarTablero(totalClientes,ready.length,warning.length,offline.length);
 
-			//totDesconect=lstCompletoEquipos.length-totalClientes;
-
-			if ($("#divOffline").length > 0) {//si existe en el dom el Div	
-				$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			}
-
-			//----------13/08/2017
-			if ($("#divTotalSinError").length > 0) {//si existe en el dom el Div	
-				$("#divTotalSinError").html(totReady);//actualizamos el total de equipos ready
-			}
-			//----------------
-
-			actualizarVistaDivs(equipo.ipID);
 			estadoEquipoEvaluado=equipo; //Para no alterar el resto del codigo, se hizo esta asignacion
 
 			if ($('#divDetallePrinter').length > 0) {//si se cargo la interfaz de detalle del printer				
 				$("#detalle"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//equipo responde por IP, cambiando icono en divdetalleEquipo a IP alertaOk
 				$("#prnName"+equipo.ipID).html(equipo.printerName);
 
-				if(estadoEquipoEvaluado.generalState==='-1'){ //para no mostrar -1 cuando tenga error
+				if(estadoEquipoEvaluado.generalState==='-1'){ //para no mostrar -1 cuando tenga error REVISAR CREO QUE NO ENTRA AL TRUE
 					$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.printerStatus.toString());
 				}else{
 					$("#prnStatus"+equipo.ipID).html(estadoEquipoEvaluado.generalState);
@@ -93,9 +81,7 @@ var app={
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "glyphicon glyphicon-ok-circle alertaOk");//cambiando icono OK en detalle printer
 				}
-
-				actualizarEstadoEquipo(equipo.ipID,OK,estadoEquipoEvaluado);//estado OK
-				actualizarVistaDivs(equipo.ipID);			
+		
 			}//cierra IF ==="Listo"
 
 
@@ -105,33 +91,24 @@ var app={
 				if($("#divDetallePrinter").length>0){
 					$("#prnIco"+equipo.ipID).attr("class", "fa fa-exclamation-circle alertaW");//cambiando estado del printer en panel detalle	
 				}
-
-				actualizarEstadoEquipo(equipo.ipID,ALERTA,estadoEquipoEvaluado);//solo aqui agregamos un tercer param
-				actualizarVistaDivs(equipo.ipID);
 			}//cierra If !==Listo
-			
+		
+		});	//cierra Latido_equipo_ok
 
-			if ($("#divWarning").length > 0) {//si existe en el dom el Div	
-				$("#divWarning").html(equiposAlertadosRT.length);//actualizamos el total de equipos connwarnings
-			}
-
-			//-------leyendo detalle de hardware 09/11/2017 modificacion
-			//####################################PROBANDO IF
-			socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
-					//alert("Sistema Operativo del cliente: "+os.Nombre);			
-					if ($('#divDetalleEquipo').length > 0) {//si esta cargada la vista divDetalleEquipo
-						tplSource='';
-						tplSource=$("#tpl-infoEquipo").html();
-						$("#divInvEquipo").empty();//limpiando
-						var tplInformacion=Handlebars.compile(tplSource);
-						var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
-						$("#divInvEquipo").html(html); //cargando resultados
-						//****************************************************************				
-					}//if
-			});
-			//-------------------------------------
-
-		});	//cierra Latido_equipo_ok	
+		//-------leyendo detalle de hardware 09/11/2017 modificacion
+		socket.on('detalle_hwClienteShow',function (data){//os,cpu,detMem,detDisk
+			//alert("Sistema Operativo del cliente: "+os.Nombre);			
+			if ($('#divDetalleEquipo').length > 0) {//si esta cargada la vista divDetalleEquipo
+				tplSource='';
+				tplSource=$("#tpl-infoEquipo").html();
+				$("#divInvEquipo").empty();//limpiando
+				var tplInformacion=Handlebars.compile(tplSource);
+				var html= tplInformacion(data); //compilando template cpu,dteMem,detDisk
+				$("#divInvEquipo").html(html); //cargando resultados	
+			}//if
+		});
+		//-------------------------------------		
+		
 
 		socket.on('conexion_cliente',function(totalClientes2){//si existe en el dom el DivTotalClientes
 			if ($('#divTotalClientes').length > 0) {
@@ -139,35 +116,33 @@ var app={
 			}
 		});
 
-	    socket.on('mostrar_lstEquipos',function(rows,contaOffline,recuentoTot){
+	    socket.on('mostrar_lstEquipos',function(rows,ready,warning,offline,totConectados){
 	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
-			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
+			lstCompletoEquipos=Array.from(rows);//guardando listado de equipo en memoria
 			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
-			if ($("#divOffline").length > 0) {//si existe en el dom el Div
-				$("#divOffline").html(contaOffline);//actualizamos el total de clientes desconectados
-			}
+
+			let totEquipos=lstCompletoEquipos.length;
+
+			actualizarTablero(totConectados,ready.length,warning.length,offline.length);
 		
 	    	var cadena='';
 	    	for (var i = 0; i < rows.length; i++) {
-	    		var x=JSON.stringify(rows[i], null, 4);
+				//var x=JSON.stringify(rows[i], null, 4); //creo q no se usa
+				
 	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+rows[i].ip+'<br> <p>'+rows[i].nombre+' '+ rows[i].ubicacion+'</p></div></a></li>';
 	    	   $("#lstKioskos").append(cadena);//cargando contenido en index.html 
 	    	}
-
-	    	$("#recuentoTotal").html(recuentoTot);
+			
+	    	$("#recuentoTotal").html(totEquipos);//badge
 
 	    });
 
-		socket.on('equipo_desconectado',function(idIpEquipo){
+		socket.on('equipo_desconectado',function(idIpEquipo, totConectados, ready,warning,offline){
 			$("#"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");
 			$("#detalle"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");//cambiando estado en panel detalle delequipo
 			$("#prnIco"+idIpEquipo).attr("class", "glyphicon glyphicon-ban-circle alertaE");					
 			
-			totDesconect=totDesconect+1;	
-			$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
-			
-			actualizarEstadoEquipo(idIpEquipo,OFFLINE);//OLIVARES
-			actualizarVistaDivs(idIpEquipo,0);
+			actualizarTablero(totConectados,read.length,warning.length,offline.length);
 		});
 
 		socket.on('ping_ipResp', function(ipsOfflineResp){// 28-12-2017
@@ -218,7 +193,6 @@ var app={
 	},
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
-
 		$("#divContenido").empty();
 		tplSource5='';
 		tplSource5=$("#tpl-equiposOffLine").html();
@@ -428,4 +402,26 @@ function respondePorIp(){
 			equiposOffLineRT.splice(posOff,1);//quitando equipo del listado de offline, si solo esta alertado
 		}
 	}	
+}
+
+function actualizarTablero(totConected,totReady,totWarning,totOffline){
+	if($("#divTotalClientes").length>0){
+		$("#divTotalClientes").empty();
+		$("#divTotalClientes").html(totConected);
+	}
+
+	if ($("#divOffline").length > 0) {//si existe en el dom el Div
+		$("#divOffline").empty();
+		$("#divOffline").html(totOffline);//actualizamos el total de clientes desconectados
+	}
+
+	if($("#divWarning").length>0){
+		$("#divWarning").empty();
+		$("#divWarning").html(totWarning);
+	}
+
+	if($("#divTotalSinError").length>0){
+		$("#divTotalSinError").empty();
+		$("#divTotalSinError").html(totReady);
+	}
 }
