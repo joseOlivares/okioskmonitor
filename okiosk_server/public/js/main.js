@@ -45,12 +45,12 @@ var socket = io.connect(servidor.IP); //creating socket connection to server, se
 
 var app={
 	receiveData:function(){
-		socket.on('latido_equipo_ok',function(equipo,totalClientes){//recibe los datos actuales del equipo
+		socket.on('latido_equipo_ok',function(equipo,totalClientes,totDesconect,totReady){//recibe los datos actuales del equipo
 			if ($("#divTotalClientes").length > 0) {//si existe en el dom el DivTotalClientes
 				$("#divTotalClientes").html(totalClientes);//actualizamos el total de clientes conectados
 			}
 
-			totDesconect=lstCompletoEquipos.length-totalClientes;
+			//totDesconect=lstCompletoEquipos.length-totalClientes;
 
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div	
 				$("#divOffline").html(totDesconect);//actualizamos el total de clientes desconectados
@@ -58,7 +58,7 @@ var app={
 
 			//----------13/08/2017
 			if ($("#divTotalSinError").length > 0) {//si existe en el dom el Div	
-				$("#divTotalSinError").html(totalClientes-equiposAlertadosRT.length);//actualizamos el total de equipos ready
+				$("#divTotalSinError").html(totReady);//actualizamos el total de equipos ready
 			}
 			//----------------
 
@@ -139,22 +139,22 @@ var app={
 			}
 		});
 
-	    socket.on('mostrar_lstEquipos',function(data){
+	    socket.on('mostrar_lstEquipos',function(rows,contaOffline,recuentoTot){
 	    	$("#lstKioskos").empty();//limpiando zona de carga del listado de Kioskos
-			lstCompletoEquipos=data.rows;//guardando listado de equipo en memoria
-			equiposOffLineRT=Array.from(data.rows);// CLONAMOS por default tomo todos como desconectados
+			lstCompletoEquipos=rows;//guardando listado de equipo en memoria
+			equiposOffLineRT=Array.from(rows);// CLONAMOS por default tomo todos como desconectados
 			if ($("#divOffline").length > 0) {//si existe en el dom el Div
-				$("#divOffline").html(data.contaOffline);//actualizamos el total de clientes desconectados
+				$("#divOffline").html(contaOffline);//actualizamos el total de clientes desconectados
 			}
 		
 	    	var cadena='';
-	    	for (var i = 0; i < data.rows.length; i++) {
-	    		var x=JSON.stringify(data.rows[i], null, 4);
-	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+data.rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+data.rows[i].ip+'<br> <p>'+data.rows[i].nombre+' '+ data.rows[i].ubicacion+'</p></div></a></li>';
+	    	for (var i = 0; i < rows.length; i++) {
+	    		var x=JSON.stringify(rows[i], null, 4);
+	    	  	cadena='<li onClick=app.mostrarDatosEquipo('+i+'); > <a href="#"><div class="minitxt"><span id="'+rows[i].ipID+'" class="glyphicon glyphicon-ban-circle alertaE"></span>'+rows[i].ip+'<br> <p>'+rows[i].nombre+' '+ rows[i].ubicacion+'</p></div></a></li>';
 	    	   $("#lstKioskos").append(cadena);//cargando contenido en index.html 
 	    	}
 
-	    	$("#recuentoTotal").html(data.rows.length);
+	    	$("#recuentoTotal").html(recuentoTot);
 
 	    });
 

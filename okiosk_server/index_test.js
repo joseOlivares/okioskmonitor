@@ -307,7 +307,7 @@ io.on('connection', function(socket){
 		if(equiposConectados.indexOf(ipIdCliente)==-1)//si no esta en el array, lo agrega
 		{
 			equiposConectados.push(ipIdCliente);
-			//socketConnectedId.push(socket.id); //agregando socket.id 19/10/17
+			estado.delOffline(ipIdCliente);//JL
 		}
 
 		console.log('Total clientes conectados: '+equiposConectados.length);				
@@ -325,7 +325,8 @@ io.on('connection', function(socket){
 			  			console.log(err);
 			  			return;
 			  		}else{ 
-			  			io.sockets.emit('mostrar_lstEquipos',{rows:rows,contaOffline:estado.offline.length});//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
+						let totDesconect=estado.offline.length;
+			  			io.sockets.emit('mostrar_lstEquipos',rows,totDesconect,estado.total);//emitiendo a todas las conecciones, si dentro del array rows hay una / genera conflictos con javascript
 						  console.log('Listado de equipos enviados a GUI de monitoreo!');
 						  //console.log(rows);
 			  		}
@@ -351,11 +352,12 @@ io.on('connection', function(socket){
 			if(equiposConectados.indexOf(equipo.ipID)==-1)//si no esta en el array, lo agrega. 
 			{
 				equiposConectados.push(equipo.ipID);	//Si se esta afectando el performance, es posible quitar este bloque 
-				estado.delOffline(equipo.ipID);//J
+				estado.delOffline(equipo.ipID);//JL
 			}
 
-
-			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length);
+			let totDesconect=estado.offline.length;
+			let totReady=estado.ready.length;
+			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length,totDesconect,totReady);
 		});
 
 
@@ -451,7 +453,8 @@ io.on('connection', function(socket){
      	quitarIpId=socket.handshake.query['ipClienteX']; //ipId del quipo desconectado
 		if(typeof quitarIpId !== 'undefined' &&  quitarIpId!== null )//si el cliente envia el idIP
 		{
-        	quitarIpIdPos=equiposConectados.indexOf(quitarIpId); //posicion del equipo desconectado en el array
+			estado.addOffline(quitarIpId);//JL
+			quitarIpIdPos=equiposConectados.indexOf(quitarIpId); //posicion del equipo desconectado en el array
         	equiposConectados.splice(quitarIpIdPos,1); //quitando el ipid del array de equipos conectados
 			//socketConnectedId.splice(quitarIpIdPos,1); //quitando socket.id 19/10/17
 
