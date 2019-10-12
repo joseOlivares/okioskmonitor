@@ -246,11 +246,11 @@ var app={
 	},
 
 	esPrinterZebra:function(defaultPrinterName){
-				if(defaultPrinterName.indexOf('Zebra')!==-1 || defaultPrinterName.indexOf('zebra')!==-1 ){
-					return 1;
-				}else{
-					return -1;
-				}
+		if(defaultPrinterName.indexOf('Zebra')!==-1 || defaultPrinterName.indexOf('zebra')!==-1 ){
+			return 1;
+		}else{
+			return -1;
+		}
 	},
 
 	showTemplate: function (template,data,target,hasRows){ //showing templates with handlebars
