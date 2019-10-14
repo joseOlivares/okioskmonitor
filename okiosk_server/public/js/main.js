@@ -15,7 +15,7 @@ let equiposOkRT=[];//listado de equipos funcionando Ok Real Time, se mantendra e
 let equiposOffLineRT=[]; //listado de equipos offline en real time
 let quitarDeLista=-1; //idip del equipo a quitar del listado de equipos alertados
 let estadoEquipoEvaluado={};
-let estadoImpresores=[];
+
 
 let  listosIpId=[],alertadosIpId=[],offlineIpId=[]; //solo guardan los ipID
 
@@ -121,8 +121,6 @@ var app={
 			actualizarEstadosLocales(ready,warning,offline);
 			asignarRegistrosPorEstado();
 
-			setEstadosImpresores(equipo);
-
 		});	//cierra Latido_equipo_ok
 
 		//-------leyendo detalle de hardware 09/11/2017 modificacion
@@ -203,6 +201,7 @@ var app={
 		let totConn=totReadyx+totWarn;
 
 		actualizarTablero(totConn,totReadyx,totWarn,totOff);//JL
+
 	},
 
 	mostrarEquiposOffLine: async function(){// creado 27-12-2017 Probar donde Cliente			
@@ -260,8 +259,8 @@ var app={
 		"use strict";
 		 var html= template(data); //compilando template
         $("#"+target).html(html); //cargando resultados
-    },
-
+	},
+	
     buscarPosicion:function(arrayObjeto,criterioBusquedaIpID){			  	
 		for(var p = 0; p < arrayObjeto.length; p++) {
 		   if(arrayObjeto[p].ipID === criterioBusquedaIpID) {
@@ -337,8 +336,6 @@ function asignarRegistrosPorEstado(){
 	equiposOffLineRT.length=0;
 	equiposAlertadosRT.length=0;
 
-	estadoImpresores.length=0;//Testing 
-
 	//llenando arrays con data completa 
 	for (let i = 0; i < listosIpId.length; i++) {//equiposOkRT
 		let pos=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(listosIpId[i]);
@@ -363,29 +360,6 @@ function asignarRegistrosPorEstado(){
 
 }
 
-function setEstadosImpresores(datosPrinter){
-
-		if(estadoImpresores.length>0){
-			
-			let p=estadoImpresores.map(function(elemento) { return elemento.ipID; }).indexOf(datosPrinter.ipID);
-
-			if(p===-1){//si no existe en objeto, lo agregamos
-				let cadena=datosPrinter.printerName+': '+datosPrinter.generalState;
-				try {
-					estadoImpresores.push({ipID:datosPrinter.ipID,resumenPrinter:cadena});	
-				} catch (error) {
-					console.log(error);
-				}
-			}
-
-		}else{//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-			let resumenPrinter=datosPrinter.printerName+': '+datosPrinter.generalState;
-			try {
-				let myipID=datosPrinter.ipID;
-				estadoImpresores[myipID]=resumenPrinter;	
-			} catch (error) {
-				console.log(error);
-			}
-			
-		}
+function buscarPosicionLstCompletoEquiipos(){
+	
 }

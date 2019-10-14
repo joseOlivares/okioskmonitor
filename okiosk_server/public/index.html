@@ -380,19 +380,19 @@
                   <th>IP</th>
                   <th>Nombre</th>
     							<th>Ubicaci&oacute;n</th>
-    							<th>Alerta Impresor</th>
+    							<th>N° Serie</th>
     						  </tr>
     						</thead>
-    						<tbody>
-    						{{#each this }}
+    						<tbody> 
+                  {{#each this }}
     							  <tr id="prnAlarma{{ipID}}">
                     				<td>{{indiceMas1 @index}}</td>
                     <td>{{ip}}</td>
                     <td>{{nombre}}</td>
     								<td>{{ubicacion}}</td>
-    								<td>{{printerName}}&nbsp;&nbsp;{{strAlertaPrinter}}</td>
+    								<td>{{serie}}</td>
     							  </tr>
-    						{{/each}} 
+                {{/each}}                                 
     						</tbody>			
     				  </table>
           </div>
@@ -414,7 +414,7 @@
                     <th>IP</th>
                     <th>Nombre</th>
                     <th>Ubicaci&oacute;n</th>
-                    <th>Status</th>
+                    <th>N° Serie</th>
     						  </tr>
     						</thead>
     						<tbody>
@@ -424,7 +424,7 @@
                         <td>{{ip}}</td>
                         <td>{{nombre}}</td>
                         <td>{{ubicacion}}</td>
-                        <td>{{status}}</td>
+                        <td>{{serie}}</td>
     							  </tr>
     						{{/each}} 
     						</tbody>			
