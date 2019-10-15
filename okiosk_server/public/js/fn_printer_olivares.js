@@ -210,10 +210,19 @@ function evaluaEstadoPrinter(printerX){
    if(printerX.prStatus){
 
    } 
-	/*if(printerX.prStatus!==7 && printerX.prDetectedErrorState===0){
+
+   	/*if(printerX.prStatus!==7 && printerX.prDetectedErrorState===0){
 		generalState="Listo";
     }*/
     
 	return {generalState:generalState, printerStatus:strPrinterStatus,extendedPrinterStatus:strExtendedPrinterStatus, detectedErrorState:strDetectedErrorstate,extendedDetectedErrorState:strExtendedDetectedErrorState};
 }
 
+//11/10/2019  Verifica que el nombre del printer lleve la palabra Zebra
+function esprinterZebra(defaultPrinterName){
+  if(defaultPrinterName.indexOf('Zebra')!==-1 || defaultPrinterName.indexOf('zebra')!==-1 ){
+    return true;
+  }else{
+    return false;
+  }
+}

@@ -28,6 +28,20 @@ namespace okioskclient
             InitializeComponent();
         }
 
+        private void Form1_Resize(object sender, EventArgs e)
+        { //Codigo nuevo, intentando ocultar formulario en kioscos al minimizar
+            if (WindowState == FormWindowState.Minimized)
+            {
+                ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
+            }
+            else
+            {
+                ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {   
             //String fullPath = "C:/okiosk_monitor/agente_monitoreo.html";
@@ -98,13 +112,13 @@ namespace okioskclient
         private void IPServidorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Configurando IP Cliente
-            this.TopMost = false;//enviando main form al fondo
+            //this.TopMost = false;//enviando main form al fondo
 
             String ipCliente = Microsoft.VisualBasic.Interaction.InputBox("Escriba la Ip del cliente (este equipo):",
                                 "Ip a monitorear", "192.168.7.224");
 
             ipCliente = ipCliente.Trim(); //borrando espacios
-            this.TopMost = true;
+            //this.TopMost = true;
 
             if (ipCliente == "")
             {
@@ -166,12 +180,12 @@ namespace okioskclient
             appPath = Directory.GetParent(appPath).FullName;
             String jsFile = appPath + @"\okiosk_installer\app\config\setIPs.js";
 
-            this.TopMost = false;  //enaviando form principal al fondo
+            //this.TopMost = false;  //enaviando form principal al fondo
 
             String ipServer = Microsoft.VisualBasic.Interaction.InputBox("Escriba la Ip del Servidor de Monitoreo:",
         "Ip Servidor", "192.168.1.1");
 
-            this.TopMost = true;
+            //this.TopMost = true;
             ipServer = ipServer.Trim();
             String newIpServer = @"servidor={IP:'http://" + ipServer + ":3000'}";
 
