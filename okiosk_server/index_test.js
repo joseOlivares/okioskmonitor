@@ -436,6 +436,12 @@ io.on('connection', function(socket){
 				});	
 		});
 
+	socket.on('refresh_lista_equipos', async function(){
+		await iniciarEstadosKioskos();
+		console.log("Se ejecutó iniciarEstadosKioskos");
+	});
+
+	
 
     socket.on('disconnect', function () {
         socketCount--; // Decrease the socket count on a disconnect	       

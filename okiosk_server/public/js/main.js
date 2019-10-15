@@ -283,6 +283,11 @@ var app={
 		}
 	},
 
+	refrescarListaEquipos:function(){
+		socket.emit('refresh_lista_equipos');//solicitamos al server actualiza la lista de equipos	
+		//alert("refrescando lstEquipos");
+	},
+
     initialize: function() {
 		"use strict";
 		var self=this;
@@ -341,6 +346,7 @@ function asignarRegistrosPorEstado(){
 		let pos=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(listosIpId[i]);
 		if(pos!==-1){
 			equiposOkRT.push(lstCompletoEquipos[pos]);
+			equiposOkRT[equiposOkRT.length-1].indiceLista=pos;//guardando el indice de la posicion en lstCompleto 
 		}
 	}
 
@@ -348,6 +354,7 @@ function asignarRegistrosPorEstado(){
 		let pos2=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(alertadosIpId[i]);
 		if(pos2!==-1){
 			equiposAlertadosRT.push(lstCompletoEquipos[pos2]);
+			equiposAlertadosRT[equiposAlertadosRT.length-1].indiceLista=pos2;
 		}
 	}
 
@@ -355,11 +362,10 @@ function asignarRegistrosPorEstado(){
 		let pos3=lstCompletoEquipos.map(function(elemento) { return elemento.ipID; }).indexOf(offlineIpId[i]);
 		if(pos3!==-1){
 			equiposOffLineRT.push(lstCompletoEquipos[pos3]);
+			equiposOffLineRT[equiposOffLineRT.length-1].indiceLista=pos3;
 		}
 	}	
 
 }
 
-function buscarPosicionLstCompletoEquiipos(){
-	
-}
+
