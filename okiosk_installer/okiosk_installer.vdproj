@@ -225,6 +225,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7E6C2051980148AD8F55896CBAC6E991"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_887F15E5E1374172A083A0E3E7180F94"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -279,12 +285,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9E643FD6043343E9A69FA9DA74C402BA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9E87672C06EB4B43975DC167230D370F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -327,7 +327,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D1AAA7CA3F1142CF8998B433A045FA3A"
+        "MsmKey" = "8:_C39CBFE420FD404A9574BA636F23FECE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1210,6 +1210,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E6C2051980148AD8F55896CBAC6E991"
+            {
+            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\fn_printer_olivares.js"
+            "TargetName" = "8:fn_printer_olivares.js"
+            "Tag" = "8:"
+            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_887F15E5E1374172A083A0E3E7180F94"
             {
             "SourcePath" = "8:..\\okiosk_monitor_html\\js\\bootstrap.min.js"
@@ -1390,26 +1410,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E643FD6043343E9A69FA9DA74C402BA"
-            {
-            "SourcePath" = "8:..\\okiosk_monitor_html\\js\\fn_printer_olivares.js"
-            "TargetName" = "8:fn_printer_olivares.js"
-            "Tag" = "8:"
-            "Folder" = "8:_4B1D7E5F3E244D43B074E7531ED41502"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E87672C06EB4B43975DC167230D370F"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\GBM\\okiosk_installer\\app\\css\\jssocials.css"
@@ -1550,7 +1550,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D1AAA7CA3F1142CF8998B433A045FA3A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C39CBFE420FD404A9574BA636F23FECE"
             {
             "SourcePath" = "8:..\\okiosk_monitor_html\\js\\main.js"
             "TargetName" = "8:main.js"
@@ -1737,11 +1737,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_F0CB56E257319A17D8FE55A905C3D0B5"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
