@@ -125,6 +125,7 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 6: 
             strDetectedErrorstate="NoToner (Sin Toner)"; //NoToner
+            generalState='-1';
             break; 
         case 7: 
             strDetectedErrorstate="Door Open (Puerta abierta)";//Door Open - 
@@ -171,9 +172,11 @@ function evaluaEstadoPrinter(printerX){
             break; 
         case 6: 
             strExtendedDetectedErrorState="No Toner (Sin Toner)"; //No Toner
+            generalState='-1';
             break; 
         case 7: 
             strExtendedDetectedErrorState="Door Open (Puerta abierta)"; //Door Open 
+            generalState='-1';
             break; 
         case 8: 
             strExtendedDetectedErrorState="Jammed (Atascado)"; //Jammed 
