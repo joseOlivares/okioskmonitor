@@ -43,9 +43,9 @@ namespace okioskclient
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {   
+        {
             //String fullPath = "C:/okiosk_monitor/agente_monitoreo.html";
-     
+            this.WindowState = FormWindowState.Minimized;//estado inicial minimizado
             String  appPath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             appPath = Directory.GetParent(appPath).FullName;
 
