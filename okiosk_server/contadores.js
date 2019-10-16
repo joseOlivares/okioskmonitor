@@ -18,7 +18,7 @@ let contadorEquipo={
         //console.log(this.datosTblEquipo);
     },
     addOffline:function(ipId){
-        if(ipId && contadorEquipo.total>contadorEquipo.offline.length && ipId.length>3){ 
+        if(ipId && contadorEquipo.total>=contadorEquipo.offline.length && ipId.length>3){ 
             try{
                 const p=contadorEquipo.offline.indexOf(ipId);
                 if(p===-1){//si no existe lo agrega
@@ -33,7 +33,7 @@ let contadorEquipo={
         }           
     },
     addWarning:function(ipId){
-        if(ipId &&  contadorEquipo.total>contadorEquipo.warning.length && ipId.length>3){
+        if(ipId && contadorEquipo.total>=contadorEquipo.warning.length && ipId.length>3){
             try{
                 const p=contadorEquipo.warning.indexOf(ipId);
                 if(p===-1){//si no existe lo agrega
@@ -48,7 +48,7 @@ let contadorEquipo={
         }     
     },
     addReady:function(ipId){
-        if(ipId && contadorEquipo.total>contadorEquipo.ready.length && ipId.length>3){
+        if(ipId && contadorEquipo.total>=contadorEquipo.ready.length && ipId.length>3){
             try{
                 const p=contadorEquipo.ready.indexOf(ipId);
                 if(p===-1){//si no existe lo agrega
@@ -102,7 +102,7 @@ let contadorEquipo={
         if(totalEquipos && totalEquipos>=0){
             contadorEquipo.total=totalEquipos;
         }else{
-            contadorEquipo.total=contadorEquipo.offline.length+contadorEquipo.warning.length+contadorEquipo.ready;
+            contadorEquipo.total=contadorEquipo.offline.length+contadorEquipo.warning.length+contadorEquipo.ready.length;
         }
     },
     setInitialState:function(){
