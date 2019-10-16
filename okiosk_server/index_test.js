@@ -334,16 +334,18 @@ io.on('connection', function(socket){
 			console.log("¿Es printer Zebra?",equipo.esPrinterZebra);
 			console.log(".......");	
 			
-			if(equiposConectados.indexOf(equipo.ipID)==-1)//si no esta en el array, lo agrega. 
+			if(equiposConectados.indexOf(equipo.ipID)===-1)//si no esta en el array, lo agrega. 
 			{
 				equiposConectados.push(equipo.ipID);	//Si se esta afectando el performance, es posible quitar este bloque 
 			}
 
 			if(equipo.generalState==="Listo")//si no tiene alertas
 			{
-				estado.addReady(equipo.ipID);		
+				estado.addReady(equipo.ipID);	
+				console.log("Estados ready: ", estado.ready);	
 			}else{
 				estado.addWarning(equipo.ipID);//si esta alertado
+				console.log("Estados warning: ", estado.warning);
 			}
 
 			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length,estado.ready,estado.warning,estado.offline);
