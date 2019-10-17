@@ -71,4 +71,17 @@ router.get('/editarkiosko/:idequipo', async (req, res) => {
     //console.log(req.params.idequipo);
 });
 
+//Verifica siuna ip existe en la base de datos
+router.get('/checkip/:ip', async (req, res) => {
+    sess=req.session;
+    if (!sess.username||!perfil.validarAcceso(sess.idperfil)) {
+        res.redirect('/login');
+    } else {
+        //Codigo aqui
+        const { ip } = req.params;
+        const kskExiste= await pool.query('SELECT COUNT(ipID) as existe FROM tblequipo WHERE ip = ?', [ip]);
+        res.send(kskExiste);
+    }
+});
+
 module.exports = router;

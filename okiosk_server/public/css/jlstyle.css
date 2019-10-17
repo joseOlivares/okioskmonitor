@@ -68,3 +68,7 @@
 .txt-centrado{
   text-align: center !important;
 }
+
+.ip-validation{
+  color: red;
+}

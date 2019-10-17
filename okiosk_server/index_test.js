@@ -274,11 +274,11 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 	}};
 //--------------------------------------------------------	
 	
-//-----Tarea programada: borrado de logs toods los domingos del mes , 18 pm---
+//-----Tarea programada: borrado de logs todos los domingos del mes , 18 pm---
 cron.schedule('0 18 * * sunday', () => {
 	//pool se ejecuta bien, pero deberiamos revisar a futuro si se hace de forma tradicional ########################
-	pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 2 MONTH)');
-	console.log('Tarea programada ejecutada... Se ha eliminado el log de alertas posterior a 2 meses!');
+	pool.query('DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 3 MONTH)');
+	console.log('Tarea programada ejecutada... Se ha eliminado el log de alertas posterior a 3 meses!');
   });
 //--------------------------------
 
@@ -342,10 +342,10 @@ io.on('connection', function(socket){
 			if(equipo.generalState==="Listo")//si no tiene alertas
 			{
 				estado.addReady(equipo.ipID);	
-				console.log("Estados ready: ", estado.ready);	
+				//console.log("Estados ready: ", estado.ready);	
 			}else{
 				estado.addWarning(equipo.ipID);//si esta alertado
-				console.log("Estados warning: ", estado.warning);
+				//console.log("Estados warning: ", estado.warning);
 			}
 
 			io.sockets.emit('latido_equipo_ok',equipo,equiposConectados.length,estado.ready,estado.warning,estado.offline);

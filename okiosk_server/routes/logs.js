@@ -48,8 +48,8 @@ router.get('/borrarlog/:opcion', async (req, res) => {
         }
 
         if(op===2){
-            myQuery='DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 2 MONTH)';
-            msg='¡Se ha borrado el contenido del log posterior a 2 meses!';
+            myQuery='DELETE FROM tblalertas_log WHERE fecha < DATE_SUB(NOW(), INTERVAL 3 MONTH)';
+            msg='¡Se ha borrado el contenido del log posterior a 3 meses!';
         }
 
         await pool.query(myQuery);
