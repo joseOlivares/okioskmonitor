@@ -288,6 +288,14 @@ var app={
 		//alert("refrescando lstEquipos");
 	},
 
+	getLoggedUserMail:function(){
+		if($("#spnUserId").length>0){
+			let loggedUserMail=$("#spnUserId").text();
+			return loggedUserMail.trim();
+		}		
+		return -1;
+	},
+
     initialize: function() {
 		"use strict";
 		var self=this;

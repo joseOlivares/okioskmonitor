@@ -151,6 +151,7 @@ router.route('/login')
 			sess.username=post.loginUsuario;
 			sess.email=userData.userMail;
 			sess.idperfil=userData.userPerfil;
+			sess.idusuario=userData.idUsuario; //agregamos el idususario 17/10/2019
 			res.redirect('/index.html');
 
 		}else {
@@ -168,7 +169,7 @@ router.get('/logout', function(req, res) {
 router.get('/username', function(req, res) {
 	 sess=req.session;
 	 //console.log(sess);
-	res.json({myUserName:sess.username,myUserId:sess.email,myPerfil:sess.idperfil});
+	res.json({myUserName:sess.username,myUserId:sess.email,myPerfil:sess.idperfil,myIdUsuario:sess.idusuario});
 	
 });	
 
@@ -266,7 +267,7 @@ var  sesionUsuario={buscar: function(arrayObjeto,myUser,myPass){
 		for(var p = 0; p < arrayObjeto.length; p++) {
 		   if(arrayObjeto[p].email===myUser.trim() && arrayObjeto[p].password===myPass.trim()) {
 			//19/09/2019 se modifico pqrq que retornara el email y el idPerfil del usuario
-		    return {userMail:arrayObjeto[p].email,userPerfil:arrayObjeto[p].idPerfil};
+		    return {userMail:arrayObjeto[p].email,userPerfil:arrayObjeto[p].idPerfil,idUsuario:arrayObjeto[p].idusuario};
 		   }
 		}
 

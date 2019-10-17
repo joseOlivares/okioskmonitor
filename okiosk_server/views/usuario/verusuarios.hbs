@@ -42,7 +42,7 @@
                                     <td>{{#estadoUsuario estado}}{{/estadoUsuario}}</td>
                                     <td>
                                         <div class="btn-group mx-auto" role="group" aria-label="Basic example">
-                                            {{#isAdminAcciones idPerfil idusuario nombre_usuario estado}} 
+                                            {{#isAdminAcciones idPerfil idusuario nombre_usuario estado email }} 
                                             
                                             {{/isAdminAcciones}}
                                         </div>
@@ -78,32 +78,48 @@
     
     table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
     
-
+    
 </script>
 <script lang="Javascript">
+   
     //por José Luis Olivares, 17/09/2019
-    function validarBorrado(id,nombre_usuario){
-        //validar borrado de usuario
-        var msg="¿Está seguro que desea eliminar el usuario?<br> <strong>"+nombre_usuario+"</strong>";
-        url="/usuario/borrarusuario/"+id; //url de borrado
-        //usando jquery-confirm
-        $.confirm({
-            title: 'Eliminar usuario',
-            content: msg,
-            closeIcon: true,
-            buttons: {
-                cancelar:{
-                    btnClass: 'btn-blue',
-                    keys:['esc'],
-                },
-                Eliminar: {
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        window.location.href=url;
-                        
+    function validarBorrado(id,nombre_usuario,email){
+         if (app.getLoggedUserMail()===email.trim()){
+            $.confirm({
+                title: 'Oops!',
+                content: '¡No puede eliminarse a si mismo!',
+                type: 'orange',
+                typeAnimated: true,
+                buttons: {
+                Ok:{
+                        keys:['esc','enter'],
                     }
-                },    
-            }
-        });
+                }
+            });
+         }else{
+            //validar borrado de usuario
+            var msg="¿Está seguro que desea eliminar el usuario?<br> <strong>"+nombre_usuario+"</strong>";
+            url="/usuario/borrarusuario/"+id; //url de borrado
+            
+            //usando jquery-confirm
+            $.confirm({
+                title: 'Eliminar usuario',
+                content: msg,
+                closeIcon: true,
+                buttons: {
+                    cancelar:{
+                        btnClass: 'btn-blue',
+                        keys:['esc'],
+                    },
+                    Eliminar: {
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            window.location.href=url;
+                            
+                        }
+                    },    
+                }
+            });
+         }//close IF
     }
 </script>
