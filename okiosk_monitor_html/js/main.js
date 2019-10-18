@@ -129,7 +129,7 @@ function socket_enviar(){
 	app.initialize();
 };
 
-var sendingData=setInterval(socket_enviar,7000);//enviando datos cada 7 seg, mejor cada 10
+var sendingData=setInterval(socket_enviar,30000);//enviando datos cada 30 segundos (18/10/2019)
 
 
 //agregado 09/11/2017 Lee estado general del hardware
