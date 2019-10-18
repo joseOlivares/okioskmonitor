@@ -105,7 +105,7 @@ var pool= mysql.createPool({ //conexion a base de datos mysql  IP_MYSQL
 	var equiposAlertados=[];
 	var ipIdCliente=-1;
 	var quitarIpId=-1, quitarIpIdPos=-1;
-	var listEquipos='SELECT * FROM tblequipo WHERE estado=1'; //seleccionando todos los equipos habilitados
+	var listEquipos='SELECT * FROM tblequipo WHERE estado=1 LIMIT 500'; //seleccionando todos los equipos habilitados
 	var usersInfo=[];//guarda informacion del listado de usuarios
 	var usuariosConectados=[];
 	//var socketConnectedId=[]; //guarda socket e ipid del cliente, para comunicacion privada 19/10/2017 
